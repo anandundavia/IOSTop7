@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import {
     Animated,
+    Easing,
     Image,
+    Linking,
+    Platform,
     ScrollView,
     StatusBar,
     StyleSheet,
     Text,
-    Platform,
-    Linking,
-    Easing,
     TouchableHighlight,
     View
 } from "react-native";
@@ -41,13 +41,10 @@ export default class PlaceDetails extends Component {
         this.props.navigation.goBack();
     };
 
-    addPlaceToFavourite = () => {
-        this.props.navigator.push({
-            component: Consts.SCREENS.PLACE_ADD_POP_UP,
-            title: Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-            passProps: {markerObject: this.props.markerObject},
-        })
-    };
+    addPlaceToFavourite = () => this.props.navigation.navigate(
+        Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
+        {markerObject: this.props.markerObject}
+    );
 
 
     /**

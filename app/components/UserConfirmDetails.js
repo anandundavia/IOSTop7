@@ -97,7 +97,6 @@ export default class UserConfirmDetails extends Component {
         this.setLoadingTextViewVisibility(true);
         Backend.getBackendAccessToken(Backend.syncUserInfo, () => {
             this.setLoadingTextViewVisibility(false);
-            //console.log("Removing the listener...");
             this.keyboardDidShowListener.remove();
             this.keyboardDidHideListener.remove();
             this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
@@ -144,9 +143,6 @@ export default class UserConfirmDetails extends Component {
                 placeholder="CITY"
                 onSubmitEditing={() => this.emailInput.focus()} // This is done so that when user hits done, It focuses on next TextInput
                 blurOnSubmit={false}
-                onChangeText={(text) => {
-                    //console.log(Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS + ": Text is : " + text);
-                }}
             />
         </View>;
     };

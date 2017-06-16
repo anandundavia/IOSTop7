@@ -116,12 +116,7 @@ export default class SearchScreen extends Component {
             rating: details.rating
         };
 
-        this.props.navigator.push({
-            title: Consts.SCREEN_TITLES.PLACE_DETAILS,
-            component: Consts.SCREENS.PLACE_DETAILS,
-            passProps: {markerObject: newMaker}
-        });
-
+        this.props.navigation.navigate(Consts.SCREENS.PLACE_DETAILS, {markerObject: newMaker});
     };
 
     /**
