@@ -91,10 +91,7 @@ export default class Dashboard extends Component {
     };
 
 
-    showSearchOverlay = () => this.props.navigator.push({
-        component: Consts.SCREENS.SEARCH_SCREEN,
-        title: Consts.SCREEN_TITLES.SEARCH_SCREEN
-    });
+    showSearchOverlay = () => this.props.navigation.navigate(Consts.SCREEN_TITLES.SEARCH_SCREEN);
 
 
     getTabBar = () => {
@@ -243,12 +240,7 @@ export default class Dashboard extends Component {
     };
 
 
-    openFilterScreen = () => {
-        this.props.navigator.push({
-            title: Consts.SCREEN_TITLES.FILTER_SCREEN,
-            component: Consts.SCREENS.FILTER_SCREEN
-        })
-    };
+    openFilterScreen = () => this.props.navigation.navigate(Consts.SCREEN_TITLES.FILTER_SCREEN);
 
 
     /**

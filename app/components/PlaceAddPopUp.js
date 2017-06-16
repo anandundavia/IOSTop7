@@ -10,6 +10,10 @@ const {height} = Dimensions.get('window');
 
 
 export default class PlaceAddPopUp extends Component {
+
+    static navigationOptions = {header: null};
+
+
     constructor(props) {
         super(props);
         // The view which will be dragged

@@ -1,18 +1,18 @@
 import React, {Component} from "react";
 import {
     DatePickerAndroid,
+    DatePickerIOS,
+    Dimensions,
     Image,
     Keyboard,
     KeyboardAvoidingView,
+    Platform,
     StatusBar,
     StyleSheet,
     Text,
     TextInput,
-    View,
-    Platform,
     TouchableHighlight,
-    DatePickerIOS,
-    Dimensions,
+    View
 } from "react-native";
 import moment from "moment";
 import {Button, ButtonGroup} from "react-native-elements";
@@ -24,6 +24,8 @@ import Memory from "../core/Memory";
 const {height, width} = Dimensions.get('window');
 
 export default class UserConfirmDetails extends Component {
+
+    static navigationOptions = {header: null};
 
     constructor(props) {
         super(props);

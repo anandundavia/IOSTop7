@@ -5,8 +5,10 @@ import {
     ScrollView,
     StatusBar,
     StyleSheet,
-    Text, Platform,
-    Linking, Easing,
+    Text,
+    Platform,
+    Linking,
+    Easing,
     TouchableHighlight,
     View
 } from "react-native";
@@ -17,6 +19,8 @@ import Backend from "../core/Backend";
 
 
 export default class PlaceDetails extends Component {
+
+    static navigationOptions = {header: null};
 
     constructor(props) {
         super(props);

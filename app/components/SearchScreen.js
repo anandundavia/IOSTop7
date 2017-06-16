@@ -7,6 +7,8 @@ import Memory from "../core/Memory";
 
 export default class SearchScreen extends Component {
 
+    static navigationOptions = {header: null};
+
     /**
      * Called When any place from auto complete bar is tapped.
      * Changes the state as required.

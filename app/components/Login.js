@@ -10,10 +10,7 @@ import Backend from "../core/Backend";
 
 export default class Login extends Component {
 
-    static navigationOptions = {
-        title: 'Welcome',
-        header: null
-    };
+    static navigationOptions = {header: null};
 
     constructor(props) {
         super(props);

@@ -23,6 +23,8 @@ const Top7 = StackNavigator({
     [Consts.SCREEN_TITLES.SPLASH]: {screen: Consts.SCREENS.SPLASH},
     [Consts.SCREEN_TITLES.LOG_IN]: {screen: Consts.SCREENS.LOG_IN},
     [Consts.SCREEN_TITLES.DASHBOARD]: {screen: Consts.SCREENS.DASHBOARD},
+    [Consts.SCREEN_TITLES.SEARCH_SCREEN]: {screen: Consts.SCREENS.SEARCH_SCREEN},
+    [Consts.SCREEN_TITLES.FILTER_SCREEN] : {screen: Consts.SCREENS.FILTER_SCREEN},
 });
 
 AppRegistry.registerComponent('IOSTop7', () => Top7);

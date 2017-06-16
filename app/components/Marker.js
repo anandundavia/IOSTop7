@@ -5,6 +5,8 @@ import Consts from "../consts/Consts";
 
 export default class Marker extends Component {
 
+    static navigationOptions = {header: null};
+
     constructor(props) {
         super(props);
         if (!props.markerObject.name) {

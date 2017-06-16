@@ -4,6 +4,9 @@ import Consts from "../consts/Consts";
 
 const {height, width} = Dimensions.get('window');
 export default class PlaceList extends Component {
+
+    static navigationOptions = {header: null};
+
     constructor(props) {
         super(props);
         if (!props.names) {
