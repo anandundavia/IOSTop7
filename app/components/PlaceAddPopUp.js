@@ -49,6 +49,7 @@ export default class PlaceAddPopUp extends Component {
                 zIndex: 1,
             }
         };
+        this.params = props.navigation.state.params;
     }
 
 
@@ -66,7 +67,7 @@ export default class PlaceAddPopUp extends Component {
 
         Memory().updateLeaderboard = true;
 
-        let url = this.props.markerObject.icon.uri;
+        let url = this.params.markerObject.icon.uri;
         let index = url.indexOf("photoreference=") + "photoreference=".length;
         let end = url.indexOf("&key=");
 
@@ -94,19 +95,19 @@ export default class PlaceAddPopUp extends Component {
         Memory().commonRequest = {
             userDetails: Memory().userObject,
             place: {
-                id: this.props.markerObject.id,
-                name: this.props.markerObject.name,
-                types: [this.props.markerObject.type],
-                phoneNumber: this.props.markerObject.phoneNumber,
+                id: this.params.markerObject.id,
+                name: this.params.markerObject.name,
+                types: [this.params.markerObject.type],
+                phoneNumber: this.params.markerObject.phoneNumber,
                 setting: "both",
                 googlePhotoRef: reference,
-                priceLevel: this.props.markerObject.priceLevel <= 3 ? 0 : 1,
+                priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
                 location: {
-                    city: this.props.markerObject.location.city,
-                    state: this.props.markerObject.location.state,
-                    country: this.props.markerObject.location.country,
-                    cityLatitude: this.props.markerObject.coordinate.latitude,
-                    cityLongitude: this.props.markerObject.coordinate.longitude,
+                    city: this.params.markerObject.location.city,
+                    state: this.params.markerObject.location.state,
+                    country: this.params.markerObject.location.country,
+                    cityLatitude: this.params.markerObject.coordinate.latitude,
+                    cityLongitude: this.params.markerObject.coordinate.longitude,
                     zoomingIndex: 0.06
                 },
                 [numberRated]: 1,
@@ -155,7 +156,7 @@ export default class PlaceAddPopUp extends Component {
         let temp = this.tempPlaceArray.reverse();
         let t; // temporary var
         let index = this.placeIndex;
-        //let newPlace = {id: this.props.markerObject.id, name: this.props.markerObject.name};
+        //let newPlace = {id: this.params.markerObject.id, name: this.params.markerObject.name};
         let newPlace = this.listPlaceObject;
 
         /*
@@ -258,7 +259,7 @@ export default class PlaceAddPopUp extends Component {
                 this.currentViewProps.style.top = 0;
                 this.placeIndex = -1;
             }
-            this.listPlaceObject = {id: this.props.markerObject.id, name: this.props.markerObject.name};
+            this.listPlaceObject = {id: this.params.markerObject.id, name: this.params.markerObject.name};
             // setting the native props will kinda sorta refresh the view 'lightly'
             this.currentPlace.setNativeProps(this.currentViewProps);
 
@@ -326,10 +327,10 @@ export default class PlaceAddPopUp extends Component {
      */
     getListID = () => {
         return this.tempUserObject.id + "_" +
-            this.props.markerObject.location.city + "_" +
-            this.props.markerObject.location.state + "_" +
-            this.props.markerObject.location.country + "_" +
-            this.props.markerObject.type;
+            this.params.markerObject.location.city + "_" +
+            this.params.markerObject.location.state + "_" +
+            this.params.markerObject.location.country + "_" +
+            this.params.markerObject.type;
     };
 
 
@@ -347,8 +348,8 @@ export default class PlaceAddPopUp extends Component {
 
         return {
             listID: listID,
-            listType: this.props.markerObject.type,
-            location: this.props.markerObject.location,
+            listType: this.params.markerObject.type,
+            location: this.params.markerObject.location,
             places: emptyArray
         }
     };
@@ -491,12 +492,12 @@ export default class PlaceAddPopUp extends Component {
      * @returns {XML}
      */
     getCurrentListNameView = () => {
-        let type = this.props.markerObject.type;
+        let type = this.params.markerObject.type;
         let typeName = type.charAt(0).toUpperCase() + type.slice(1) + "s";
 
         return <View style={styles.placeNameContainerPopUp}>
             <Text
-                style={styles.placeNamePopUp}>Top7 {typeName}, {this.props.markerObject.location.city}</Text>
+                style={styles.placeNamePopUp}>Top7 {typeName}, {this.params.markerObject.location.city}</Text>
         </View>
     };
 
@@ -515,7 +516,7 @@ export default class PlaceAddPopUp extends Component {
                     source={require("../icons/drag_black.png")}
                     //style={styles.dragImageContainerPopUp}
                 />
-                <Text style={styles.dragPlaceNamePopUp}>{this.props.markerObject.name}</Text>
+                <Text style={styles.dragPlaceNamePopUp}>{this.params.markerObject.name}</Text>
             </View>
         }
 

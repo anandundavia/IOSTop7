@@ -29,8 +29,7 @@
     "babel-preset-react-native": "1.9.1",
     "jest": "19.0.2",
     "react-native-elements": "0.10.3",
-    "react-test-renderer": "16.0.0-alpha.6",
-    "react-native-maps": "*"
+    "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
     "preset": "react-native"

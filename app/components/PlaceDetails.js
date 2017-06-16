@@ -26,7 +26,8 @@ export default class PlaceDetails extends Component {
         super(props);
         this.loadingText = null;
         let length;
-        if (this.props.markerObject.friendsView === undefined || this.props.markerObject.friendsView === null || this.props.markerObject.friendsView.length === 0) {
+        this.params = props.navigation.state.params;
+        if (this.params.markerObject.friendsView === undefined || this.params.markerObject.friendsView === null || this.params.markerObject.friendsView.length === 0) {
             length = 0;
         } else {
             length = 80;
@@ -43,7 +44,7 @@ export default class PlaceDetails extends Component {
 
     addPlaceToFavourite = () => this.props.navigation.navigate(
         Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-        {markerObject: this.props.markerObject}
+        {markerObject: this.params.markerObject}
     );
 
 
@@ -54,10 +55,10 @@ export default class PlaceDetails extends Component {
      */
     getListID = () => {
         return Memory().userObject.id + "_" +
-            this.props.markerObject.location.city + "_" +
-            this.props.markerObject.location.state + "_" +
-            this.props.markerObject.location.country + "_" +
-            this.props.markerObject.type;
+            this.params.markerObject.location.city + "_" +
+            this.params.markerObject.location.state + "_" +
+            this.params.markerObject.location.country + "_" +
+            this.params.markerObject.type;
     };
 
     /**
@@ -94,7 +95,7 @@ export default class PlaceDetails extends Component {
             for (let i = 0; i < places.length; i++) {
                 let place = places[i];
                 //Does the current place id matches the place id in marker object?
-                if (place.id === this.props.markerObject.id) {
+                if (place.id === this.params.markerObject.id) {
                     // Yes. it does. This place is already added to user's one of the favourite list.
                     // Do not load the add button
                     showAddButton = false;
@@ -144,14 +145,14 @@ export default class PlaceDetails extends Component {
      */
     loadAllReviews = () => {
 
-        if (this.props.markerObject.reviews.length === 0) {
-            Backend.getReviews(this.props.markerObject.id, (reviews) => {
-                this.props.markerObject.reviews = reviews;
+        if (this.params.markerObject.reviews.length === 0) {
+            Backend.getReviews(this.params.markerObject.id, (reviews) => {
+                this.params.markerObject.reviews = reviews;
                 this.setState({});
             });
         }
 
-        let review = this.props.markerObject.reviews.map((value, key) => {
+        let review = this.params.markerObject.reviews.map((value, key) => {
             return <View key={key} style={styles.review}>
                 {/*View for user name and image*/}
                 <View style={styles.userNameAndImage}>
@@ -181,8 +182,8 @@ export default class PlaceDetails extends Component {
 
 
     getRatingsView = () => {
-        let rating = Math.floor(this.props.markerObject.rating);
-        let diff = this.props.markerObject.rating - rating;
+        let rating = Math.floor(this.params.markerObject.rating);
+        let diff = this.params.markerObject.rating - rating;
 
         let stars = [];
 
@@ -224,7 +225,7 @@ export default class PlaceDetails extends Component {
      * This view is displayed when the user taps on the okay button
      */
     getLoadingTextView = () => {
-        if (this.props.markerObject.reviews.length === 0)
+        if (this.params.markerObject.reviews.length === 0)
             return <View style={styles.loadingTextContainer}>
                 <Text
                     ref={loadingText => this.loadingText = loadingText}
@@ -234,23 +235,23 @@ export default class PlaceDetails extends Component {
 
 
     getFriendsView = () => {
-        if (this.props.markerObject.friendsView === undefined || this.props.markerObject.friendsView === null) {
-            this.props.markerObject.friendsView = [];
+        if (this.params.markerObject.friendsView === undefined || this.params.markerObject.friendsView === null) {
+            this.params.markerObject.friendsView = [];
         }
         return <Animated.View
             ref={view => this.friendsContainer = view}
             style={[styles.friendsContainer, {height: this.friendsViewHeight}]}>
-            {this.props.markerObject.friendsView}
+            {this.params.markerObject.friendsView}
         </Animated.View>
     };
 
 
     openMapApp = () => {
         if (Platform.OS === 'ios') {
-            let googleMapURL = "comgooglemaps://?saddr=" + +this.props.markerObject.coordinate.latitude + "," + this.props.markerObject.coordinate.longitude;
+            let googleMapURL = "comgooglemaps://?saddr=" + +this.params.markerObject.coordinate.latitude + "," + this.params.markerObject.coordinate.longitude;
             Linking.openURL(googleMapURL).then((e) => {
             }).catch((err) => {
-                let appleMapURL = "http://maps.apple.com/?daddr=" + this.props.markerObject.coordinate.latitude + "," + this.props.markerObject.coordinate.longitude;
+                let appleMapURL = "http://maps.apple.com/?daddr=" + this.params.markerObject.coordinate.latitude + "," + this.params.markerObject.coordinate.longitude;
                 Linking.openURL(appleMapURL).then((e) => {
                 }).catch((err) => {
                     console.log("Can not open maps..");
@@ -273,7 +274,7 @@ export default class PlaceDetails extends Component {
 
         let typeIcon;
         let type;
-        switch (this.props.markerObject.type) {
+        switch (this.params.markerObject.type) {
             case  Consts.PLACE_TYPES.BAR:
                 typeIcon = <Image style={styles.placeDetailsIcon} source={require("../icons/bar_white.png")}/>;
                 type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.BAR.toUpperCase()}</Text>;
@@ -293,12 +294,12 @@ export default class PlaceDetails extends Component {
         let priceLevel;
         let priceLimit;
 
-        if (this.props.markerObject.number) {
+        if (this.params.markerObject.number) {
             priceLimit = 0;
         } else {
             priceLimit = 3;
         }
-        if (this.props.markerObject.priceLevel <= priceLimit) {
+        if (this.params.markerObject.priceLevel <= priceLimit) {
             priceLevelIcon = <Image style={[styles.placeDetailsIcon, {marginLeft: 2}] }
                                     source={require("../icons/affordable_white.png")}/>;
             priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.AFFORDABLE.toUpperCase()}</Text>
@@ -314,12 +315,12 @@ export default class PlaceDetails extends Component {
             {/*Image of the place*/}
             <View style={styles.imageContainer}>
                 <Image
-                    source={this.props.markerObject.icon}
+                    source={this.params.markerObject.icon}
                     style={styles.placeImage}/>
                 <TouchableHighlight
                     onPress={() => {
-                        if (this.props.markerObject.phoneNumber) {
-                            Linking.openURL('tel:' + this.props.markerObject.phoneNumber).then((e) => {
+                        if (this.params.markerObject.phoneNumber) {
+                            Linking.openURL('tel:' + this.params.markerObject.phoneNumber).then((e) => {
                                 console.log("Calling successful");
                                 console.log(JSON.stringify(e))
                             }).catch((err) => {
@@ -328,7 +329,7 @@ export default class PlaceDetails extends Component {
                             });
                         } else {
                             console.warn("No phone number found.");
-                            console.log(JSON.stringify(this.props.markerObject));
+                            console.log(JSON.stringify(this.params.markerObject));
                         }
                     }}
                     underlayColor={'rgba(0,0,0,0)'}
@@ -339,7 +340,7 @@ export default class PlaceDetails extends Component {
             {/*Name of the place*/}
             <View style={styles.placeNameContainer}>
                 <Text style={styles.placeName}>
-                    {this.props.markerObject.name}
+                    {this.params.markerObject.name}
                 </Text>
             </View>
 
@@ -378,10 +379,10 @@ export default class PlaceDetails extends Component {
                     style={styles.map}
                     onRegionChangeComplete={() => {
                     }}
-                    region={this.props.markerObject.coordinate}>
+                    region={this.params.markerObject.coordinate}>
                     <MapView.Marker
                         onPress={this.openMapApp}
-                        coordinate={this.props.markerObject.coordinate}>
+                        coordinate={this.params.markerObject.coordinate}>
                         <Image source={require('../icons/pin_black.png')}/>
                     </MapView.Marker>
                 </MapView>
@@ -401,13 +402,13 @@ export default class PlaceDetails extends Component {
 
 
     componentDidMount() {
-        if (this.props.markerObject.friendsView === undefined || this.props.markerObject.friendsView === null || this.props.markerObject.friendsView.length === 0) {
-            this.props.markerObject.friendsView = [];
+        if (this.params.markerObject.friendsView === undefined || this.params.markerObject.friendsView === null || this.params.markerObject.friendsView.length === 0) {
+            this.params.markerObject.friendsView = [];
             //console.log("No friends. Gonna make the req.");
             let req = {
                 userid: Memory().userObject.id,
-                placeid: this.props.markerObject.id,
-                placeType: this.props.markerObject.type
+                placeid: this.params.markerObject.id,
+                placeType: this.params.markerObject.type
             };
 
             let friendsView = [];
@@ -437,7 +438,7 @@ export default class PlaceDetails extends Component {
                         </View>
                     )
                 }
-                this.props.markerObject.friendsView = friendsView;
+                this.params.markerObject.friendsView = friendsView;
                 Animated.timing(this.friendsViewHeight, {
                     // value is in percentage so converting it into dimensions.
                     toValue: 80,
@@ -450,7 +451,7 @@ export default class PlaceDetails extends Component {
     }
 
     render() {
-        //console.log("PlaceDetails: Render called");
+        console.log("PlaceDetails: Render called");
         return (
             <View>
                 {this.getTheTopbarView()}

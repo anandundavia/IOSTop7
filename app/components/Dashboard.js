@@ -248,7 +248,6 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getTopBarView = () => {
-
         if (!Memory().leaderBoardFilters) {
             console.log("Defaulting the filters...");
             Memory().leaderBoardFilters = Consts.DEFAULT_LEADERBOARD_FILTERS;

@@ -115,8 +115,8 @@ export default class SearchScreen extends Component {
             reviews: reviews,
             rating: details.rating
         };
-
-        this.props.navigation.navigate(Consts.SCREENS.PLACE_DETAILS, {markerObject: newMaker});
+        console.log("GOing to place details!");
+        this.props.navigation.navigate(Consts.SCREEN_TITLES.PLACE_DETAILS, {markerObject: newMaker});
     };
 
     /**
