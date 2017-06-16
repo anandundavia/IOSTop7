@@ -134,7 +134,7 @@ export default class FilterScreen extends Component {
 
         console.log(JSON.stringify(Memory().leaderBoardFilters));
 
-        this.props.navigator.pop();
+        this.props.navigation.goBack();
     };
 
 
@@ -142,7 +142,7 @@ export default class FilterScreen extends Component {
         return <TouchableHighlight
             onPress={ () => {
                 Memory().updateLeaderboard = false;
-                this.props.navigator.pop();
+                this.props.navigation.goBack();
             }}
             underlayColor={"#c5b167"}
             style={styles.closeButtonContainer}>

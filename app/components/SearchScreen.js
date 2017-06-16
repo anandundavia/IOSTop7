@@ -3,7 +3,6 @@ import {Image, StyleSheet, TouchableHighlight} from "react-native";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 
 import Consts from "../consts/Consts";
-import Memory from "../core/Memory";
 
 export default class SearchScreen extends Component {
 
@@ -159,7 +158,7 @@ export default class SearchScreen extends Component {
                 <TouchableHighlight
                     style={{width: 25, height: 80, justifyContent: "center",}}
                     underlayColor={"rgba(0,0,0,0)"}
-                    onPress={() => this.props.navigator.pop()}>
+                    onPress={() => this.props.navigation.goBack()}>
                     <Image
                         style={{marginLeft: 5,}}
                         source={require("../icons/back_black.png")}/>

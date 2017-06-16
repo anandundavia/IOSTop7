@@ -57,7 +57,7 @@ export default class PlaceAddPopUp extends Component {
      * This function is called as the onPress on back button
      */
     hidePopUp = () => {
-        this.props.navigator.pop()
+        this.props.navigation.goBack();
     };
 
 
@@ -116,7 +116,7 @@ export default class PlaceAddPopUp extends Component {
 
         Backend.updateUserInformation(() => {
             this.setLoadingTextViewVisibility(false);
-            this.props.navigator.pop();
+            this.props.navigation.goBack();
         })
     };
 

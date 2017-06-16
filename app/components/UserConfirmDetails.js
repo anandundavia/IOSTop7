@@ -100,10 +100,7 @@ export default class UserConfirmDetails extends Component {
             //console.log("Removing the listener...");
             this.keyboardDidShowListener.remove();
             this.keyboardDidHideListener.remove();
-            this.props.navigator.push({
-                component: Consts.SCREENS.DASHBOARD,
-                title: Consts.SCREEN_TITLES.DASHBOARD
-            });
+            this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
         });
 
     };

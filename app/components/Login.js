@@ -31,15 +31,9 @@ export default class Login extends Component {
             Backend.syncUserInfo((isUserNew) => {
                 this.setLoadingTextViewVisibility(false);
                 if (isUserNew) {
-                    this.props.navigator.push({
-                        component: Consts.SCREENS.USER_CONFIRM_DETAILS,
-                        title: Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS
-                    });
+                    this.props.navigation.navigate(Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS);
                 } else {
-                    this.props.navigator.push({
-                        component: Consts.SCREENS.DASHBOARD,
-                        title: Consts.SCREEN_TITLES.DASHBOARD
-                    });
+                    this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
                 }
             })
         } else {

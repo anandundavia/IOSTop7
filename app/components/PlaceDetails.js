@@ -38,7 +38,7 @@ export default class PlaceDetails extends Component {
      * Go back to the dashboard when the user taps on back button
      */
     goBack = () => {
-        this.props.navigator.pop();
+        this.props.navigation.goBack();
     };
 
     addPlaceToFavourite = () => {
