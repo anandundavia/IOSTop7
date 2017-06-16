@@ -131,6 +131,7 @@ repositories {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
 
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile project(':react-native-maps')
