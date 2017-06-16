@@ -140,14 +140,16 @@ export default class Main extends Component {
 
 
     networkStatusChanged = (status) => {
-
-
         switch (status) {
             case Consts.NETWORK_STATUS.WIFI : {
                 this.setLoadingTextViewVisibility(false);
                 break;
             }
             case Consts.NETWORK_STATUS.CELL: {
+                this.setLoadingTextViewVisibility(false);
+                break;
+            }
+            case Consts.NETWORK_STATUS.MOBILE: {
                 this.setLoadingTextViewVisibility(false);
                 break;
             }

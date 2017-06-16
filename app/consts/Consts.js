@@ -21,6 +21,7 @@ export default class Consts {
         NONE: "none",
         WIFI: "wifi",
         CELL: "cell",
+        MOBILE:"MOBILE",
         UNKNOWN: "unknown"
     };
 
