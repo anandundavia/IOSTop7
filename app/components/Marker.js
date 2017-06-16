@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Text, TouchableHighlight, View, Linking} from "react-native";
+import {Image, Linking, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import MapView from "react-native-maps";
 import Consts from "../consts/Consts";
 
@@ -24,13 +24,11 @@ export default class Marker extends Component {
     /**
      * When the tooltip is pressed, the page details page is loaded.
      */
-    onToolTipPressed = () => {
-        this.props.navigator.push({
-            component: Consts.SCREENS.PLACE_DETAILS,
-            title: Consts.SCREEN_TITLES.PLACE_DETAILS,
-            passProps: {markerObject: this.props.markerObject}
-        })
-    };
+    onToolTipPressed = () => this.props.navigation.navigate(
+        Consts.SCREEN_TITLES.PLACE_DETAILS,
+        {markerObject: this.props.markerObject}
+    );
+
 
     /**
      * Creates and returns the Callout.
