@@ -63,17 +63,6 @@ export default class Main extends Component {
     //             console.log("Navigator WARNING: SCENE NOT FOUND!")
     //     }
     // };
-    //
-    //
-    // configureScene = (route) => {
-    //     if (route.sceneConfig) {
-    //         return route.sceneConfig;
-    //     }
-    //     return {
-    //         ...Navigator.SceneConfigs.FadeAndroid,
-    //         gestures: {}
-    //     };
-    // };
 
 
     networkStatusChanged = (status) => {
@@ -141,16 +130,14 @@ export default class Main extends Component {
 
 
     componentDidMount() {
-        // console.warn("attaching network listener..");
+        // Attaching a listener for network changes.
         NetInfo.addEventListener('change', this.networkStatusChanged);
-
-
         // This is for your info
         // If you want to remove the listener,
         // NetInfo.removeEventListener( 'change', callback );
 
         // Go to Splash!
-        this.props.navigation.navigate("Splash");
+        this.props.navigation.navigate(Consts.SCREEN_TITLES.SPLASH);
     }
 }
 

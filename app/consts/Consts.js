@@ -17,13 +17,13 @@ export default class Consts {
     // };
 
 
-    // static NAVIGATION_OPTIONS = {header: null};
+    //static NAVIGATION_OPTIONS = {header: null};
 
     static NETWORK_STATUS = {
         NONE: "none",
         WIFI: "wifi",
         CELL: "cell",
-        MOBILE:"MOBILE",
+        MOBILE: "MOBILE",
         UNKNOWN: "unknown"
     };
 

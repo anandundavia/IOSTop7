@@ -2,18 +2,16 @@ import React, {Component} from "react";
 import {Animated, Dimensions, Image, StatusBar, StyleSheet, Text, View} from "react-native";
 import {AccessToken} from "react-native-fbsdk";
 import Facebook from "../core/Facebook";
-import Consts from "../consts/Consts";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
+
+import Consts from "../consts/Consts";
 
 const {width} = Dimensions.get('window');
 
 export default class Splash extends Component {
 
-    static navigationOptions = {
-        title: 'Welcome',
-        header: null
-    };
+    static navigationOptions ={header: null};
 
     constructor(props) {
         super(props);
@@ -33,12 +31,7 @@ export default class Splash extends Component {
         this.updateLoadingBar(80);
         Backend.syncUserInfo(() => {
                 this.updateLoadingBar(120);
-                this.props.navigator.navigate("Dashboard");
-
-                // this.props.navigator.push({
-                //     component: Consts.SCREENS.USER_CONFIRM_DETAILS,
-                //     title: Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS
-                // })
+                this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
             }
         );
     };
@@ -50,12 +43,7 @@ export default class Splash extends Component {
      * @param result
      */
     handleData = (error, result) => {
-        console.log("Handle data!");
         this.updateLoadingBar(40);
-
-        //console.log("Data from FB received..");
-        //console.log(JSON.stringify(result));
-
         // Do we have any error?
         if (!error) {
             // No we don't. Save the data in memory and sync the information
@@ -95,11 +83,8 @@ export default class Splash extends Component {
      * Checks the facebook access token to determine whether the user is logged in or not
      */
     checkAccessToken = () => {
-
-
         AccessToken.getCurrentAccessToken().then((data) => {
             let valid = !!data; // which means valid = data? true : false;
-            //console.log("Splash: Access token checked. Valid : " + valid);
             this.updateLoadingBar(20);
             //Is access token valid?
             if (valid) {
@@ -110,15 +95,7 @@ export default class Splash extends Component {
             } else {
                 // Nope the access token is not valid.
                 // The user is not logged in. The user has to log in
-                // this.props.navigator.push({
-                //     component: Login,
-                //     title: Consts.SCREEN_TITLES.LOG_IN
-                // })
-                console.log("Hererereereererer");
-                //console.log(this.props.navigation);
-                this.props.navigation.navigate("Login");
-                // this.props.navigation.navigate(Consts.SCREEN_TITLES.LOG_IN);
-                console.log("Nadasdasdas");
+                this.props.navigation.navigate(Consts.SCREEN_TITLES.LOG_IN);
             }
         }).catch((error) => {
             // This error will show up only and only if there are some issues in linking of Facebook SDK.
@@ -127,8 +104,6 @@ export default class Splash extends Component {
     };
 
     render() {
-        console.log("Splash: Render called");
-        // console.log(width);
         return (
             <Image
                 source={require("../icons/background.png")}
@@ -153,11 +128,8 @@ export default class Splash extends Component {
 
 
     componentDidMount() {
-        //console.log("Splash: componentDidMount() called");
         if (!this.state.isAccessTokenChecked) {
-            //console.log("Splash: Access token not checked, checking...");
             this.checkAccessToken();
-
         }
     }
 }

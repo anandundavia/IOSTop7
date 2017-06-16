@@ -6,10 +6,7 @@ import Main from "./app/components/Main";
 
 export default class IOSTop7 extends Component {
 
-    static navigationOptions = {
-        title: 'Welcome',
-        header: null
-    };
+    static navigationOptions = {header: null};
 
     render() {
         return <Main navigation={this.props.navigation}/>;
@@ -23,8 +20,9 @@ export default class IOSTop7 extends Component {
 
 const Top7 = StackNavigator({
     "Home": {screen: IOSTop7},
-    "Splash": {screen: Consts.SCREENS.SPLASH},
-    "Login": {screen: Consts.SCREENS.LOG_IN}
+    [Consts.SCREEN_TITLES.SPLASH]: {screen: Consts.SCREENS.SPLASH},
+    [Consts.SCREEN_TITLES.LOG_IN]: {screen: Consts.SCREENS.LOG_IN},
+    [Consts.SCREEN_TITLES.DASHBOARD]: {screen: Consts.SCREENS.DASHBOARD},
 });
 
 AppRegistry.registerComponent('IOSTop7', () => Top7);

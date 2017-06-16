@@ -14,7 +14,6 @@ import {
     View
 } from "react-native";
 import MapView from "react-native-maps";
-import {LoginButton} from "react-native-fbsdk";
 import SideMenu from "react-native-side-menu";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 
@@ -24,13 +23,13 @@ import PlaceList from "./PlaceList";
 import Consts from "../consts/Consts";
 import Backend from "../core/Backend";
 import Memory from "../core/Memory";
-import Login from "./Login";
 
 
 const {width} = Dimensions.get('window');
 
 export default class Dashboard extends Component {
 
+    static navigationOptions = {header: null};
 
     constructor(props) {
         super(props);

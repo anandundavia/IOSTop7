@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppRegistry, BackHandler} from "react-native";
+import {AppRegistry} from "react-native";
 import {StackNavigator} from "react-navigation";
 import Consts from "./app/consts/Consts";
 import Main from "./app/components/Main";
@@ -14,7 +14,6 @@ export default class IOSTop7 extends Component {
     render() {
         return <Main navigation={this.props.navigation}/>;
     }
-
 }
 
 const Top7 = StackNavigator({
