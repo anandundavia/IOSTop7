@@ -1,15 +1,20 @@
 import React, {Component} from "react";
-import {Animated, Dimensions, Image, StatusBar, StyleSheet, View, Text, AsyncStorage} from "react-native";
+import {Animated, Dimensions, Image, StatusBar, StyleSheet, Text, View} from "react-native";
 import {AccessToken} from "react-native-fbsdk";
 import Facebook from "../core/Facebook";
 import Consts from "../consts/Consts";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
-import Login from "./Login";
 
 const {width} = Dimensions.get('window');
 
 export default class Splash extends Component {
+
+    static navigationOptions = {
+        title: 'Welcome',
+        header: null
+    };
+
     constructor(props) {
         super(props);
         this.loadingBarWidth = new Animated.Value(0);
@@ -28,10 +33,7 @@ export default class Splash extends Component {
         this.updateLoadingBar(80);
         Backend.syncUserInfo(() => {
                 this.updateLoadingBar(120);
-                this.props.navigator.push({
-                    component: Consts.SCREENS.DASHBOARD,
-                    title: Consts.SCREEN_TITLES.DASHBOARD
-                })
+                this.props.navigator.navigate("Dashboard");
 
                 // this.props.navigator.push({
                 //     component: Consts.SCREENS.USER_CONFIRM_DETAILS,
@@ -48,6 +50,7 @@ export default class Splash extends Component {
      * @param result
      */
     handleData = (error, result) => {
+        console.log("Handle data!");
         this.updateLoadingBar(40);
 
         //console.log("Data from FB received..");
@@ -107,10 +110,15 @@ export default class Splash extends Component {
             } else {
                 // Nope the access token is not valid.
                 // The user is not logged in. The user has to log in
-                this.props.navigator.push({
-                    component: Login,
-                    title: Consts.SCREEN_TITLES.LOG_IN
-                })
+                // this.props.navigator.push({
+                //     component: Login,
+                //     title: Consts.SCREEN_TITLES.LOG_IN
+                // })
+                console.log("Hererereereererer");
+                //console.log(this.props.navigation);
+                this.props.navigation.navigate("Login");
+                // this.props.navigation.navigate(Consts.SCREEN_TITLES.LOG_IN);
+                console.log("Nadasdasdas");
             }
         }).catch((error) => {
             // This error will show up only and only if there are some issues in linking of Facebook SDK.
@@ -119,7 +127,7 @@ export default class Splash extends Component {
     };
 
     render() {
-        // console.log("Splash: Render called");
+        console.log("Splash: Render called");
         // console.log(width);
         return (
             <Image

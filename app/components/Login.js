@@ -1,4 +1,4 @@
-import {LoginManager, LoginButton} from "react-native-fbsdk";
+import {LoginManager} from "react-native-fbsdk";
 import React, {Component} from "react";
 import {Image, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 
@@ -9,6 +9,11 @@ import Backend from "../core/Backend";
 
 
 export default class Login extends Component {
+
+    static navigationOptions = {
+        title: 'Welcome',
+        header: null
+    };
 
     constructor(props) {
         super(props);
@@ -111,7 +116,7 @@ export default class Login extends Component {
     };
 
     render() {
-        //console.log("Login: Render called");
+        console.log("Login: Render called");
         return (
             <Image
                 source={require("../icons/background.png")}

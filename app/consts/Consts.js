@@ -17,6 +17,8 @@ export default class Consts {
     // };
 
 
+    // static NAVIGATION_OPTIONS = {header: null};
+
     static NETWORK_STATUS = {
         NONE: "none",
         WIFI: "wifi",
