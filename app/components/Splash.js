@@ -11,7 +11,7 @@ const {width} = Dimensions.get('window');
 
 export default class Splash extends Component {
 
-    static navigationOptions ={header: null};
+    static navigationOptions = {header: null};
 
     constructor(props) {
         super(props);
@@ -31,7 +31,9 @@ export default class Splash extends Component {
         this.updateLoadingBar(80);
         Backend.syncUserInfo(() => {
                 this.updateLoadingBar(120);
+                console.log("asdasd");
                 this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+                console.log("asdasdAAA");
             }
         );
     };
