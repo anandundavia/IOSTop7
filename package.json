@@ -20,7 +20,8 @@
     "react-native-side-menu": "^0.20.1",
     "react-native-sortable-listview": "^0.2.2",
     "react-native-ui-xg": "0.0.3",
-    "react-native-vector-icons": "^4.2.0"
+    "react-native-vector-icons": "^4.2.0",
+    "react-navigation": "^1.0.0-beta.11"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

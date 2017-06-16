@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppRegistry, Navigator, View, Platform, Text, NetInfo, StyleSheet, NavigatorIOS} from "react-native";
+import {AppRegistry, Navigator, NavigatorIOS, NetInfo, Platform, StyleSheet, Text, View} from "react-native";
 
 import Login from "./Login";
 import Splash from "./Splash";
@@ -106,7 +106,7 @@ export default class Main extends Component {
             ref={loadingText => this.loadingText = loadingText}
             style={styles.loadingTextContainer}>
             <Text
-                style={styles.loadingText}>No network connection! </Text>
+                style={styles.loadingText}>No network connection!</Text>
         </View>
     };
 
@@ -122,16 +122,17 @@ export default class Main extends Component {
                 navigationBarHidden={true}
             />
         } else {
-            navigator = <Navigator
-                initialRoute={INITIAL_SCREEN}
-                renderScene={this.sceneChanger}
-                configureScene={this.configureScene}
-            />;
+            console.log("Okay it is navigator");
+            // navigator = <Navigator
+            //     initialRoute={INITIAL_SCREEN}
+            //     renderScene={this.sceneChanger}
+            //     configureScene={this.configureScene}
+            // />;
         }
 
         return (
             <View style={styles.mainContainer}>
-                {navigator}
+                {/*{navigator}*/}
                 {this.getLoadingTextView()}
             </View>
         )
