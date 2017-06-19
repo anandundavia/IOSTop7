@@ -258,7 +258,10 @@ export default class Dashboard extends Component {
     };
 
 
-    openFilterScreen = () => this.props.navigation.navigate(Consts.SCREEN_TITLES.FILTER_SCREEN);
+    openFilterScreen = () => this.props.navigation.navigate(
+        Consts.SCREEN_TITLES.FILTER_SCREEN,
+        {updateLeaderBoard: this.updateLeaderBoard}
+    );
 
 
     /**
@@ -371,6 +374,17 @@ export default class Dashboard extends Component {
     };
 
 
+    updateLeaderBoard = () => {
+        if (Memory().updateLeaderboard) {
+            Memory().updateLeaderboard = false;
+            this.setLoadingTextViewVisibility(true);
+            Backend.getLeaderBoard(() => {
+                this.setLoadingTextViewVisibility(false);
+                this.setState({});
+            })
+        }
+    };
+
     //DOWN BELOW IS THE COMPONENT LIFE CYCLE METHODS
     componentDidMount() {
         this.setLoadingTextViewVisibility(true);
@@ -381,23 +395,13 @@ export default class Dashboard extends Component {
     }
 
     componentDidUpdate() {
-
         if (Memory().userObject.lists && this.nameContainer) {
             this.nameContainer.setNativeProps({
                 text: this.getListName(0)
             });
             this.scrollView.goToPage(0);
         }
-
-        if (Memory().updateLeaderboard) {
-            Memory().updateLeaderboard = false;
-            this.setLoadingTextViewVisibility(true);
-            Backend.getLeaderBoard(() => {
-                this.setLoadingTextViewVisibility(false);
-                this.setState({});
-            })
-        }
-
+        this.updateLeaderBoard();
     }
 
     render() {

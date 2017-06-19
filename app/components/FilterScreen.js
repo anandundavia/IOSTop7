@@ -44,9 +44,9 @@ export default class FilterScreen extends Component {
 
 
             let priceL = Memory().leaderBoardFilters.priceLevel;
-            if(priceL === 0) {
+            if (priceL === 0) {
                 priceLevel = 1;
-            } else if(priceL === 1) {
+            } else if (priceL === 1) {
                 priceLevel = 2;
             } else {
                 priceLevel = 0;
@@ -128,6 +128,7 @@ export default class FilterScreen extends Component {
             setting: "both",
         };
         Memory().updateLeaderboard = true;
+        this.props.navigation.state.params.updateLeaderBoard();
         this.props.navigation.goBack();
     };
 
