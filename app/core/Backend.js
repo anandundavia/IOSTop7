@@ -49,7 +49,7 @@ export default class Backend {
         }).then((response) => {
             Memory().userObject = response.user;
             //console.log("Received first time::: "+JSON.stringify(Memory().userObject));
-            callback(response.userNew,...args);
+            callback(response.userNew, ...args);
         }).catch((data) => {
             console.log(data);
         });

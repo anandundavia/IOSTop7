@@ -153,7 +153,10 @@ export default class SearchScreen extends Component {
                 <TouchableHighlight
                     style={{width: 25, height: 80, justifyContent: "center",}}
                     underlayColor={"rgba(0,0,0,0)"}
-                    onPress={() => this.props.navigation.goBack()}>
+                    onPress={() => {
+                        this.props.navigation.state.params.onGoBack();
+                        this.props.navigation.goBack()
+                    }}>
                     <Image
                         style={{marginLeft: 5,}}
                         source={require("../icons/back_black.png")}/>

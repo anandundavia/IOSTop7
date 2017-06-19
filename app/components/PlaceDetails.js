@@ -42,10 +42,27 @@ export default class PlaceDetails extends Component {
         this.props.navigation.goBack();
     };
 
-    addPlaceToFavourite = () => this.props.navigation.navigate(
-        Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-        {markerObject: this.params.markerObject}
-    );
+    addPlaceToFavourite = () => {
+        if (Memory().userObject.isGuest) {
+            this.params.markerObject.friendsView = null;
+            this.props.navigation.navigate(
+                Consts.SCREEN_TITLES.LOG_IN,
+                {
+                    toPage: Consts.SCREEN_TITLES.PLACE_DETAILS,
+                    markerObject: this.params.markerObject,
+                    onGoBack: () => {
+                        this.setState({});
+                    },
+                }
+            );
+        } else {
+            this.props.navigation.navigate(
+                Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
+                {markerObject: this.params.markerObject}
+            );
+        }
+
+    };
 
 
     /**
@@ -401,10 +418,9 @@ export default class PlaceDetails extends Component {
     };
 
 
-    componentDidMount() {
+    fetchAndAnimateFriendsView = () => {
         if (this.params.markerObject.friendsView === undefined || this.params.markerObject.friendsView === null || this.params.markerObject.friendsView.length === 0) {
             this.params.markerObject.friendsView = [];
-            //console.log("No friends. Gonna make the req.");
             let req = {
                 userid: Memory().userObject.id,
                 placeid: this.params.markerObject.id,
@@ -432,11 +448,21 @@ export default class PlaceDetails extends Component {
                     }
 
                 } else {
-                    friendsView.push(
-                        <View key={0} style={styles.noFriendsContainer}>
-                            <Text style={styles.noFriendsText}>None of your friends have ranked this place!</Text>
-                        </View>
-                    )
+                    if (Memory().userObject.isGuest) {
+                        friendsView.push(
+                            <View key={0} style={styles.noFriendsContainer}>
+                                <Text style={styles.noFriendsText}>You need to be logged in to see your friends
+                                    ranks!</Text>
+                            </View>
+                        )
+                    } else {
+                        friendsView.push(
+                            <View key={0} style={styles.noFriendsContainer}>
+                                <Text style={styles.noFriendsText}>None of your friends have ranked this place!</Text>
+                            </View>
+                        )
+                    }
+
                 }
                 this.params.markerObject.friendsView = friendsView;
                 Animated.timing(this.friendsViewHeight, {
@@ -448,10 +474,19 @@ export default class PlaceDetails extends Component {
 
             });
         }
+    };
+
+
+    componentDidUpdate() {
+        this.fetchAndAnimateFriendsView();
+    }
+
+    componentDidMount() {
+        this.fetchAndAnimateFriendsView();
     }
 
     render() {
-        console.log("PlaceDetails: Render called");
+        // console.log("PlaceDetails: Render called");
         return (
             <View>
                 {this.getTheTopbarView()}

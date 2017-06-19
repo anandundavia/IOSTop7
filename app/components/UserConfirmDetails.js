@@ -30,6 +30,8 @@ export default class UserConfirmDetails extends Component {
     constructor(props) {
         super(props);
 
+        this.params = props.navigation.state.params;
+
         this.popUpZIndex = -10;
 
 
@@ -99,7 +101,12 @@ export default class UserConfirmDetails extends Component {
             this.setLoadingTextViewVisibility(false);
             this.keyboardDidShowListener.remove();
             this.keyboardDidHideListener.remove();
-            this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+            if(this.params && this.params.toPage) {
+                this.props.navigation.navigate(this.params.toPage);
+            } else {
+                this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+            }
+
         });
 
     };

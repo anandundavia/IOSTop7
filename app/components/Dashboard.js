@@ -84,14 +84,21 @@ export default class Dashboard extends Component {
 
 
     setListName = (data) => {
-        console.log("Getting list name....");
         return this.nameContainer.setNativeProps({
             text: data.ref.props.listName
         })
     };
 
 
-    showSearchOverlay = () => this.props.navigation.navigate(Consts.SCREEN_TITLES.SEARCH_SCREEN);
+    showSearchOverlay = () => {
+        this.sideMenu.openMenu(false);
+        this.props.navigation.navigate(Consts.SCREEN_TITLES.SEARCH_SCREEN, {
+            onGoBack: () => {
+                this.setState({});
+                this.sideMenu.openMenu(true);
+            },
+        })
+    };
 
 
     getTabBar = () => {
@@ -133,13 +140,20 @@ export default class Dashboard extends Component {
             </View>;
         }
 
+        let userImageSource;
+        if (Memory().userObject.isGuest) {
+            userImageSource = require("../icons/guest_user_image_black.png");
+        } else {
+            userImageSource = {uri: Memory().userObject.picture.data.url};
+        }
+
         return <Image
             source={require("../icons/background.png")}
             style={styles.drawerContainer}>
             {/*View for user details => Profile pic and name*/}
             <View style={styles.userDetailsContainer}>
                 <Image
-                    source={{uri: Memory().userObject.picture.data.url}}
+                    source={userImageSource}
                     style={styles.userProfilePic}/>
                 <View style={styles.userNameContainer}>
                     <Text style={styles.userName}>{Memory().userObject.name}</Text>
@@ -354,7 +368,6 @@ export default class Dashboard extends Component {
 
 
     //DOWN BELOW IS THE COMPONENT LIFE CYCLE METHODS
-
     componentDidMount() {
         this.setLoadingTextViewVisibility(true);
         Backend.getAllCity(() => Backend.getLeaderBoard(() => {

@@ -1,4 +1,4 @@
-import {LoginManager} from "react-native-fbsdk";
+import {LoginManager, LoginButton} from "react-native-fbsdk";
 import React, {Component} from "react";
 import {Image, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 
@@ -14,6 +14,7 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
+        this.params = props.navigation.state.params;
         this.state = {
             isAccessTokenChecked: false,
             isUserLoggedIn: false,
@@ -31,9 +32,19 @@ export default class Login extends Component {
             Backend.syncUserInfo((isUserNew) => {
                 this.setLoadingTextViewVisibility(false);
                 if (isUserNew) {
-                    this.props.navigation.navigate(Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS);
+                    this.props.navigation.navigate(
+                        Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS,
+                        // TODO: PLEASE TEST
+                        {...this.params}
+                    );
                 } else {
-                    this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+                    if (this.params && this.params.toPage) {
+                        this.props.navigation.state.params.onGoBack();
+                        this.props.navigation.goBack();
+                    } else {
+                        this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+                    }
+
                 }
             })
         } else {
@@ -74,7 +85,12 @@ export default class Login extends Component {
      * Skip the login and go to dashboard when the user does not want to login
      */
     skipLogIn = () => {
-
+        this.setLoadingTextViewVisibility(true);
+        Backend.getBackendAccessToken(() => {
+            Memory().userObject = Consts.GUEST_USER;
+            this.setLoadingTextViewVisibility(false);
+            this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+        });
     };
 
 
@@ -106,8 +122,28 @@ export default class Login extends Component {
         </View>
     };
 
+
+    getSkipLoginView = () => {
+
+
+        if (this.params && this.params.toPage) {
+
+        } else {
+            return <TouchableHighlight
+                onPress={this.skipLogIn}
+                style={styles.skipLoginContainer}>
+                <Text style={styles.skipLoginText}>
+                    skip login
+                </Text>
+            </TouchableHighlight>
+        }
+    };
+
+
     render() {
         console.log("Login: Render called");
+
+
         return (
             <Image
                 source={require("../icons/background.png")}
@@ -127,15 +163,9 @@ export default class Login extends Component {
                     </Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight
-                    onPress={this.skipLogIn}
-                    style={styles.skipLoginContainer}>
-                    <Text style={styles.skipLoginText}>
-                        skip login
-                    </Text>
-                </TouchableHighlight>
+                {this.getSkipLoginView()}
 
-                {/*<LoginButton/>*/}
+                <LoginButton/>
 
                 <View style={styles.declarationTextContainer}>
                     <Text style={styles.declarationText}>I agree to Top7's terms of service and privacy policy</Text>

@@ -128,6 +128,26 @@ export default class Consts {
     };
 
 
+    static GUEST_USER = {
+        "isGuest": "true",
+        "id": "guestUser",
+        "name": "Guest User",
+        "picture": {
+            "data": {
+                "is_silhouette": true,
+                "url": "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10354686_10150004552801856_220367501106153455_n.jpg?oh=8eba33d5cd9b44273f78c1511e2d6359&oe=59D7DD50"
+            }
+        },
+        "status": null,
+        "city": null,
+        "gender": null,
+        "dateOfBirth": null,
+        "lists": null,
+        "friendsList": null,
+        "expert": false
+    };
+
+
     /**
      * This little function returns just the 'th' string :P
      *
