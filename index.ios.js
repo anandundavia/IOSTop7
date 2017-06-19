@@ -3,12 +3,13 @@ import {AppRegistry} from "react-native";
 import {StackNavigator} from "react-navigation";
 import Consts from "./app/consts/Consts";
 import Main from "./app/components/Main";
+import Splash from "./app/components/Splash";
 
 // For Testing, set this to the screen you are working on. Saves the time of Navigation.
 // To test the whole app, uncomment the next line
-//const HomeScreen= {screen:IOSTop7};
+const HomeScreen = {screen: Splash};
 
-const HomeScreen = {screen: Consts.SCREENS.LOG_IN};
+//const HomeScreen = {screen: Consts.SCREENS.LOG_IN};
 
 export default class IOSTop7 extends Component {
 

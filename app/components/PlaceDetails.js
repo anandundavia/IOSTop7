@@ -33,6 +33,7 @@ export default class PlaceDetails extends Component {
             length = 80;
         }
         this.friendsViewHeight = new Animated.Value(length);
+        this.isAdded = false;
 
     }
 
@@ -58,7 +59,11 @@ export default class PlaceDetails extends Component {
         } else {
             this.props.navigation.navigate(
                 Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-                {markerObject: this.params.markerObject}
+                {
+                    markerObject: this.params.markerObject,
+                    isAdded: this.isAdded,
+                    onGoBack: () => this.setState({}),
+                }
             );
         }
 
@@ -134,11 +139,16 @@ export default class PlaceDetails extends Component {
                 <Image source={require('../icons/plus_black.png')}/>
             </TouchableHighlight>
         } else {
+            this.isAdded = true;
             // No, the list is already added. We do not want to show the add button
-            addButtonView = <View style={styles.existsContainer}>
-                <Text style={styles.rank}>{placeRank}</Text>
-                <Text style={styles.rankTH}>{Consts.getTHString(placeRank)}</Text>
-            </View>;
+            addButtonView = <TouchableHighlight underlayColor={'rgba(0,0,0,0)'}
+                                                onPress={this.addPlaceToFavourite}
+                                                style={styles.existsContainer}>
+                <View style={{flexDirection: "row"}}>
+                    <Text style={styles.rank}>{placeRank}</Text>
+                    <Text style={styles.rankTH}>{Consts.getTHString(placeRank)}</Text>
+                </View>
+            </TouchableHighlight>;
         }
 
         return <View style={styles.topBar}>
@@ -451,8 +461,9 @@ export default class PlaceDetails extends Component {
                     if (Memory().userObject.isGuest) {
                         friendsView.push(
                             <View key={0} style={styles.noFriendsContainer}>
-                                <Text style={styles.noFriendsText}>You need to be logged in to see your friends
-                                    ranks!</Text>
+                                <Text style={styles.noFriendsText}>
+                                    You need to be logged in to see your friends' ranks!
+                                </Text>
                             </View>
                         )
                     } else {
@@ -551,7 +562,6 @@ const styles = StyleSheet.create({
     rankTH: {
         color: "black",
         fontSize: 8,
-        marginTop: -8,
     },
 
     imageContainer: {

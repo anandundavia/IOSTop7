@@ -136,6 +136,19 @@ export default class Login extends Component {
         }
     };
 
+    getBackButton = () => {
+        if (Memory().userObject && Memory().userObject.isGuest) {
+            return <TouchableHighlight
+                onPress={() => this.props.navigation.goBack()}
+                underlayColor={"#c5b167"}
+                style={styles.buttonContainerPopUp}>
+                <Image
+                    style={{marginLeft: -3}}
+                    source={require('../icons/back_black.png')}/>
+            </TouchableHighlight>
+        }
+    };
+
 
     render() {
         console.log("Login: Render called");
@@ -145,6 +158,7 @@ export default class Login extends Component {
             <Image
                 source={require("../icons/background.png")}
                 style={styles.container}>
+                {this.getBackButton()}
                 <StatusBar hidden={true}/>
                 <Image
                     style={styles.appLogo}
@@ -162,7 +176,7 @@ export default class Login extends Component {
 
                 {this.getSkipLoginView()}
 
-                <LoginButton/>
+                {/*<LoginButton/>*/}
 
                 <View style={styles.declarationTextContainer}>
                     <Text style={styles.declarationText}>I agree to Top7's terms of service and privacy policy</Text>
@@ -190,6 +204,19 @@ const styles = StyleSheet.create({
         marginBottom: 60,
         alignSelf: "center"
     },
+
+    buttonContainerPopUp: {
+        position: "absolute",
+        left: 5,
+        top: 5,
+        height: 40,
+        width: 40,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        //borderWidth: 1
+    },
+
 
     facebookLoginContainer: {
         width: "80%",

@@ -50,6 +50,11 @@ export default class PlaceAddPopUp extends Component {
             }
         };
         this.params = props.navigation.state.params;
+
+        if (this.params.isAdded) {
+            this.currentPlaceDropped = true;
+        }
+
     }
 
 
@@ -117,8 +122,9 @@ export default class PlaceAddPopUp extends Component {
 
         Backend.updateUserInformation(() => {
             this.setLoadingTextViewVisibility(false);
+            this.props.navigation.state.params.onGoBack();
             this.props.navigation.goBack();
-        })
+        });
     };
 
 
@@ -507,7 +513,7 @@ export default class PlaceAddPopUp extends Component {
      * @returns {XML}
      */
     getCurrentPlaceView = () => {
-        if (!this.currentPlaceDropped) {
+        if (!this.currentPlaceDropped && !this.params.isAdded) {
             return <View
                 ref={currentPlace => this.currentPlace = currentPlace}
                 style={styles.currentPlaceContainerPopUp}
@@ -559,6 +565,7 @@ export default class PlaceAddPopUp extends Component {
                 key={key}
                 {...this.panResponder.panHandlers}
                 style={[styles.userListPlaceNameContainerPopUp, border]}>
+
                 {view}
 
                 <View style={styles.placeRankContainerPopUp}>
@@ -574,10 +581,15 @@ export default class PlaceAddPopUp extends Component {
                     {name}
                 </Text>
                 }
+
                 {name && <TouchableHighlight
                     onPress={() => this.removePlace(key)}
-                    style={styles.removePlacePopUp}><Image
-                    source={require("../icons/close_white.png")}/></TouchableHighlight>}
+                    style={styles.removePlacePopUp}>
+                    <Image
+                        source={require("../icons/close_white.png")}/>
+                </TouchableHighlight>
+                }
+
             </View>
         });
         return <View style={styles.userListsContainerPopUp}>{listView}</View>;

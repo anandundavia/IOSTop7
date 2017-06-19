@@ -231,14 +231,18 @@ export default class Dashboard extends Component {
     loadPlaces = () => Memory().markers.map((value, key) => {
         if (value.number) { // if number is not set, then it means they are searched markers.
             return <View style={styles.listViewPlaceNameContainer} key={key}>
-                <View style={styles.placeRankContainerPopUp}>
-                    <Text style={styles.placeViewRankPopUp}>{value.number}</Text>
-                    <Text style={styles.placeRankTHPopUp}>
-                        {Consts.getTHString(value.number)}
-                    </Text>
-                </View>
                 <Image style={styles.listViewPlaceIcon} source={value.icon}/>
-                <Text style={styles.listViewPlaceName}>{value.name}</Text>
+                <View style={styles.listViewPlaceNameContainer}>
+                    <View style={styles.placeRankContainerPopUp}>
+                        <Text style={styles.placeViewRankPopUp}>{value.number}</Text>
+                        <Text style={styles.placeRankTHPopUp}>
+                            {Consts.getTHString(value.number)}
+                        </Text>
+                    </View>
+                    <View style={styles.listViewPlaceName} >
+                        <Text>{value.name}</Text>
+                    </View>
+                </View>
             </View>;
         }
     });
@@ -246,9 +250,6 @@ export default class Dashboard extends Component {
 
     getListView = () => {
         return <View style={styles.listViewContainer}>
-            <View style={styles.listViewTitleContainer}>
-                <Text style={styles.listViewTitle}>Top7 Restaurants, Miami</Text>
-            </View>
             <ScrollView
                 style={styles.listViewLeaderboradContainer}
                 showsVerticalScrollIndicator={false}>
@@ -292,49 +293,40 @@ export default class Dashboard extends Component {
     };
 
 
-    // filterButtonPressed = () => {
-    //     //console.log("Filter")
-    // };
-    //
-    //
-    // listViewButtonPressed = () => {
-    //     this.setState({
-    //         loadMapView: !this.state.loadMapView
-    //     })
-    // };
+    listViewButtonPressed = () => {
+        this.setState({
+            loadMapView: !this.state.loadMapView
+        })
+    };
 
 
-    // /**
-    //  * As the name says...
-    //  * @returns {XML}
-    //  */
-    // getBottomBarView = () => {
-    //     let iconView;
-    //     if (this.state.loadMapView) {
-    //         iconView = <Image
-    //             style={styles.listIcon}
-    //             source={require('../images/format-list-bulleted-128.png')}/>
-    //
-    //     } else {
-    //         iconView = <Image
-    //             style={styles.listIcon}
-    //             source={require('../images/map_icon.png')}/>
-    //     }
-    //
-    //     return <View style={styles.bottomBarContainer}>
-    //         <TouchableHighlight style={styles.filterIconContainer}
-    //                             underlayColor={'#888888'}
-    //                             onPress={this.filterButtonPressed}>
-    //             <Image style={styles.filterIcon} source={require('../images/filter-128.png')}/>
-    //         </TouchableHighlight>
-    //
-    //         <TouchableHighlight style={styles.listIconContainer}
-    //                             underlayColor={'#888888'}
-    //                             onPress={this.listViewButtonPressed}>
-    //             {iconView}
-    //         </TouchableHighlight>
-    //     </View>;
-    // };
+    /**
+     * As the name says...
+     * @returns {XML}
+     */
+    getBottomBarView = () => {
+        let iconView;
+        if (this.state.loadMapView) {
+            iconView = <Image source={require('../icons/drag_black.png')}/>
+
+        } else {
+            iconView = <Image source={require('../icons/map_black.png')}/>
+        }
+
+        return <View style={styles.bottomBarContainer}>
+            <TouchableHighlight style={styles.filterIconContainer}
+                                underlayColor={'#888888'}
+                                onPress={this.openFilterScreen}>
+                <Image source={require('../icons/filter_black.png')}/>
+            </TouchableHighlight>
+
+            <TouchableHighlight style={styles.listIconContainer}
+                                underlayColor={'#888888'}
+                                onPress={this.listViewButtonPressed}>
+                {iconView}
+            </TouchableHighlight>
+        </View>;
+    };
 
     getMainView = () => {
         if (this.state.loadMapView) {
@@ -553,7 +545,7 @@ const styles = StyleSheet.create({
 
     listViewContainer: {
         position: 'absolute',
-        top: 70,
+        top: 80,
         left: 0,
         right: 0,
         bottom: 60,
@@ -562,18 +554,18 @@ const styles = StyleSheet.create({
 
     },
 
-    listViewTitleContainer: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 60,
-        width: "100%",
-        backgroundColor: '#aaaaaa'
-    },
+    // listViewTitleContainer: {
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     height: 60,
+    //     width: "100%",
+    //     backgroundColor: '#aaaaaa'
+    // },
 
-    listViewTitle: {
-        fontWeight: 'bold',
-        fontSize: 20
-    },
+    // listViewTitle: {
+    //     fontWeight: 'bold',
+    //     fontSize: 20
+    // },
 
     listViewLeaderboradContainer: {
         width: "100%",
@@ -582,12 +574,15 @@ const styles = StyleSheet.create({
     },
 
     listViewPlaceNameContainer: {
-        flexDirection: 'row',
-        //borderWidth: 1,
+        //flexDirection: 'row',
+        borderWidth: 1,
         alignItems: 'center',
-        height: 60,
+        height: 300,
         marginBottom: 10,
-        padding: 10
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 30,
+        paddingRight: 30,
     },
 
     placeRankContainerPopUp: {
@@ -604,18 +599,17 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     listViewPlaceIcon: {
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-        marginLeft: 10,
+        height: 200,
+        width: 360,
+
+        // borderRadius: 20,
+        // marginLeft: 10,
         //borderWidth: 1,
     },
 
-    listViewPlaceName: {
-        //borderWidth: 1,
-        marginLeft: 10,
-        paddingRight: 50,
-        fontSize: 18,
+    listViewPlaceNameContainer: {
+        borderWidth: 1,
+
     },
     mainViewContainer: {
         position: "absolute",
@@ -653,28 +647,27 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: "100%",
         height: 60,
-        backgroundColor: '#999999'
+        backgroundColor: 'rgba(0,0,0,0.5)'
     },
     filterIconContainer: {
         height: 60,
         width: 60,
         justifyContent: 'center',
+        alignItems: "center",
+        //borderWidth: 1,
     },
-    filterIcon: {
-        height: 30,
-        width: 30,
-        marginLeft: 6,
-    },
+
     listIconContainer: {
         height: 60,
         width: 60,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        //borderWidth: 1,
     },
-    listIcon: {
-        height: 38,
-        width: 38,
-    },
+    // listIcon: {
+    //     height: 38,
+    //     width: 38,
+    // },
 
 
     loadingText: {

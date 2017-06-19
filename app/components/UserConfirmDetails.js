@@ -53,6 +53,8 @@ export default class UserConfirmDetails extends Component {
             iosDate: new Date()
         };
 
+        console.log(this.params);
+
     }
 
     /**
@@ -101,14 +103,19 @@ export default class UserConfirmDetails extends Component {
             this.setLoadingTextViewVisibility(false);
             this.keyboardDidShowListener.remove();
             this.keyboardDidHideListener.remove();
-            if(this.params && this.params.toPage) {
-                this.props.navigation.navigate(this.params.toPage);
+            console.log("Synced the info");
+            if (this.params && this.params.toPage) {
+                console.log("Going to specific page");
+                //TODO: SHould remnove this page from stack
+                this.props.navigation.navigate(
+                    this.params.toPage,
+                    {...this.params}
+                );
             } else {
+                console.log("naaaah, goiunt to notmal dashboard");
                 this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
             }
-
         });
-
     };
 
 
