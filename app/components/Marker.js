@@ -18,6 +18,7 @@ export default class Marker extends Component {
         if (!props.markerObject.coordinate) {
             console.err("Cordinate object not set in props");
         }
+
     }
 
 
@@ -26,7 +27,10 @@ export default class Marker extends Component {
      */
     onToolTipPressed = () => this.props.navigation.navigate(
         Consts.SCREEN_TITLES.PLACE_DETAILS,
-        {markerObject: this.props.markerObject}
+        {
+            onGoBack: () => this.props.refreshDashboard(),
+            markerObject: this.props.markerObject
+        }
     );
 
 
@@ -107,14 +111,11 @@ export default class Marker extends Component {
                         onPress={() => {
                             if (this.props.markerObject.phoneNumber) {
                                 Linking.openURL('tel:' + this.props.markerObject.phoneNumber).then((e) => {
-                                    console.log("Calling successful");
                                     console.log(JSON.stringify(e))
                                 }).catch((err) => {
-                                    console.log("Error calling..");
                                     console.log(JSON.stringify(err));
                                 });
                             } else {
-                                console.warn("No phone number found.");
                                 console.log(JSON.stringify(this.props.markerObject));
                             }
                         }}

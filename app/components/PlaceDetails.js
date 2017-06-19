@@ -33,12 +33,14 @@ export default class PlaceDetails extends Component {
             length = 80;
         }
         this.friendsViewHeight = new Animated.Value(length);
+
     }
 
     /**
      * Go back to the dashboard when the user taps on back button
      */
     goBack = () => {
+        this.params.onGoBack();
         this.props.navigation.goBack();
     };
 
@@ -50,9 +52,7 @@ export default class PlaceDetails extends Component {
                 {
                     toPage: Consts.SCREEN_TITLES.PLACE_DETAILS,
                     markerObject: this.params.markerObject,
-                    onGoBack: () => {
-                        this.setState({});
-                    },
+                    onGoBack: () => this.setState({}),
                 }
             );
         } else {

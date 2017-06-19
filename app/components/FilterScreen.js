@@ -120,7 +120,6 @@ export default class FilterScreen extends Component {
                 priceLevel = 1;
                 break;
         }
-
         Memory().leaderBoardFilters = {
             types: type,
             priceLevel: priceLevel,
@@ -128,12 +127,7 @@ export default class FilterScreen extends Component {
             ratedBy: "all",
             setting: "both",
         };
-
         Memory().updateLeaderboard = true;
-
-
-        console.log(JSON.stringify(Memory().leaderBoardFilters));
-
         this.props.navigation.goBack();
     };
 

@@ -124,13 +124,10 @@ export default class Login extends Component {
 
 
     getSkipLoginView = () => {
-
-
-        if (this.params && this.params.toPage) {
-
-        } else {
+        if (!(this.params && this.params.toPage)) {
             return <TouchableHighlight
                 onPress={this.skipLogIn}
+                underlayColor={"#c5b167"}
                 style={styles.skipLoginContainer}>
                 <Text style={styles.skipLoginText}>
                     skip login
@@ -212,7 +209,13 @@ const styles = StyleSheet.create({
 
     skipLoginContainer: {
         position: "absolute",
-        bottom: 90,
+        bottom: 85,
+        height: 25,
+        width: 100,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        //borderWidth: 1,
     },
 
     skipLoginText: {

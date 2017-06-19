@@ -94,7 +94,7 @@ export default class Dashboard extends Component {
         this.sideMenu.openMenu(false);
         this.props.navigation.navigate(Consts.SCREEN_TITLES.SEARCH_SCREEN, {
             onGoBack: () => {
-                this.setState({});
+                this.refreshDashboard();
                 this.sideMenu.openMenu(true);
             },
         })
@@ -184,12 +184,16 @@ export default class Dashboard extends Component {
         return <Marker
             key={key}
             markerObject={value}
-            navigator={this.props.navigator}/>
+            refreshDashboard={this.refreshDashboard}
+            navigation={this.props.navigation}/>
     };
 
 
     regionChanged = () => {
     };
+
+
+    refreshDashboard = () => this.setState({});
 
 
     /**
