@@ -25,7 +25,10 @@ const {height, width} = Dimensions.get('window');
 
 export default class UserConfirmDetails extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     constructor(props) {
         super(props);

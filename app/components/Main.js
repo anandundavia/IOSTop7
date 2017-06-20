@@ -23,7 +23,10 @@ import Consts from "../consts/Consts";
  */
 export default class Main extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     //
     // sceneChanger = (route, navigator) => {

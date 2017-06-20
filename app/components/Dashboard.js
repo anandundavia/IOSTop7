@@ -30,7 +30,10 @@ const {height, width} = Dimensions.get('window');
 
 export default class Dashboard extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     constructor(props) {
         super(props);

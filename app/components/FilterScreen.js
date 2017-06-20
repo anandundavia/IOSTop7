@@ -8,7 +8,10 @@ import Consts from "../consts/Consts";
 
 export default class FilterScreen extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     constructor(props) {
         super(props);

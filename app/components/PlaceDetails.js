@@ -20,7 +20,10 @@ import Backend from "../core/Backend";
 
 export default class PlaceDetails extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     constructor(props) {
         super(props);

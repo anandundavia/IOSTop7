@@ -11,7 +11,10 @@ const {height} = Dimensions.get('window');
 
 export default class PlaceAddPopUp extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
 
     constructor(props) {

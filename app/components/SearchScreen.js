@@ -6,7 +6,10 @@ import Consts from "../consts/Consts";
 
 export default class SearchScreen extends Component {
 
-    static navigationOptions = {header: null};
+    static navigationOptions = {
+        gesturesEnabled: false,
+        header: null
+    };
 
     /**
      * Called When any place from auto complete bar is tapped.
