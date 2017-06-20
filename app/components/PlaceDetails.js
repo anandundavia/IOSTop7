@@ -36,7 +36,7 @@ export default class PlaceDetails extends Component {
             length = 80;
         }
         this.friendsViewHeight = new Animated.Value(length);
-        this.isAdded = false;
+        this.isAdded = null;
 
     }
 
@@ -142,7 +142,7 @@ export default class PlaceDetails extends Component {
                 <Image source={require('../icons/plus_black.png')}/>
             </TouchableHighlight>
         } else {
-            this.isAdded = true;
+            this.isAdded = placeRank;
             // No, the list is already added. We do not want to show the add button
             addButtonView = <TouchableHighlight underlayColor={'rgba(0,0,0,0)'}
                                                 onPress={this.addPlaceToFavourite}

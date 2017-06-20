@@ -54,7 +54,8 @@ export default class PlaceAddPopUp extends Component {
         };
         this.params = props.navigation.state.params;
 
-        if (this.params.isAdded) {
+
+        if (this.params.isAdded !== null) {
             this.currentPlaceDropped = true;
         }
 
@@ -100,6 +101,14 @@ export default class PlaceAddPopUp extends Component {
             weightedRating = "userTotalWeightedRating";
         }
 
+        let number;
+        if (this.params.isAdded) {
+            number = 0;
+        } else {
+            number = 1;
+        }
+
+
         Memory().commonRequest = {
             userDetails: Memory().userObject,
             place: {
@@ -118,10 +127,13 @@ export default class PlaceAddPopUp extends Component {
                     cityLongitude: this.params.markerObject.coordinate.longitude,
                     zoomingIndex: 0.06
                 },
-                [numberRated]: 1,
-                [weightedRating]: 10 - this.placeIndex
+                [numberRated]: number,
+                [weightedRating]: (10 - this.placeIndex)
             }
         };
+
+
+        console.log(JSON.stringify(Memory().commonRequest));
 
         Backend.updateUserInformation(() => {
             this.setLoadingTextViewVisibility(false);
