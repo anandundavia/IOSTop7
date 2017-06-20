@@ -18,21 +18,17 @@ export default class SearchScreen extends Component {
      * @param details
      */
     suggestedPlaceOnPress = (data, details = null) => {
-        let type = null;
+        let type = [];
 
-
+        console.log(JSON.stringify(details.types));
         if (details.types) {
             for (let i = 0; i < details.types.length; i++) {
-                if (!type) { // If the type is not found
-                    if (details.types[i] === Consts.PLACE_TYPES.RESTAURANT) {
-                        type = Consts.PLACE_TYPES.RESTAURANT;
-                    } else if (details.types[i] === "night_club") {
-                        type = Consts.PLACE_TYPES.CLUB;
-                    } else if (details.types[i] === "bar") {
-                        type = Consts.PLACE_TYPES.BAR;
-                    }
-                } else { // Type is found, break!
-                    break;
+                if (details.types[i] === Consts.PLACE_TYPES.RESTAURANT) {
+                    type.push(Consts.PLACE_TYPES.RESTAURANT);
+                } else if (details.types[i] === "night_club") {
+                    type.push(Consts.PLACE_TYPES.CLUB);
+                } else if (details.types[i] === "bar") {
+                    type.push(Consts.PLACE_TYPES.BAR);
                 }
             }
         } else {
@@ -115,6 +111,9 @@ export default class SearchScreen extends Component {
             reviews: reviews,
             rating: details.rating
         };
+
+        //console.log(JSON.stringify(newMaker));
+
         this.props.navigation.navigate(
             Consts.SCREEN_TITLES.PLACE_DETAILS,
             {

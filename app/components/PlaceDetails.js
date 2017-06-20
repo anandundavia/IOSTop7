@@ -304,7 +304,7 @@ export default class PlaceDetails extends Component {
 
         let typeIcon;
         let type;
-        switch (this.params.markerObject.type) {
+        switch (this.params.markerObject.type[0]) {
             case  Consts.PLACE_TYPES.BAR:
                 typeIcon = <Image style={styles.placeDetailsIcon} source={require("../icons/bar_white.png")}/>;
                 type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.BAR.toUpperCase()}</Text>;

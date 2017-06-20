@@ -40,7 +40,6 @@ export default class PlaceAddPopUp extends Component {
 
         this.tempUserObject = JSON.parse(JSON.stringify(Memory().userObject));
 
-
         this.listPlaceObject = null;
         this.listPlaceIndex = null;
 
@@ -127,6 +126,7 @@ export default class PlaceAddPopUp extends Component {
                     cityLongitude: this.params.markerObject.coordinate.longitude,
                     zoomingIndex: 0.06
                 },
+                rating: this.params.markerObject.rating,
                 [numberRated]: number,
                 [weightedRating]: (10 - this.placeIndex)
             }
@@ -622,7 +622,18 @@ export default class PlaceAddPopUp extends Component {
         </View>
     };
 
+
+    setUpPopUp = () => {
+        if(this.params.markerObject.type.length > 1) {
+            console.log("Should show");
+        } else {
+            console.log("Shoud not");
+        }
+    };
+
+
     componentWillMount() {
+        this.setUpPopUp();
         this.precomputeListInformation();
         this.setUpDragging();
     }
