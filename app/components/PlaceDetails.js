@@ -151,7 +151,7 @@ export default class PlaceDetails extends Component {
             </TouchableHighlight>;
         }
 
-        return <View style={styles.topBar}>
+        return <Image source={require("../icons/topBar.png")} style={styles.topBar}>
             {/*The view for back button*/}
             <TouchableHighlight style={styles.backButtonContainer}
                                 underlayColor={'rgba(0,0,0,0)'}
@@ -161,7 +161,7 @@ export default class PlaceDetails extends Component {
 
             {/*The add button*/}
             {addButtonView}
-        </View>;
+        </Image>;
     };
 
 
@@ -516,8 +516,11 @@ const styles = StyleSheet.create({
 
     topBar: {
         position: "absolute",
-        left: 0,
-        right: 0,
+        // left: 0,
+        // right: 0,
+        //height: 80,
+        width: "100%",
+        height: 40,
         top: 0,
         zIndex: 1,
         flexDirection: "row",

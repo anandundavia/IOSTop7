@@ -4,6 +4,7 @@
 import React, {Component} from "react";
 import {
     Dimensions,
+    Animated,
     Image,
     ScrollView,
     StatusBar,
@@ -25,7 +26,7 @@ import Backend from "../core/Backend";
 import Memory from "../core/Memory";
 
 
-const {width} = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
 export default class Dashboard extends Component {
 
@@ -34,6 +35,19 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
         this.sideMenu = null;
+
+        this.viewTop = new Animated.Value(80);
+        this.viewLeft = new Animated.Value(0);
+        this.viewRight = new Animated.Value(0);
+        this.viewBottom = new Animated.Value(-80);
+
+        this.animatedDesign = {
+            top: this.viewTop,
+            left: this.viewLeft,
+            right: this.viewRight,
+            bottom: this.viewBottom
+        };
+
         this.state = {
             showOverlay: false,
             loadMapView: true,
@@ -102,7 +116,6 @@ export default class Dashboard extends Component {
 
 
     getTabBar = () => {
-
         return <View style={styles.currentListNameContainer}>
             <TextInput
                 ref={(view) => this.nameContainer = view}
@@ -190,6 +203,7 @@ export default class Dashboard extends Component {
 
 
     regionChanged = () => {
+        // console.log("Me called");
     };
 
 
@@ -202,7 +216,6 @@ export default class Dashboard extends Component {
      */
     getMainMapView = () => {
         let regionToLoad;
-
         if (Memory().currentCity) {
             regionToLoad = {
                 latitude: parseFloat(Memory().currentCity.cityLatitude),
@@ -213,14 +226,19 @@ export default class Dashboard extends Component {
         } else {
             regionToLoad = Consts.DEFAULT_REGION;
         }
-        return <View style={styles.mainViewContainer}>
-            <MapView
+
+        console.log(regionToLoad);
+
+        return <Animated.View
+            ref={view => this.mapView = view}
+            style={[styles.mainViewContainer, this.animatedDesign]}>
+            <MapView.Animated
                 region={regionToLoad}
                 style={styles.map}
                 onRegionChangeComplete={this.regionChanged}>
                 {Memory().markers.map(this.loadMarkers)}
-            </MapView>
-        </View>
+            </MapView.Animated>
+        </Animated.View>
     };
 
 
@@ -230,17 +248,88 @@ export default class Dashboard extends Component {
      */
     loadPlaces = () => Memory().markers.map((value, key) => {
         if (value.number) { // if number is not set, then it means they are searched markers.
+
+            let rating = Math.floor(value.rating);
+            let diff = value.rating - rating;
+
+            let stars = [];
+
+            let index;
+
+            for (index = 0; index < rating; index++) {
+                stars.push(<Image style={styles.star} key={index} source={require("../icons/star-fill.png")}/>)
+            }
+
+            if (0 < diff && diff < 0.5) {
+                stars.push(<Image style={styles.star} key={index} source={require("../icons/star-half.png")}/>);
+            } else if (0.5 <= diff) {
+                stars.push(<Image style={styles.star} key={index} source={require("../icons/star-fill.png")}/>);
+            }
+
+            if (diff === 0) index--;
+
+            while (++index < 5) {
+                stars.push(<Image style={styles.star} key={index} source={require("../icons/star.png")}/>)
+            }
+
+
+            let typeIcon;
+            let type;
+            switch (value.type) {
+                case  Consts.PLACE_TYPES.BAR:
+                    typeIcon = <Image style={styles.placeDetailsIcon} source={require("../icons/bar_black.png")}/>;
+                    type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.BAR.toUpperCase()}</Text>;
+                    break;
+                case Consts.PLACE_TYPES.CLUB:
+                    typeIcon = <Image style={styles.placeDetailsIcon} source={require("../icons/club_black.png")}/>;
+                    type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.CLUB.toUpperCase()}</Text>;
+                    break;
+                default :
+                    typeIcon =
+                        <Image style={styles.placeDetailsIcon} source={require("../icons/restaurant_black.png")}/>;
+                    type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.RESTAURANT.toUpperCase()}</Text>;
+                    break;
+            }
+
+
+            let priceLevelIcon;
+            let priceLevel;
+            let limit = 0;
+
+            if (value.priceLevel <= limit) {
+                priceLevelIcon =
+                    <Image style={styles.placeDetailsIcon} source={require("../icons/affordable_black.png")}/>;
+                priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.AFFORDABLE.toUpperCase()}</Text>
+            } else {
+                priceLevelIcon =
+                    <Image style={styles.placeDetailsIcon} source={require("../icons/expensive_black.png")}/>;
+                priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
+            }
+
             return <View style={styles.listViewPlaceNameContainer} key={key}>
                 <Image style={styles.listViewPlaceIcon} source={value.icon}/>
-                <View style={styles.listViewPlaceNameContainer}>
-                    <View style={styles.placeRankContainerPopUp}>
-                        <Text style={styles.placeViewRankPopUp}>{value.number}</Text>
-                        <Text style={styles.placeRankTHPopUp}>
-                            {Consts.getTHString(value.number)}
-                        </Text>
+                <View style={styles.listViewPlaceNameAndRankContainer}>
+                    <View style={styles.listViewPlaceRankContainer}>
+                        <Text style={styles.listViewPlaceRank}>{value.number}</Text>
+                        <Text style={styles.listViewPlaceRankTH}>{Consts.getTHString(value.number)}</Text>
                     </View>
-                    <View style={styles.listViewPlaceName} >
-                        <Text>{value.name}</Text>
+                    <View style={styles.listViewPlaceName}>
+                        <Text style={styles.listViewPlaceNameText}>{value.name}</Text>
+                    </View>
+                </View>
+                <View style={styles.listViewPlaceDetailsContainer}>
+                    <View style={styles.listViewRatingsContainer}>
+                        {stars}
+                    </View>
+                    <View style={styles.listViewPlaceDetails}>
+                        <View style={styles.listViewPlaceDetailsIconContainer}>
+                            {typeIcon}
+                            {type}
+                        </View>
+                        <View style={styles.listViewPlaceDetailsIconContainer}>
+                            {priceLevelIcon}
+                            {priceLevel}
+                        </View>
                     </View>
                 </View>
             </View>;
@@ -249,13 +338,13 @@ export default class Dashboard extends Component {
 
 
     getListView = () => {
-        return <View style={styles.listViewContainer}>
+        return <Animated.View style={[styles.mainViewContainer, this.animatedDesign]}>
             <ScrollView
                 style={styles.listViewLeaderboradContainer}
                 showsVerticalScrollIndicator={false}>
                 {this.loadPlaces()}
             </ScrollView>
-        </View>
+        </Animated.View>
     };
 
 
@@ -294,9 +383,54 @@ export default class Dashboard extends Component {
 
 
     listViewButtonPressed = () => {
-        this.setState({
-            loadMapView: !this.state.loadMapView
-        })
+        let time = 100;
+        Animated.parallel([
+            Animated.timing(this.viewTop, {
+                toValue: height / 2,
+                duration: time
+            }),
+            Animated.timing(this.viewBottom, {
+                toValue: height / 2,
+                duration: time
+            }),
+            Animated.timing(this.viewLeft, {
+                toValue: width / 2,
+                duration: time
+            }),
+            Animated.timing(this.viewRight, {
+                toValue: width / 2,
+                duration: time
+            })
+        ]).start(() => {
+            this.setState({
+                loadMapView: !this.state.loadMapView
+            });
+            Animated.parallel([
+                Animated.timing(this.viewTop, {
+                    toValue: 80,
+                    duration: time
+                }),
+                Animated.timing(this.viewBottom, {
+                    toValue: 0,
+                    duration: time
+                }),
+                Animated.timing(this.viewLeft, {
+                    toValue: 0,
+                    duration: time
+                }),
+                Animated.timing(this.viewRight, {
+                    toValue: 0,
+                    duration: time
+                })
+            ]).start(() => {
+                console.log("Setting....");
+                if (this.mapView) {
+                    console.log("Okay!!....");
+                    this.mapView.setNativeProps({});
+                }
+
+            });
+        });
     };
 
 
@@ -307,25 +441,26 @@ export default class Dashboard extends Component {
     getBottomBarView = () => {
         let iconView;
         if (this.state.loadMapView) {
-            iconView = <Image source={require('../icons/drag_black.png')}/>
+            iconView = <Image source={require('../icons/drag_white.png')}/>
 
         } else {
-            iconView = <Image source={require('../icons/map_black.png')}/>
+            iconView = <Image source={require('../icons/map_white.png')}/>
         }
 
-        return <View style={styles.bottomBarContainer}>
-            <TouchableHighlight style={styles.filterIconContainer}
-                                underlayColor={'#888888'}
-                                onPress={this.openFilterScreen}>
-                <Image source={require('../icons/filter_black.png')}/>
-            </TouchableHighlight>
-
+        return <Image style={styles.bottomBarContainer}
+                      source={require("../icons/bottom-bar.png")}>
             <TouchableHighlight style={styles.listIconContainer}
-                                underlayColor={'#888888'}
+                                underlayColor={'rgba(0,0,0,0.2)'}
                                 onPress={this.listViewButtonPressed}>
                 {iconView}
             </TouchableHighlight>
-        </View>;
+
+            <TouchableHighlight style={styles.filterIconContainer}
+                                underlayColor={'rgba(0,0,0,0.2)'}
+                                onPress={this.openFilterScreen}>
+                <Image source={require('../icons/filter_white.png')}/>
+            </TouchableHighlight>
+        </Image>;
     };
 
     getMainView = () => {
@@ -345,7 +480,7 @@ export default class Dashboard extends Component {
     setLoadingTextViewVisibility = (isVisible) => {
         this.loadingText.setNativeProps({
             style: {
-                bottom: isVisible ? 12 : -100,
+                bottom: isVisible ? 70 : -100,
                 elevation: 20
             }
         });
@@ -387,6 +522,7 @@ export default class Dashboard extends Component {
     }
 
     componentDidUpdate() {
+
         if (Memory().userObject.lists && this.nameContainer) {
             this.nameContainer.setNativeProps({
                 text: this.getListName(0)
@@ -423,7 +559,7 @@ export default class Dashboard extends Component {
                     {this.getMainView()}
 
 
-                    {/*{this.getBottomBarView()}*/}
+                    {this.getBottomBarView()}
                     {this.getLoadingTextView()}
                 </View>
             </SideMenu>
@@ -435,7 +571,8 @@ export default class Dashboard extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: "white"
     },
 
     drawerContainer: {
@@ -543,46 +680,41 @@ const styles = StyleSheet.create({
         color: "black"
     },
 
-    listViewContainer: {
-        position: 'absolute',
-        top: 80,
-        left: 0,
-        right: 0,
-        bottom: 60,
-        alignItems: 'center',
-        backgroundColor: 'white'
+    // listViewContainer: {
+    //     position: "absolute",
+    //     // top: 80,
+    //     // left: 0,
+    //     // right: 0,
+    //     // bottom: 0,
+    //     alignItems: "center",
+    //     backgroundColor: "white",
+    // },
 
+    mainViewContainer: {
+        position: "absolute",
+        alignItems: "center",
+        backgroundColor: "white",
     },
 
-    // listViewTitleContainer: {
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     height: 60,
-    //     width: "100%",
-    //     backgroundColor: '#aaaaaa'
-    // },
-
-    // listViewTitle: {
-    //     fontWeight: 'bold',
-    //     fontSize: 20
-    // },
 
     listViewLeaderboradContainer: {
+        height: "100%",
         width: "100%",
-        height: "100%"
+        paddingLeft: 25,
+        paddingRight: 25,
+        paddingTop: 15,
+        // borderWidth: 1,
+        // borderColor: "green"
         //flex: 1,
     },
 
     listViewPlaceNameContainer: {
-        //flexDirection: 'row',
-        borderWidth: 1,
-        alignItems: 'center',
-        height: 300,
-        marginBottom: 10,
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 30,
-        paddingRight: 30,
+        height: (height - 140) / 2,
+        width: "100%",
+        marginBottom: 15,
+        borderRadius: 5,
+        // borderWidth: 1,
+        // borderColor: "red"
     },
 
     placeRankContainerPopUp: {
@@ -599,26 +731,106 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     listViewPlaceIcon: {
-        height: 200,
-        width: 360,
-
-        // borderRadius: 20,
+        height: 170,
+        width: "100%",
+        borderRadius: 5,
         // marginLeft: 10,
         //borderWidth: 1,
     },
 
-    listViewPlaceNameContainer: {
-        borderWidth: 1,
 
-    },
-    mainViewContainer: {
-        position: "absolute",
-        top: 80,
-        left: 0,
-        right: 0,
-        bottom: -80,
+    listViewPlaceNameAndRankContainer: {
+        height: 70,
+        width: "100%",
+        flexDirection: "row",
         alignItems: "center",
+        //borderWidth: 1,
     },
+
+    listViewPlaceRankContainer: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        margin: 5,
+        backgroundColor: "#313031",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        //borderWidth: 1
+    },
+
+    listViewPlaceRank: {
+        color: "white",
+        fontSize: 22,
+        marginLeft: 3,
+        // borderWidth: 1,
+        // borderColor: "white",
+    },
+
+    listViewPlaceRankTH: {
+        color: "white",
+        fontSize: 10,
+        marginTop: -10,
+        // borderWidth: 1,
+        // borderColor: "white",
+    },
+
+
+    listViewPlaceName: {
+        flex: 1,
+        marginLeft: 10,
+        marginRight: 5,
+        //borderWidth: 1,
+    },
+
+
+    listViewPlaceNameText: {
+        fontSize: 20,
+    },
+    listViewPlaceDetailsContainer: {
+        height: 58,
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        //borderWidth: 1,
+    },
+
+    star: {
+        height: 20,
+        width: 20,
+    },
+
+    listViewRatingsContainer: {
+        flex: 3,
+        height: 20,
+        flexDirection: "row",
+        //borderWidth: 1,
+    },
+
+    listViewPlaceDetails: {
+        flex: 2,
+        flexDirection: "row",
+        //borderWidth: 1,
+    },
+
+    listViewPlaceDetailsIconContainer: {
+        flex: 1,
+        alignItems: "center",
+        // borderWidth: 1,
+    },
+
+    placeDetailsIcon: {
+        height: 35,
+        width: 35,
+        //flex: 1,
+    },
+
+    placeDetailsText: {
+        fontSize: 8,
+        fontWeight: "bold",
+        marginTop: 3,
+    },
+
 
     map: {
         position: "absolute",
@@ -633,7 +845,7 @@ const styles = StyleSheet.create({
         bottom: 20,
         height: 40,
         width: 40,
-        borderWidth: 1
+        //borderWidth: 1
     },
     currentLocation: {
         width: 40, height: 40
@@ -647,11 +859,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: "100%",
         height: 60,
-        backgroundColor: 'rgba(0,0,0,0.5)'
     },
     filterIconContainer: {
         height: 60,
         width: 60,
+        borderRadius: 30,
         justifyContent: 'center',
         alignItems: "center",
         //borderWidth: 1,
@@ -660,6 +872,7 @@ const styles = StyleSheet.create({
     listIconContainer: {
         height: 60,
         width: 60,
+        borderRadius: 30,
         justifyContent: 'center',
         alignItems: 'center',
         //borderWidth: 1,

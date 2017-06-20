@@ -80,9 +80,6 @@ export default class SearchScreen extends Component {
         }
 
 
-        console.log("Phone number: " + JSON.stringify(details.international_phone_number));
-
-
         //Create the review array.
         let reviews = [];
         for (let i = 0; i < details.reviews.length; i++) {
@@ -115,8 +112,14 @@ export default class SearchScreen extends Component {
             reviews: reviews,
             rating: details.rating
         };
-        console.log("GOing to place details!");
-        this.props.navigation.navigate(Consts.SCREEN_TITLES.PLACE_DETAILS, {markerObject: newMaker});
+        this.props.navigation.navigate(
+            Consts.SCREEN_TITLES.PLACE_DETAILS,
+            {
+                markerObject: newMaker,
+                onGoBack: () => {
+                }
+            }
+        );
     };
 
     /**

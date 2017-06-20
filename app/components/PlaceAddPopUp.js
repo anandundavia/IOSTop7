@@ -413,8 +413,6 @@ export default class PlaceAddPopUp extends Component {
             onMoveShouldSetPanResponder: () => true,
             onPanResponderRelease: this.dropReleased,
             onPanResponderMove: this.dragStarted,
-
-
         });
     };
 
