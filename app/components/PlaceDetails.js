@@ -629,11 +629,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "black",
         fontWeight: "bold",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     rankTH: {
         color: "black",
         fontSize: 8,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     imageContainer: {
@@ -674,7 +676,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: "black",
         fontWeight: "bold",
-        backgroundColor: "rgba(0,0,0,0)"
+        backgroundColor: "rgba(0,0,0,0)",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 
@@ -724,12 +727,14 @@ const styles = StyleSheet.create({
 
     noFriendsText: {
         fontSize: 16,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     userImageRank: {
         fontSize: 12,
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     placeDetailsContainer: {
@@ -753,7 +758,8 @@ const styles = StyleSheet.create({
         marginTop: 2,
         color: "black",
         fontSize: 9,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     placeDetailsIcon: {
@@ -775,7 +781,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 19,
         color: "black",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: 'Museo Sans Cyrl'
+
     },
     horizontalLine: {
         height: 1,
@@ -848,14 +856,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         color: "black",
-        marginLeft: 20
+        marginLeft: 20,
+        fontFamily: 'Museo Sans Cyrl'
     },
     reviewTextContainer: {
         marginTop: 5
     },
     reviewText: {
         color: "black",
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'Museo Sans Cyrl'
     },
     review: {
         marginTop: 10,
@@ -863,7 +873,8 @@ const styles = StyleSheet.create({
 
 
     loadingText: {
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1
     },
 
