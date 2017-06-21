@@ -150,7 +150,8 @@ styles = StyleSheet.create({
     },
 
     loadingText: {
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1
     },
 
