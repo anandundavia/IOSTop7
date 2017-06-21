@@ -181,6 +181,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         color: "white",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     numberTH: {
@@ -188,6 +189,7 @@ const styles = StyleSheet.create({
         fontSize: 9,
         fontWeight: "bold",
         color: "white",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     placeDetailsMarkerContainer: {
@@ -221,6 +223,7 @@ const styles = StyleSheet.create({
         height: 20,
         fontSize: 14,
         color: "black",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 
@@ -255,7 +258,8 @@ const styles = StyleSheet.create({
     placeDetailsText: {
         fontSize: 7,
         fontWeight: "bold",
-        marginTop: 4
+        marginTop: 4,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 });
