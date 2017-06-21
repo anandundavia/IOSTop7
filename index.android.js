@@ -4,12 +4,14 @@ import {StackNavigator} from "react-navigation";
 import Consts from "./app/consts/Consts";
 import Main from "./app/components/Main";
 
+
+const HomeScreen = {screen: Splash};
 export default class IOSTop7 extends Component {
 
     static navigationOptions = {header: null};
 
     render() {
-        return <Main navigation={this.props.navigation}/>;
+        return <Top7 onNavigationStateChange={null}/>
     }
 
     componentDidMount() {
@@ -19,7 +21,7 @@ export default class IOSTop7 extends Component {
 }
 
 const Top7 = StackNavigator({
-    "Home": {screen: IOSTop7},
+    "Home": HomeScreen,
     [Consts.SCREEN_TITLES.SPLASH]: {screen: Consts.SCREENS.SPLASH},
     [Consts.SCREEN_TITLES.LOG_IN]: {screen: Consts.SCREENS.LOG_IN},
     [Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS]: {screen: Consts.SCREENS.USER_CONFIRM_DETAILS},

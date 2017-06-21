@@ -4,10 +4,11 @@ import {StackNavigator} from "react-navigation";
 import Consts from "./app/consts/Consts";
 import Main from "./app/components/Main";
 import Splash from "./app/components/Splash";
+import Login from "./app/components/Login";
 
 // For Testing, set this to the screen you are working on. Saves the time of Navigation.
 // To test the whole app, uncomment the next line
-const HomeScreen = {screen: Splash};
+const HomeScreen = {screen: Login};
 
 //const HomeScreen = {screen: Consts.SCREENS.LOG_IN};
 

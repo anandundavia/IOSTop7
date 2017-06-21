@@ -234,7 +234,8 @@ const styles = StyleSheet.create({
 
     facebookLoginText: {
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     skipLoginContainer: {
@@ -251,6 +252,7 @@ const styles = StyleSheet.create({
     skipLoginText: {
         textDecorationLine: "underline",
         fontSize: 12,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     declarationTextContainer: {
@@ -259,10 +261,11 @@ const styles = StyleSheet.create({
         bottom: 10,
     },
 
-    declarationText: {},
+    declarationText: {fontFamily: 'Museo Sans Cyrl'},
 
     loadingText: {
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1
     },
 
