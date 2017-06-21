@@ -203,7 +203,7 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white"}}>{value}</Text>
+                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
                     </View>
                 })
             }
@@ -233,7 +233,7 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white"}}>{value}</Text>
+                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
                     </View>
                 })
             }
@@ -262,7 +262,7 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white"}}>{value}</Text>
+                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
                     </View>
                 })
             }
@@ -353,7 +353,8 @@ const styles = StyleSheet.create({
     filterParameterName: {
         color: "white",
         //fontWeight: "bold",
-        fontSize: 17
+        fontSize: 17,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 
@@ -452,7 +453,8 @@ const styles = StyleSheet.create({
     applyButton: {
         color: "white",
         // fontWeight:"bold",
-        fontSize: 18
+        fontSize: 18,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 

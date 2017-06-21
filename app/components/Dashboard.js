@@ -150,7 +150,7 @@ export default class Dashboard extends Component {
         } else {
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
-                <Text style={{color: "black", fontSize: 18}}>
+                <Text style={{color: "black", fontSize: 18, fontFamily: 'Museo Sans Cyrl'}}>
                     Add any place to a list and the list will show up here
                 </Text>
             </View>;
@@ -426,7 +426,9 @@ export default class Dashboard extends Component {
                     duration: time
                 })
             ]).start(() => {
+                console.log("Setting....");
                 if (this.mapView) {
+                    console.log("Okay!!....");
                     this.mapView.setNativeProps({});
                 }
 
@@ -600,6 +602,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop: 10,
         color: "black",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     currentListNameContainer: {
@@ -678,7 +681,8 @@ const styles = StyleSheet.create({
     cityName: {
         paddingLeft: 20,
         fontSize: 20,
-        color: "black"
+        color: "black",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     // listViewContainer: {
@@ -764,6 +768,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 22,
         marginLeft: 3,
+        fontFamily: 'Museo Sans Cyrl'
         // borderWidth: 1,
         // borderColor: "white",
     },
@@ -772,6 +777,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 10,
         marginTop: -10,
+        fontFamily: 'Museo Sans Cyrl'
         // borderWidth: 1,
         // borderColor: "white",
     },
@@ -787,6 +793,7 @@ const styles = StyleSheet.create({
 
     listViewPlaceNameText: {
         fontSize: 20,
+        fontFamily: 'Museo Sans Cyrl'
     },
     listViewPlaceDetailsContainer: {
         height: 58,
@@ -830,6 +837,7 @@ const styles = StyleSheet.create({
         fontSize: 8,
         fontWeight: "bold",
         marginTop: 3,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
 
@@ -885,7 +893,8 @@ const styles = StyleSheet.create({
 
 
     loadingText: {
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1
     },
 

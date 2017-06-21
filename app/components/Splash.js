@@ -34,9 +34,7 @@ export default class Splash extends Component {
         this.updateLoadingBar(80);
         Backend.syncUserInfo(() => {
                 this.updateLoadingBar(120);
-                console.log("asdasd");
                 this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
-                console.log("asdasdAAA");
             }
         );
     };
@@ -119,6 +117,7 @@ export default class Splash extends Component {
                     source={require("../icons/logo_white.png")}/>
                 <View style={styles.loadingTextContainer}>
                     <Text
+                        style={{fontFamily: 'Museo Sans Cyrl'}}
                         ref={loadingText => this.loadingText = loadingText}>
                         Please wait...
                     </Text>

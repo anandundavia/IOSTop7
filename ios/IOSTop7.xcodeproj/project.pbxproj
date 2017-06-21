@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -38,7 +37,7 @@
 		2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DCD954D1E0B4F2C00145EB5 /* IOSTop7Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IOSTop7Tests.m */; };
 		3F109FD5CDEF4E81AC0834DD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBF4AC1BB6A74D0FB44E082B /* MaterialIcons.ttf */; };
-		462651BD1EFAA3D900B1CA4D /* MuseoSansCyrl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 462651BC1EFAA3D900B1CA4D /* MuseoSansCyrl.otf */; };
+		46A2BEC21EFAA646001DAB43 /* MuseoSansCyrl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 46A2BEC11EFAA646001DAB43 /* MuseoSansCyrl.otf */; };
 		46A6BC561EE52D6D000CB5BC /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A6BC3C1EE52D52000CB5BC /* libAirMaps.a */; };
 		46A6BC871EE5325C000CB5BC /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A6BC831EE5325C000CB5BC /* Bolts.framework */; };
 		46A6BC881EE5325C000CB5BC /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A6BC841EE5325C000CB5BC /* FBSDKCoreKit.framework */; };
@@ -295,7 +294,7 @@
 		2EB4F757D67C4EC6B2360036 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		349D2FA0A43F4D5195C5CF9D /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		4614E5A41EF2976200F4C753 /* IOSTop7.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = IOSTop7.entitlements; path = IOSTop7/IOSTop7.entitlements; sourceTree = "<group>"; };
-		462651BC1EFAA3D900B1CA4D /* MuseoSansCyrl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSansCyrl.otf; path = ../../../Downloads/MuseoSansCyrl.otf; sourceTree = "<group>"; };
+		46A2BEC11EFAA646001DAB43 /* MuseoSansCyrl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MuseoSansCyrl.otf; path = ../app/font/MuseoSansCyrl.otf; sourceTree = "<group>"; };
 		46A6BC371EE52D52000CB5BC /* AirMaps.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		46A6BC831EE5325C000CB5BC /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = ../../../Documents/FacebookSDK/Bolts.framework; sourceTree = "<group>"; };
 		46A6BC841EE5325C000CB5BC /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
@@ -569,7 +568,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				462651BC1EFAA3D900B1CA4D /* MuseoSansCyrl.otf */,
+				46A2BEC11EFAA646001DAB43 /* MuseoSansCyrl.otf */,
 				13B07FAE1A68108700A75B9A /* IOSTop7 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* IOSTop7Tests */,
@@ -1022,7 +1021,7 @@
 				3F109FD5CDEF4E81AC0834DD /* MaterialIcons.ttf in Resources */,
 				7E35B5549A284E039A47D5A1 /* Octicons.ttf in Resources */,
 				81264900102C4B1B8A983F21 /* SimpleLineIcons.ttf in Resources */,
-				462651BD1EFAA3D900B1CA4D /* MuseoSansCyrl.otf in Resources */,
+				46A2BEC21EFAA646001DAB43 /* MuseoSansCyrl.otf in Resources */,
 				D07615E3290B4478BD41243D /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
