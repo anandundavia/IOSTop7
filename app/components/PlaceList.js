@@ -74,12 +74,14 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         color: "white",
         fontWeight: "bold",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     rankTH: {
         color: "white",
         fontSize: 6,
         marginTop: -8,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     placeNameTextContainer: {
@@ -93,6 +95,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 10,
         color: "black",
+        fontFamily: 'Museo Sans Cyrl'
         //width: "90%",
 
     },
