@@ -697,7 +697,7 @@ const styles = StyleSheet.create({
         width: "100%"
     },
 
-    submitButtonPopUp: {fontSize: 12},
+    submitButtonPopUp: {fontSize: 12, fontFamily: 'Museo Sans Cyrl'},
 
     placeNameContainerPopUp: {
         marginTop: 5,
@@ -712,7 +712,8 @@ const styles = StyleSheet.create({
     placeNamePopUp: {
         fontSize: 28,
         fontWeight: "bold",
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1,
     },
 
@@ -741,7 +742,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         elevation: 10,
         color: "#B0B0B0",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1,
     },
 
@@ -774,7 +776,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1,
     },
 
@@ -803,6 +806,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1,
     },
 
@@ -810,10 +814,12 @@ const styles = StyleSheet.create({
         fontSize: 9,
         color: "white",
         marginTop: -7,
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     loadingText: {
-        color: "white"
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
         //borderWidth: 1
     },
 
