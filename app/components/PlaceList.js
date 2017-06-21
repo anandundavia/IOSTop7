@@ -18,10 +18,9 @@ export default class PlaceList extends Component {
     }
 
 
-
     render() {
         return (
-            <View style={styles.userListsContainer} >
+            <View style={styles.userListsContainer}>
                 {this.props.names && this.props.names.map((i, j) => {
                     return <View key={j} style={styles.placeNameContainer}>
 
@@ -31,7 +30,7 @@ export default class PlaceList extends Component {
                         </View>
 
                         <View style={styles.placeNameTextContainer}>
-                            <Text style={styles.placeName}>{i.name}</Text>
+                            <Text numberOfLines={1} style={styles.placeName}>{i.name}</Text>
                         </View>
                         {
                             i.name && <Image
@@ -56,6 +55,7 @@ const styles = StyleSheet.create({
         height: "12%",
         alignItems: "center",
         paddingLeft: 20,
+        //borderWidth: 1,
     },
 
 
@@ -84,17 +84,22 @@ const styles = StyleSheet.create({
 
     placeNameTextContainer: {
         backgroundColor: "rgba(0,0,0,0)",
-        width: "83%"
+        width: "75%",
+        height: "50%",
+        overflow: "hidden",
     },
 
     placeName: {
         fontSize: 18,
         marginLeft: 10,
-        color: "black"
+        color: "black",
+        //width: "90%",
+
     },
 
     dragIcon: {
-        position: "absolute",
-        right: 10,
+        //position: "absolute",
+        marginLeft: 10,
+        //right: 10,
     }
 });

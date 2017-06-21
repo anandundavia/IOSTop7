@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>12</string>
+	<string>13</string>
 	<key>FacebookAppID</key>
 	<string>908049482667226</string>
 	<key>FacebookDisplayName</key>
@@ -63,6 +63,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>MuseoSansCyrl.otf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>FontAwesome.ttf</string>

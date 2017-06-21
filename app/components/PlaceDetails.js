@@ -4,6 +4,7 @@ import {
     Easing,
     Image,
     Linking,
+    Alert,
     Platform,
     ScrollView,
     StatusBar,
@@ -48,6 +49,57 @@ export default class PlaceDetails extends Component {
         this.props.navigation.goBack();
     };
 
+
+    addPlace = () => this.props.navigation.navigate(
+        Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
+        {
+            markerObject: this.params.markerObject,
+            isAdded: this.isAdded,
+            onGoBack: () => this.setState({}),
+        }
+    );
+
+
+    showPopUp = () => {
+        let options = [];
+        for (let i = 0; i < this.params.markerObject.type.length; i++) {
+            if (this.params.markerObject.type[i] === Consts.PLACE_TYPES.CLUB) {
+                options.push({
+                    text: this.params.markerObject.type[i].charAt(0).toUpperCase() + this.params.markerObject.type[i].slice(1),
+                    onPress: () => {
+                        this.params.markerObject.type = Consts.PLACE_TYPES.CLUB;
+                        this.addPlace();
+                    }
+                })
+            } else if (this.params.markerObject.type[i] === Consts.PLACE_TYPES.BAR) {
+                options.push({
+                    text: this.params.markerObject.type[i].charAt(0).toUpperCase() + this.params.markerObject.type[i].slice(1),
+                    onPress: () => {
+                        this.params.markerObject.type = Consts.PLACE_TYPES.BAR;
+                        this.addPlace();
+                    }
+                })
+            } else if (this.params.markerObject.type[i] === Consts.PLACE_TYPES.RESTAURANT) {
+                options.push({
+                    text: this.params.markerObject.type[i].charAt(0).toUpperCase() + this.params.markerObject.type[i].slice(1),
+                    onPress: () => {
+                        this.params.markerObject.type = Consts.PLACE_TYPES.RESTAURANT;
+                        this.addPlace();
+                    }
+                })
+            }
+        }
+
+        Alert.alert(
+            'Select a category',
+            'Please select in which category you want to add the place',
+            options, {
+                cancelable: true
+            }
+        )
+    };
+
+
     addPlaceToFavourite = () => {
         if (Memory().userObject.isGuest) {
             this.params.markerObject.friendsView = null;
@@ -60,14 +112,20 @@ export default class PlaceDetails extends Component {
                 }
             );
         } else {
-            this.props.navigation.navigate(
-                Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-                {
-                    markerObject: this.params.markerObject,
-                    isAdded: this.isAdded,
-                    onGoBack: () => this.setState({}),
+
+            if (this.params.markerObject.type instanceof Object) {
+                if (this.params.markerObject.type.length === 1) {
+                    let type = this.params.markerObject.type[0];
+                    delete this.params.markerObject.type;
+                    this.params.markerObject.type = type;
+                } else if (this.params.markerObject.type.length > 1) {
+                    this.showPopUp();
+                } else {
+                    console.warn("SOMETNG ");
                 }
-            );
+            } else {
+                this.addPlace();
+            }
         }
 
     };
@@ -434,10 +492,18 @@ export default class PlaceDetails extends Component {
     fetchAndAnimateFriendsView = () => {
         if (this.params.markerObject.friendsView === undefined || this.params.markerObject.friendsView === null || this.params.markerObject.friendsView.length === 0) {
             this.params.markerObject.friendsView = [];
+
+            let type;
+            if (this.params.markerObject.type instanceof Object) {
+                type = this.params.markerObject.type[0];
+            } else {
+                type = this.params.markerObject.type;
+            }
+
             let req = {
                 userid: Memory().userObject.id,
                 placeid: this.params.markerObject.id,
-                placeType: this.params.markerObject.type
+                placeType: type
             };
 
             let friendsView = [];

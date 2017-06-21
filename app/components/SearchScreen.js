@@ -34,7 +34,6 @@ export default class SearchScreen extends Component {
         } else {
             console.warn("Google has no types!");
         }
-
         // If the place is neither restaurant nor club nor bar, do not show the marker
         // Should show a message or something to user about why the marker is not loaded
         if (!type) {
@@ -78,7 +77,7 @@ export default class SearchScreen extends Component {
             // console.warn("Google has no images of this place. Marker will not be loaded..");
         }
 
-
+        console.log(JSON.stringify(details));
         //Create the review array.
         let reviews = [];
         for (let i = 0; i < details.reviews.length; i++) {

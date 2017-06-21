@@ -426,9 +426,7 @@ export default class Dashboard extends Component {
                     duration: time
                 })
             ]).start(() => {
-                console.log("Setting....");
                 if (this.mapView) {
-                    console.log("Okay!!....");
                     this.mapView.setNativeProps({});
                 }
 

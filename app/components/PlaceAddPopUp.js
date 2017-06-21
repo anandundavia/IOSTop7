@@ -512,6 +512,10 @@ export default class PlaceAddPopUp extends Component {
      */
     getCurrentListNameView = () => {
         let type = this.params.markerObject.type;
+
+
+        console.log(type);
+
         let typeName = type.charAt(0).toUpperCase() + type.slice(1) + "s";
 
         return <View style={styles.placeNameContainerPopUp}>
@@ -623,17 +627,8 @@ export default class PlaceAddPopUp extends Component {
     };
 
 
-    setUpPopUp = () => {
-        if(this.params.markerObject.type.length > 1) {
-            console.log("Should show");
-        } else {
-            console.log("Shoud not");
-        }
-    };
-
-
     componentWillMount() {
-        this.setUpPopUp();
+        //this.setUpPopUp();
         this.precomputeListInformation();
         this.setUpDragging();
     }
