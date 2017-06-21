@@ -618,6 +618,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         color: "black",
+        fontFamily: 'Museo Sans Cyrl'
     },
 
     horizontalLine: {
