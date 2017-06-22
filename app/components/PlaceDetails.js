@@ -654,13 +654,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "black",
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     rankTH: {
         color: "black",
         fontSize: 8,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     imageContainer: {
@@ -702,7 +702,7 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "bold",
         backgroundColor: "rgba(0,0,0,0)",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 
@@ -752,14 +752,15 @@ const styles = StyleSheet.create({
 
     noFriendsText: {
         fontSize: 16,
-        fontFamily: 'Museo Sans Cyrl'
+        color:"black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     userImageRank: {
         fontSize: 12,
         fontWeight: "bold",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     placeDetailsContainer: {
@@ -784,7 +785,7 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 9,
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     placeDetailsIcon: {
@@ -807,7 +808,7 @@ const styles = StyleSheet.create({
         fontSize: 19,
         color: "black",
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
 
     },
     horizontalLine: {
@@ -882,7 +883,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "black",
         marginLeft: 20,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
     reviewTextContainer: {
         marginTop: 5
@@ -890,7 +891,7 @@ const styles = StyleSheet.create({
     reviewText: {
         color: "black",
         fontSize: 15,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
     review: {
         marginTop: 10,
@@ -899,7 +900,7 @@ const styles = StyleSheet.create({
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
