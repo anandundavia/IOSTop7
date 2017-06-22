@@ -1,6 +1,6 @@
-import {LoginManager, LoginButton} from "react-native-fbsdk";
+import {LoginManager} from "react-native-fbsdk";
 import React, {Component} from "react";
-import {Image, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {Image, Platform, StatusBar, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 
 import Consts from "../consts/Consts";
 import Facebook from "../core/Facebook";
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     facebookLoginText: {
         fontWeight: "bold",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     skipLoginContainer: {
@@ -252,7 +252,8 @@ const styles = StyleSheet.create({
     skipLoginText: {
         textDecorationLine: "underline",
         fontSize: 12,
-        fontFamily: 'Museo Sans Cyrl'
+        color: "black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     declarationTextContainer: {
@@ -261,11 +262,14 @@ const styles = StyleSheet.create({
         bottom: 10,
     },
 
-    declarationText: {fontFamily: 'Museo Sans Cyrl'},
+    declarationText: {
+        color: "black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
+    },
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
