@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, Linking, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {Image, Linking, Platform, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import MapView from "react-native-maps";
 import Consts from "../consts/Consts";
 
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     numberTH: {
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         fontSize: 9,
         fontWeight: "bold",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     placeDetailsMarkerContainer: {
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         height: 20,
         fontSize: 14,
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 
@@ -259,7 +259,8 @@ const styles = StyleSheet.create({
         fontSize: 7,
         fontWeight: "bold",
         marginTop: 4,
-        fontFamily: 'Museo Sans Cyrl'
+        color: "black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 });
