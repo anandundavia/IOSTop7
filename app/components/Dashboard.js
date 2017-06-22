@@ -309,33 +309,45 @@ export default class Dashboard extends Component {
                 priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
             }
 
-            return <View style={styles.listViewPlaceNameContainer} key={key}>
-                <Image style={styles.listViewPlaceIcon} source={value.icon}/>
-                <View style={styles.listViewPlaceNameAndRankContainer}>
-                    <View style={styles.listViewPlaceRankContainer}>
-                        <Text style={styles.listViewPlaceRank}>{value.number}</Text>
-                        <Text style={styles.listViewPlaceRankTH}>{Consts.getTHString(value.number)}</Text>
-                    </View>
-                    <View style={styles.listViewPlaceName}>
-                        <Text style={styles.listViewPlaceNameText}>{value.name}</Text>
-                    </View>
-                </View>
-                <View style={styles.listViewPlaceDetailsContainer}>
-                    <View style={styles.listViewRatingsContainer}>
-                        {stars}
-                    </View>
-                    <View style={styles.listViewPlaceDetails}>
-                        <View style={styles.listViewPlaceDetailsIconContainer}>
-                            {typeIcon}
-                            {type}
+            return <TouchableHighlight
+                key={key}
+                onPress={() => {
+                    this.props.navigation.navigate(
+                        Consts.SCREEN_TITLES.PLACE_DETAILS,
+                        {
+                            onGoBack: () => this.refreshDashboard(),
+                            markerObject: value
+                        }
+                    );
+                }}>
+                <View style={styles.listViewPlaceNameContainer}>
+                    <Image style={styles.listViewPlaceIcon} source={value.icon}/>
+                    <View style={styles.listViewPlaceNameAndRankContainer}>
+                        <View style={styles.listViewPlaceRankContainer}>
+                            <Text style={styles.listViewPlaceRank}>{value.number}</Text>
+                            <Text style={styles.listViewPlaceRankTH}>{Consts.getTHString(value.number)}</Text>
                         </View>
-                        <View style={styles.listViewPlaceDetailsIconContainer}>
-                            {priceLevelIcon}
-                            {priceLevel}
+                        <View style={styles.listViewPlaceName}>
+                            <Text style={styles.listViewPlaceNameText}>{value.name}</Text>
                         </View>
                     </View>
+                    <View style={styles.listViewPlaceDetailsContainer}>
+                        <View style={styles.listViewRatingsContainer}>
+                            {stars}
+                        </View>
+                        <View style={styles.listViewPlaceDetails}>
+                            <View style={styles.listViewPlaceDetailsIconContainer}>
+                                {typeIcon}
+                                {type}
+                            </View>
+                            <View style={styles.listViewPlaceDetailsIconContainer}>
+                                {priceLevelIcon}
+                                {priceLevel}
+                            </View>
+                        </View>
+                    </View>
                 </View>
-            </View>;
+            </TouchableHighlight>
         }
     });
 
@@ -737,7 +749,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
     },
     listViewPlaceIcon: {
-        height: 170,
+        height: "60%",
         width: "100%",
         borderRadius: 5,
         // marginLeft: 10,
@@ -746,10 +758,11 @@ const styles = StyleSheet.create({
 
 
     listViewPlaceNameAndRankContainer: {
-        height: 70,
+        height: "20%",
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
+        marginTop: 3,
         //borderWidth: 1,
     },
 
@@ -757,7 +770,6 @@ const styles = StyleSheet.create({
         height: 50,
         width: 50,
         borderRadius: 25,
-        margin: 5,
         backgroundColor: "#313031",
         flexDirection: "row",
         alignItems: "center",
@@ -797,7 +809,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Museo Sans Cyrl'
     },
     listViewPlaceDetailsContainer: {
-        height: 58,
+        height: "20%",
         width: "100%",
         flexDirection: "row",
         alignItems: "center",

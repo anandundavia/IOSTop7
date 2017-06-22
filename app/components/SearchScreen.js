@@ -130,7 +130,11 @@ export default class SearchScreen extends Component {
     getGoogleAutoCompleteView = () => {
         // Need API key and type of the place you want to search.
         // Read: https://github.com/FaridSafi/react-native-google-places-autocomplete
-        const query = {key: Consts.KEYS.GOOGLE_API_KEY, types: "establishment"};
+        const query = {
+            key: Consts.KEYS.GOOGLE_API_KEY,
+            types: "establishment",
+            components: "country:us"
+        };
 
         return <GooglePlacesAutocomplete
             placeholder='Search'
@@ -138,7 +142,7 @@ export default class SearchScreen extends Component {
             autoFocus={true}
             listViewDisplayed='false' // true/false/undefined
             fetchDetails={true}
-            renderDescription={(row) => row.description}
+            renderDescription={(row) => console.log(row)}
             onPress={this.suggestedPlaceOnPress}
             getDefaultValue={() => ""}
             query={query}
