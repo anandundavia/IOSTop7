@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Animated, Dimensions, Image, StatusBar, StyleSheet, Text, View} from "react-native";
+import {Animated, Dimensions, Image, Platform, StatusBar, StyleSheet, Text, View} from "react-native";
 import {AccessToken} from "react-native-fbsdk";
 import Facebook from "../core/Facebook";
 import Memory from "../core/Memory";
@@ -107,6 +107,14 @@ export default class Splash extends Component {
     };
 
     render() {
+
+        let fontStyle;
+        if (Platform.OS === 'ios') {
+            fontStyle = {fontFamily: 'Museo Sans Cyrl'}
+        } else {
+            fontStyle = {fontFamily: 'MuseoSansCyrl'}
+        }
+
         return (
             <Image
                 source={require("../icons/background.png")}
@@ -117,7 +125,7 @@ export default class Splash extends Component {
                     source={require("../icons/logo_white.png")}/>
                 <View style={styles.loadingTextContainer}>
                     <Text
-                        style={{fontFamily: 'Museo Sans Cyrl'}}
+                        style={fontStyle}
                         ref={loadingText => this.loadingText = loadingText}>
                         Please wait...
                     </Text>
