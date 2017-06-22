@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AppRegistry, NetInfo, StyleSheet, Text, View} from "react-native";
+import {AppRegistry, NetInfo, Platform,StyleSheet, Text, View} from "react-native";
 
 import Consts from "../consts/Consts";
 
@@ -28,44 +28,6 @@ export default class Main extends Component {
         header: null
     };
 
-    //
-    // sceneChanger = (route, navigator) => {
-    //     console.info("Navigator: Going to '" + route.name + "' screen");
-    //     switch (route.title) {
-    //         case Consts.SCREEN_TITLES.LOG_IN :
-    //             return <Login navigator={navigator}/>;
-    //             break;
-    //         case Consts.SCREEN_TITLES.SPLASH :
-    //             return <Splash navigator={navigator}/>;
-    //             break;
-    //         case Consts.SCREEN_TITLES.NETWORK :
-    //             return <Network navigator={navigator}/>;
-    //             break;
-    //         case Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS :
-    //             return <UserConfirmDetails navigator={navigator}/>;
-    //             break;
-    //         case Consts.SCREEN_TITLES.DASHBOARD :
-    //             return <Dashboard navigator={navigator}/>;
-    //             break;
-    //         case Consts.SCREEN_TITLES.PLACE_DETAILS:
-    //             return <PlaceDetails
-    //                 navigator={navigator}
-    //                 markerObject={route.markerObject}
-    //             />;
-    //             break;
-    //         case Consts.SCREEN_TITLES.PLACE_ADD_POP_UP:
-    //             return <PlaceAddPopUp
-    //                 navigator={navigator}
-    //                 markerObject={route.markerObject}
-    //             />;
-    //         case Consts.SCREEN_TITLES.SEARCH_SCREEN:
-    //             return <SearchScreen
-    //                 navigator={navigator}
-    //             />;
-    //         default:
-    //             console.log("Navigator WARNING: SCENE NOT FOUND!")
-    //     }
-    // };
 
 
     networkStatusChanged = (status) => {
@@ -151,7 +113,7 @@ styles = StyleSheet.create({
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
