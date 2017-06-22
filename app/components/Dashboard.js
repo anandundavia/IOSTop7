@@ -182,7 +182,11 @@ export default class Dashboard extends Component {
         } else {
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
-                <Text style={{color: "black", fontSize: 18, fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'}}>
+                <Text style={{
+                    color: "black",
+                    fontSize: 18,
+                    fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
+                }}>
                     Add any place to a list and the list will show up here
                 </Text>
             </View>;
@@ -281,17 +285,17 @@ export default class Dashboard extends Component {
             regionToLoad = Consts.DEFAULT_REGION;
         }
 
-        console.log(regionToLoad);
+        //console.log(regionToLoad);
 
-        return <Animated.View
-            style={[styles.mainViewContainer, this.animatedDesign]}>
-            <MapView.Animated
+        return <View
+            style={[styles.mainViewContainer]}>
+            <MapView
                 region={regionToLoad}
                 style={styles.map}
                 onRegionChangeComplete={this.regionChanged}>
-                {Memory().markers.map(this.loadMarkers)}
-            </MapView.Animated>
-        </Animated.View>
+                {/*{Memory().markers.map(this.loadMarkers)}*/}
+            </MapView>
+        </View>
     };
 
 
@@ -908,7 +912,7 @@ const styles = StyleSheet.create({
 
     listViewPlaceNameText: {
         fontSize: 20,
-        color:"black",
+        color: "black",
         fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
     listViewPlaceDetailsContainer: {
@@ -953,7 +957,7 @@ const styles = StyleSheet.create({
         fontSize: 8,
         fontWeight: "bold",
         marginTop: 3,
-        color:"black",
+        color: "black",
         fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 

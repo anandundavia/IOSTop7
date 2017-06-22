@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import {
+    Alert,
     Animated,
     Easing,
     Image,
     Linking,
-    Alert,
     Platform,
     ScrollView,
     StatusBar,
@@ -318,12 +318,17 @@ export default class PlaceDetails extends Component {
      * This view is displayed when the user taps on the okay button
      */
     getLoadingTextView = () => {
-        if (this.params.markerObject.reviews.length === 0)
-            return <View style={styles.loadingTextContainer}>
+        if (this.params.markerObject.reviews.length === 0) {
+            return <View
+                style={[styles.loadingTextContainer,
+                    {zIndex: this.params.markerObject.reviews.length === 0 ? -100 : 100}
+                ]}>
                 <Text
-                    ref={loadingText => this.loadingText = loadingText}
                     style={styles.loadingText}>Getting reviews...</Text>
             </View>
+        } else {
+            return <View/>
+        }
     };
 
 
@@ -709,6 +714,7 @@ const styles = StyleSheet.create({
     friendsContainer: {
         width: "100%",
         height: 0,
+        marginTop: Platform.OS === 'ios' ? 0 : -7,
         paddingLeft: 15,
         paddingRight: 15,
         flexDirection: "row",
@@ -722,8 +728,10 @@ const styles = StyleSheet.create({
         height: 60,
         width: 60,
         //marginRight: 15,
-        marginTop: -3,
-        // borderWidth: 1,
+        // marginTop: 0,
+        alignItems: "center",
+        justifyContent: "center",
+        //borderWidth: 1,
     },
 
     userImageRankContainer: {
@@ -752,7 +760,7 @@ const styles = StyleSheet.create({
 
     noFriendsText: {
         fontSize: 16,
-        color:"black",
+        color: "black",
         fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
@@ -908,7 +916,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         bottom: 12,
-        borderWidth: 1,
         width: 150,
         height: 30,
         borderRadius: 10,
@@ -916,7 +923,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderColor: "rgba(0,0,0,0.5)",
         backgroundColor: "rgba(0,0,0,0.5)",
-        elevation: 20
+        elevation: 20,
 
     }
 });
