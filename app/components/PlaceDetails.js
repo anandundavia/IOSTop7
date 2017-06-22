@@ -118,6 +118,7 @@ export default class PlaceDetails extends Component {
                     let type = this.params.markerObject.type[0];
                     delete this.params.markerObject.type;
                     this.params.markerObject.type = type;
+                    this.addPlace();
                 } else if (this.params.markerObject.type.length > 1) {
                     this.showPopUp();
                 } else {
@@ -603,8 +604,8 @@ const styles = StyleSheet.create({
     backButtonContainer: {
         width: 30,
         height: 30,
-        marginLeft:5,
-        marginTop:5,
+        marginLeft: 5,
+        marginTop: 5,
         alignItems: "center",
         justifyContent: "center",
         //borderWidth: 1
@@ -620,8 +621,8 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
         right: 0,
-        marginRight:5,
-        marginTop:5,
+        marginRight: 5,
+        marginTop: 5,
         alignItems: "center",
         justifyContent: "center",
         //borderWidth: 1

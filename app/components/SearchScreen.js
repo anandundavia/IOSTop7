@@ -1,8 +1,10 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, TouchableHighlight} from "react-native";
+import {Image, StyleSheet, Alert, TouchableHighlight} from "react-native";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 
 import Consts from "../consts/Consts";
+import Memory from "../core/Memory";
+
 
 export default class SearchScreen extends Component {
 
@@ -20,7 +22,6 @@ export default class SearchScreen extends Component {
     suggestedPlaceOnPress = (data, details = null) => {
         let type = [];
 
-        console.log(JSON.stringify(details.types));
         if (details.types) {
             for (let i = 0; i < details.types.length; i++) {
                 if (details.types[i] === Consts.PLACE_TYPES.RESTAURANT) {
@@ -77,7 +78,7 @@ export default class SearchScreen extends Component {
             // console.warn("Google has no images of this place. Marker will not be loaded..");
         }
 
-        console.log(JSON.stringify(details));
+        // console.log(JSON.stringify(details));
         //Create the review array.
         let reviews = [];
         for (let i = 0; i < details.reviews.length; i++) {
@@ -89,38 +90,75 @@ export default class SearchScreen extends Component {
             });
         }
 
-        let newMaker = {
-            id: data.place_id,
-            priceLevel: details.price_level,
-            icon: {uri: icon},
-            name: details.name,
-            phoneNumber: details.international_phone_number,
-            type: type,
-            location: {
-                city: city,
-                state: state,
-                country: country
-            },
-            coordinate: {
-                latitude: details.geometry.location.lat,
-                longitude: details.geometry.location.lng,
-                latitudeDelta: 0.15,
-                longitudeDelta: 0.15,
-            },
-            reviews: reviews,
-            rating: details.rating
-        };
 
-        //console.log(JSON.stringify(newMaker));
+        let cities = Memory().allCities;
 
-        this.props.navigation.navigate(
-            Consts.SCREEN_TITLES.PLACE_DETAILS,
-            {
-                markerObject: newMaker,
-                onGoBack: () => {
+        let cityExists = false;
+        for (let i = 0; i < cities.length; i++) {
+            if (cities[i].city === city) {
+                cityExists = true;
+                break;
+            }
+        }
+
+
+        let typeExists = false;
+        for (let i = 0; i < type.length && !typeExists; i++) {
+            switch (type[i]) {
+                case Consts.PLACE_TYPES.BAR : {
+                    typeExists = true;
+                    break;
+                }
+                case Consts.PLACE_TYPES.CLUB : {
+                    typeExists = true;
+                    break;
+                }
+                case Consts.PLACE_TYPES.RESTAURANT : {
+                    typeExists = true;
+                    break;
                 }
             }
-        );
+        }
+
+
+        if (typeExists && cityExists) {
+            let newMaker = {
+                id: data.place_id,
+                priceLevel: details.price_level,
+                icon: {uri: icon},
+                name: details.name,
+                phoneNumber: details.international_phone_number,
+                type: type,
+                location: {
+                    city: city,
+                    state: state,
+                    country: country
+                },
+                coordinate: {
+                    latitude: details.geometry.location.lat,
+                    longitude: details.geometry.location.lng,
+                    latitudeDelta: 0.15,
+                    longitudeDelta: 0.15,
+                },
+                reviews: reviews,
+                rating: details.rating
+            };
+
+            //console.log(JSON.stringify(newMaker));
+
+            this.props.navigation.navigate(
+                Consts.SCREEN_TITLES.PLACE_DETAILS,
+                {
+                    markerObject: newMaker,
+                    onGoBack: () => {
+                    }
+                }
+            );
+        } else {
+            Alert.alert(Consts.WRONG_PLACE_MESSAGES.TITLE, Consts.WRONG_PLACE_MESSAGES.MESSAGE)
+        }
+
+
     };
 
     /**
@@ -142,7 +180,7 @@ export default class SearchScreen extends Component {
             autoFocus={true}
             listViewDisplayed='false' // true/false/undefined
             fetchDetails={true}
-            renderDescription={(row) => console.log(row)}
+            renderDescription={(row) => row.description}
             onPress={this.suggestedPlaceOnPress}
             getDefaultValue={() => ""}
             query={query}

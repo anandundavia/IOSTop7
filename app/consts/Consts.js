@@ -19,6 +19,12 @@ export default class Consts {
 
     //static NAVIGATION_OPTIONS = {header: null};
 
+
+    static WRONG_PLACE_MESSAGES = {
+        TITLE: "Select Another Place",
+        MESSAGE: "The place you selected does not belong to either the types or the cities enabled by the system"
+    };
+
     static NETWORK_STATUS = {
         NONE: "none",
         WIFI: "wifi",
