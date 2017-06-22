@@ -263,7 +263,7 @@ export default class UserConfirmDetails extends Component {
                 underlayColor={"#c5b167"}
                 style={[styles.closeButton, {zIndex: this.popUpZIndex}]}
                 onPress={this.togglePopUp}>
-                <Text style={{color: "black",  fontFamily: 'Museo Sans Cyrl'}}>OK</Text>
+                <Text style={{color: "black",   fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'}}>OK</Text>
             </TouchableHighlight>
 
             <DatePickerIOS
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 18,
         marginLeft: 4,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     datePicker: {
@@ -424,7 +424,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "white",
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     genderButtonText: {
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         alignSelf: "center",
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     profilePicContainer: {
@@ -518,7 +518,7 @@ const styles = StyleSheet.create({
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
