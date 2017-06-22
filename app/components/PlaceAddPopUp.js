@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import {Dimensions, Image, PanResponder, StyleSheet, Text, TouchableHighlight, View} from "react-native";
+import {Dimensions, Image, PanResponder, Platform, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
 
@@ -723,7 +723,7 @@ const styles = StyleSheet.create({
     submitButtonPopUp: {
         fontSize: 14,
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     placeNameContainerPopUp: {
@@ -740,7 +740,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: "bold",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1,
     },
 
@@ -772,7 +772,7 @@ const styles = StyleSheet.create({
         elevation: 10,
         color: "#B0B0B0",
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1,
     },
 
@@ -806,7 +806,7 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1,
     },
 
@@ -836,7 +836,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1,
     },
 
@@ -844,12 +844,12 @@ const styles = StyleSheet.create({
         fontSize: 9,
         color: "white",
         marginTop: -7,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
