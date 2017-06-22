@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Dimensions, Image, PanResponder, StyleSheet, Text, View} from "react-native";
+import {Dimensions, Image, Platform, StyleSheet, Text, View} from "react-native";
 import Consts from "../consts/Consts";
 
 const {height, width} = Dimensions.get('window');
@@ -77,14 +77,14 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         color: "white",
         fontWeight: "bold",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     rankTH: {
         color: "white",
         fontSize: 6,
         marginTop: -8,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     placeNameTextContainer: {
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 10,
         color: "black",
-        fontFamily: 'Museo Sans Cyrl',
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //width: "90%",
         //borderWidth:1,
 

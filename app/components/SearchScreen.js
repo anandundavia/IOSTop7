@@ -264,7 +264,7 @@ const autoCompleteStyle = {
     description: {
         width: 100,
         color: "black",
-        fontFamily:"Museo Sans Cyrl"
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     listView: {
@@ -286,7 +286,7 @@ const autoCompleteStyle = {
         fontSize: 18,
         marginLeft: 25,
         marginTop: 13,
-        fontFamily:"Museo Sans Cyrl"
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 };
