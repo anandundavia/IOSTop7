@@ -137,6 +137,36 @@ export default class Dashboard extends Component {
     };
 
 
+    swipeLift = () => {
+        let currentPageIndex = this.scrollView.state.currentPage;
+        if (currentPageIndex !== 0) {
+            currentPageIndex--;
+            this.scrollView.goToPage(currentPageIndex);
+        }
+    };
+
+
+    editPlaceList = () => {
+        this.props.navigation.navigate(
+            Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
+            {
+                markerObject: Memory().userObject.lists[this.scrollView.state.currentPage],
+                isAdded: true
+            }
+        )
+    };
+
+    swipeRight = () => {
+        let currentPageIndex = this.scrollView.state.currentPage;
+        if (Memory().userObject.lists) {
+            let totalPages = Memory().userObject.lists.length;
+            if (currentPageIndex !== totalPages - 1) {
+                currentPageIndex++;
+                this.scrollView.goToPage(currentPageIndex);
+            }
+        }
+    };
+
     /**
      * Creates the left side bar of the dashboard.
      * @returns {XML}
@@ -187,6 +217,25 @@ export default class Dashboard extends Component {
                 tabBarUnderlineStyle={{height: 0}}>
                 {userListView}
             </ScrollableTabView>
+            <View style={styles.listNavigationContainer}>
+                <TouchableHighlight
+                    underlayColor={"#c5b167"}
+                    onPress={this.swipeLift}
+                    style={styles.leftButton}>
+                    <Image source={require("../icons/back_black.png")}/>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    onPress={this.editPlaceList}
+                    style={styles.editButton}>
+                    <Text>Edit</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    underlayColor={"#c5b167"}
+                    onPress={this.swipeRight}
+                    style={styles.rightButton}>
+                    <Image source={require("../icons/back_right.png")}/>
+                </TouchableHighlight>
+            </View>
         </Image>;
     };
 
@@ -375,7 +424,6 @@ export default class Dashboard extends Component {
      */
     getTopBarView = () => {
         if (!Memory().leaderBoardFilters) {
-            console.log("Defaulting the filters...");
             Memory().leaderBoardFilters = Consts.DEFAULT_LEADERBOARD_FILTERS;
         }
         return <View style={styles.topBarContainer}>
@@ -398,53 +446,58 @@ export default class Dashboard extends Component {
 
 
     listViewButtonPressed = () => {
-        let time = 100;
-        Animated.parallel([
-            Animated.timing(this.viewTop, {
-                toValue: height / 2,
-                duration: time
-            }),
-            Animated.timing(this.viewBottom, {
-                toValue: height / 2,
-                duration: time
-            }),
-            Animated.timing(this.viewLeft, {
-                toValue: width / 2,
-                duration: time
-            }),
-            Animated.timing(this.viewRight, {
-                toValue: width / 2,
-                duration: time
-            })
-        ]).start(() => {
-            this.setState({
-                loadMapView: !this.state.loadMapView
-            });
-            Animated.parallel([
-                Animated.timing(this.viewTop, {
-                    toValue: 80,
-                    duration: time
-                }),
-                Animated.timing(this.viewBottom, {
-                    toValue: 0,
-                    duration: time
-                }),
-                Animated.timing(this.viewLeft, {
-                    toValue: 0,
-                    duration: time
-                }),
-                Animated.timing(this.viewRight, {
-                    toValue: 0,
-                    duration: time
-                })
-            ]).start(() => {
-                console.log("Setting....");
-                if (this.mapView) {
-                    console.log("Okay!!....");
-                    this.mapView.setNativeProps({});
-                }
+        // let time = 100;
+        // Animated.parallel([
+        //     Animated.timing(this.viewTop, {
+        //         toValue: height / 2,
+        //         duration: time
+        //     }),
+        //     Animated.timing(this.viewBottom, {
+        //         toValue: height / 2,
+        //         duration: time
+        //     }),
+        //     Animated.timing(this.viewLeft, {
+        //         toValue: width / 2,
+        //         duration: time
+        //     }),
+        //     Animated.timing(this.viewRight, {
+        //         toValue: width / 2,
+        //         duration: time
+        //     })
+        // ]).start(() => {
+        //     this.setState({
+        //         loadMapView: !this.state.loadMapView
+        //     });
+        //     Animated.parallel([
+        //         Animated.timing(this.viewTop, {
+        //             toValue: 80,
+        //             duration: time
+        //         }),
+        //         Animated.timing(this.viewBottom, {
+        //             toValue: 0,
+        //             duration: time
+        //         }),
+        //         Animated.timing(this.viewLeft, {
+        //             toValue: 0,
+        //             duration: time
+        //         }),
+        //         Animated.timing(this.viewRight, {
+        //             toValue: 0,
+        //             duration: time
+        //         })
+        //     ]).start(() => {
+        //         console.log("Setting....");
+        //         if (this.mapView) {
+        //             console.log("Okay!!....");
+        //             this.mapView.setNativeProps({});
+        //         }
+        //
+        //     });
+        // });
 
-            });
+
+        this.setState({
+            loadMapView: !this.state.loadMapView
         });
     };
 
@@ -572,8 +625,6 @@ export default class Dashboard extends Component {
                      in here. SO A FUNCTION.
                      */}
                     {this.getMainView()}
-
-
                     {this.getBottomBarView()}
                     {this.getLoadingTextView()}
                 </View>
@@ -591,7 +642,49 @@ const styles = StyleSheet.create({
     },
 
     drawerContainer: {
+        height: "100%",
+        width: "100%"
+    },
+
+
+    listNavigationContainer: {
+        justifyContent: "space-between",
+        flexDirection: "row",
+        height: "8%",
+        borderColor: "green"
+    },
+
+    leftButton: {
+        width: "20%",
+        borderRadius: 30,
+        marginRight: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        marginLeft: 5,
+        marginBottom: 5,
+        //borderWidth:1
+    },
+
+
+    editButton: {
         flex: 1,
+        borderRadius: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 5,
+        //borderWidth:1
+    },
+
+
+    rightButton: {
+        width: "20%",
+        borderRadius: 30,
+        marginLeft: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 5,
+        marginBottom: 5,
+        //borderWidth:1
     },
 
     userDetailsContainer: {
@@ -635,7 +728,7 @@ const styles = StyleSheet.create({
 
     horizontalLine: {
         height: 3,
-        width: "68%",
+        width: "90%",
         marginTop: 8,
         marginBottom: 8,
         backgroundColor: "black",

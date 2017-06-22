@@ -48,14 +48,17 @@ export default class PlaceList extends Component {
 const styles = StyleSheet.create({
     userListsContainer: {
         width: width * 0.88,
-        flex: 1,
+        height: "auto",
+        // borderWidth: 1,
+        // borderColor: "red"
     },
     placeNameContainer: {
         flexDirection: "row",
-        height: "12%",
+        height: height * 0.08,
         alignItems: "center",
         paddingLeft: 20,
-        //borderWidth: 1,
+        // borderWidth: 1,
+        // borderColor: "green"
     },
 
 
@@ -95,8 +98,9 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 10,
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: 'Museo Sans Cyrl',
         //width: "90%",
+        //borderWidth:1,
 
     },
 
