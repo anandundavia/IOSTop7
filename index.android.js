@@ -16,7 +16,7 @@ export default class IOSTop7 extends Component {
 
     componentDidMount() {
         //Added in android to remove the effect of back button
-        BackHandler.addEventListener('hardwareBackPress', () => true);
+        BackHandler.addEventListener('hardwareBackPress', () => console.log("Back pressed"));
     }
 }
 
