@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {StyleSheet, View, Image, Text, ScrollView, TouchableHighlight, Dimensions} from "react-native";
+import {Image, Platform, StyleSheet, Text, TouchableHighlight, View} from "react-native";
 import {Option, OptionList, Select} from "react-native-selectme";
 import {ButtonGroup} from "react-native-elements";
 
@@ -203,7 +203,10 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
+                        <Text style={{
+                            color: "white",
+                            fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
+                        }}>{value}</Text>
                     </View>
                 })
             }
@@ -233,7 +236,10 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
+                        <Text style={{
+                            color: "white",
+                            fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
+                        }}>{value}</Text>
                     </View>
                 })
             }
@@ -262,7 +268,10 @@ export default class FilterScreen extends Component {
             <View style={styles.typeNameContainer}>{
                 typeNames.map((value, key) => {
                     return <View key={key} style={styles.typeName}>
-                        <Text style={{color: "white", fontFamily: 'Museo Sans Cyrl'}}>{value}</Text>
+                        <Text style={{
+                            color: "white",
+                            fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
+                        }}>{value}</Text>
                     </View>
                 })
             }
@@ -354,7 +363,7 @@ const styles = StyleSheet.create({
         color: "white",
         //fontWeight: "bold",
         fontSize: 17,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 
@@ -454,7 +463,7 @@ const styles = StyleSheet.create({
         color: "white",
         // fontWeight:"bold",
         fontSize: 18,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 
