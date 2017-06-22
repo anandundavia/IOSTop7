@@ -515,12 +515,7 @@ export default class PlaceAddPopUp extends Component {
      */
     getCurrentListNameView = () => {
         let type = this.params.markerObject.type;
-
-
-        console.log(type);
-
         let typeName = type.charAt(0).toUpperCase() + type.slice(1) + "s";
-
         return <View style={styles.placeNameContainerPopUp}>
             <Text
                 style={styles.placeNamePopUp}>Top7 {typeName}, {this.params.markerObject.location.city}</Text>
@@ -544,6 +539,8 @@ export default class PlaceAddPopUp extends Component {
                 />
                 <Text style={styles.dragPlaceNamePopUp}>{this.params.markerObject.name}</Text>
             </View>
+        } else {
+            return <View/>
         }
 
     };
@@ -565,6 +562,13 @@ export default class PlaceAddPopUp extends Component {
             if (key === 0) {
                 border = {borderTopWidth: 1}
             }
+
+            let customBorder = {};
+            if (!(Platform.OS === 'ios')) {
+                customBorder = {borderWidth: 1};
+            }
+
+
             let name = value.id ? value.name : null;
             let view;
             if (name) {
@@ -583,8 +587,12 @@ export default class PlaceAddPopUp extends Component {
             return <View
                 ref={view => this.allPlaces[parseInt(key)] = view}
                 key={key}
-                {...this.panResponder.panHandlers}
-                style={[styles.userListPlaceNameContainerPopUp, border]}>
+
+                style={[
+                    styles.userListPlaceNameContainerPopUp,
+                    border,
+                    customBorder
+                ]}>
 
                 {view}
 
@@ -597,6 +605,7 @@ export default class PlaceAddPopUp extends Component {
 
                 {name && <Text
                     numberOfLines={1}
+                    {...this.panResponder.panHandlers}
                     style={[styles.userListPlaceNamePopUp, this.tempFontStyle]}>
                     {name}
                 </Text>
@@ -740,6 +749,8 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontWeight: "bold",
         color: "white",
+        marginLeft: 25,
+        marginRight: 25,
         fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1,
     },
@@ -813,11 +824,12 @@ const styles = StyleSheet.create({
     removePlacePopUp: {
         position: "absolute",
         right: 10,
+        zIndex:100,
         height: 40,
         width: 40,
         justifyContent: "center",
         alignItems: "center",
-        //borderWidth:1,
+       // borderWidth:1,
     },
 
     placeRankContainerPopUp: {

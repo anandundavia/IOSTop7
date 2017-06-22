@@ -663,7 +663,7 @@ const styles = StyleSheet.create({
     listNavigationContainer: {
         justifyContent: "space-between",
         flexDirection: "row",
-        height: "8%",
+        height: "6%",
         borderColor: "green"
     },
 
@@ -938,6 +938,7 @@ const styles = StyleSheet.create({
     listViewPlaceDetails: {
         flex: 2,
         flexDirection: "row",
+        marginTop: -1,
         //borderWidth: 1,
     },
 
