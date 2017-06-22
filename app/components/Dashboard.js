@@ -3,9 +3,10 @@
  */
 import React, {Component} from "react";
 import {
-    Dimensions,
     Animated,
+    Dimensions,
     Image,
+    Platform,
     ScrollView,
     StatusBar,
     StyleSheet,
@@ -181,7 +182,7 @@ export default class Dashboard extends Component {
         } else {
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
-                <Text style={{color: "black", fontSize: 18, fontFamily: 'Museo Sans Cyrl'}}>
+                <Text style={{color: "black", fontSize: 18, fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'}}>
                     Add any place to a list and the list will show up here
                 </Text>
             </View>;
@@ -226,9 +227,9 @@ export default class Dashboard extends Component {
                     <Image source={require("../icons/back_black.png")}/>
                 </TouchableHighlight>
                 {/*<TouchableHighlight*/}
-                    {/*onPress={this.editPlaceList}*/}
-                    {/*style={styles.editButton}>*/}
-                    {/*<Text>Edit</Text>*/}
+                {/*onPress={this.editPlaceList}*/}
+                {/*style={styles.editButton}>*/}
+                {/*<Text>Edit</Text>*/}
                 {/*</TouchableHighlight>*/}
                 <TouchableHighlight
                     underlayColor={"#c5b167"}
@@ -360,9 +361,9 @@ export default class Dashboard extends Component {
 
 
             let lastObjectStyle = {};
-            if(key === Memory().markers.length - 1 ) {
+            if (key === Memory().markers.length - 1) {
                 lastObjectStyle = {
-                    marginBottom:150
+                    marginBottom: 150
                 }
             }
 
@@ -715,7 +716,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         marginTop: 10,
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     currentListNameContainer: {
@@ -731,7 +732,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     horizontalLine: {
@@ -796,7 +797,7 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         fontSize: 20,
         color: "black",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
     // listViewContainer: {
@@ -882,7 +883,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 22,
         marginLeft: 3,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         // borderWidth: 1,
         // borderColor: "white",
     },
@@ -891,7 +892,7 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 10,
         marginTop: -10,
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         // borderWidth: 1,
         // borderColor: "white",
     },
@@ -907,7 +908,8 @@ const styles = StyleSheet.create({
 
     listViewPlaceNameText: {
         fontSize: 20,
-        fontFamily: 'Museo Sans Cyrl'
+        color:"black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
     listViewPlaceDetailsContainer: {
         height: "20%",
@@ -951,7 +953,8 @@ const styles = StyleSheet.create({
         fontSize: 8,
         fontWeight: "bold",
         marginTop: 3,
-        fontFamily: 'Museo Sans Cyrl'
+        color:"black",
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
     },
 
 
@@ -1008,7 +1011,7 @@ const styles = StyleSheet.create({
 
     loadingText: {
         color: "white",
-        fontFamily: 'Museo Sans Cyrl'
+        fontFamily: Platform.OS === 'ios' ? 'Museo Sans Cyrl' : 'MuseoSansCyrl'
         //borderWidth: 1
     },
 
