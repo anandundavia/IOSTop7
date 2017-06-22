@@ -112,7 +112,7 @@ export default class Splash extends Component {
         if (Platform.OS === 'ios') {
             fontStyle = {fontFamily: 'Museo Sans Cyrl'}
         } else {
-            fontStyle = {fontFamily: 'MuseoSansCyrl'}
+            fontStyle = {fontFamily: 'MuseoSansCyrl', color: "black"}
         }
 
         return (
