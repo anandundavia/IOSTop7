@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {AppRegistry, BackHandler} from "react-native";
 import {StackNavigator} from "react-navigation";
 import Consts from "./app/consts/Consts";
+import Splash from "./app/components/Splash";
 import Main from "./app/components/Main";
 
 
