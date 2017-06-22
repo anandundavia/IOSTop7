@@ -562,6 +562,14 @@ export default class PlaceDetails extends Component {
     };
 
 
+    componentWillUpdate() {
+        this.isAdded = null;
+    }
+
+    componentWillMount() {
+        this.isAdded = null;
+    }
+
     componentDidUpdate() {
         this.fetchAndAnimateFriendsView();
     }

@@ -4,6 +4,7 @@ import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete"
 
 import Consts from "../consts/Consts";
 import Memory from "../core/Memory";
+import Backend from "../core/Backend";
 
 
 export default class SearchScreen extends Component {
@@ -13,15 +14,48 @@ export default class SearchScreen extends Component {
         header: null
     };
 
-    /**
-     * Called When any place from auto complete bar is tapped.
-     * Changes the state as required.
-     * @param data
-     * @param details
-     */
-    suggestedPlaceOnPress = (data, details = null) => {
-        let type = [];
+    dataReceived = (data, placeData, details) => {
+        if (data.Status === 'success') {
+            let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
+                Consts.KEYS.GOOGLE_API_KEY;
+            let newMaker = {
+                id: data.place.id,
+                priceLevel: data.place.priceLevel,
+                icon: {uri: icon},
+                name: data.place.name,
+                phoneNumber: data.place.phoneNumber,
+                number: 3, // So that PriceRange in PlaceDetails does not break
+                type: [data.place.types[0]],
+                location: {
+                    city: data.place.location.city,
+                    state: data.place.location.state,
+                    country: data.place.location.country
+                },
+                coordinate: {
+                    latitude: parseFloat(data.place.location.cityLatitude),
+                    longitude: parseFloat(data.place.location.cityLongitude),
+                    latitudeDelta: 0.15,
+                    longitudeDelta: 0.15,
+                },
+                reviews: [],
+                rating: data.place.rating
+            };
+            this.props.navigation.navigate(
+                Consts.SCREEN_TITLES.PLACE_DETAILS,
+                {
+                    markerObject: newMaker,
+                    onGoBack: () => {
+                    }
+                }
+            );
+        } else {
+            this.detailsFromGoogle(placeData, details);
+        }
+    };
 
+
+    detailsFromGoogle = (data, details) => {
+        let type = [];
         if (details.types) {
             for (let i = 0; i < details.types.length; i++) {
                 if (details.types[i] === Consts.PLACE_TYPES.RESTAURANT) {
@@ -157,9 +191,16 @@ export default class SearchScreen extends Component {
         } else {
             Alert.alert(Consts.WRONG_PLACE_MESSAGES.TITLE, Consts.WRONG_PLACE_MESSAGES.MESSAGE)
         }
-
-
     };
+
+    /**
+     * Called When any place from auto complete bar is tapped.
+     * Changes the state as required.
+     * @param data
+     * @param details
+     */
+    suggestedPlaceOnPress = (data, details = null) => Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
+
 
     /**
      * Creates the Google Auto-complete component required for search.

@@ -146,15 +146,16 @@ export default class Dashboard extends Component {
     };
 
 
-    editPlaceList = () => {
-        this.props.navigation.navigate(
-            Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
-            {
-                markerObject: Memory().userObject.lists[this.scrollView.state.currentPage],
-                isAdded: true
-            }
-        )
-    };
+    // editPlaceList = () => {
+    //     this.props.navigation.navigate(
+    //         Consts.SCREEN_TITLES.PLACE_ADD_POP_UP,
+    //         {
+    //             markerObject: Memory().userObject.lists[this.scrollView.state.currentPage],
+    //             isAdded: true,
+    //             onGoBack: () => this.setState({}),
+    //         }
+    //     )
+    // };
 
     swipeRight = () => {
         let currentPageIndex = this.scrollView.state.currentPage;
@@ -224,11 +225,11 @@ export default class Dashboard extends Component {
                     style={styles.leftButton}>
                     <Image source={require("../icons/back_black.png")}/>
                 </TouchableHighlight>
-                <TouchableHighlight
-                    onPress={this.editPlaceList}
-                    style={styles.editButton}>
-                    <Text>Edit</Text>
-                </TouchableHighlight>
+                {/*<TouchableHighlight*/}
+                    {/*onPress={this.editPlaceList}*/}
+                    {/*style={styles.editButton}>*/}
+                    {/*<Text>Edit</Text>*/}
+                {/*</TouchableHighlight>*/}
                 <TouchableHighlight
                     underlayColor={"#c5b167"}
                     onPress={this.swipeRight}
@@ -282,7 +283,6 @@ export default class Dashboard extends Component {
         console.log(regionToLoad);
 
         return <Animated.View
-            ref={view => this.mapView = view}
             style={[styles.mainViewContainer, this.animatedDesign]}>
             <MapView.Animated
                 region={regionToLoad}
@@ -358,6 +358,14 @@ export default class Dashboard extends Component {
                 priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
             }
 
+
+            let lastObjectStyle = {};
+            if(key === Memory().markers.length - 1 ) {
+                lastObjectStyle = {
+                    marginBottom:150
+                }
+            }
+
             return <TouchableHighlight
                 key={key}
                 onPress={() => {
@@ -369,7 +377,7 @@ export default class Dashboard extends Component {
                         }
                     );
                 }}>
-                <View style={styles.listViewPlaceNameContainer}>
+                <View style={[styles.listViewPlaceNameContainer, lastObjectStyle]}>
                     <Image style={styles.listViewPlaceIcon} source={value.icon}/>
                     <View style={styles.listViewPlaceNameAndRankContainer}>
                         <View style={styles.listViewPlaceRankContainer}>

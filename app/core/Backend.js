@@ -331,4 +331,40 @@ export default class Backend {
             console.log(JSON.stringify(error));
         })
     }
+
+
+    static getPlaceDetails(placeID, callback, ...args) {
+        fetch(Consts.BACKEND.PLACE_DETAILS, {
+            method: "post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + Memory().oAuth.access_token
+            },
+            body: JSON.stringify({id: placeID})
+        }).then((response) => {
+            if (response.status === 200) {
+                return response;
+            } else {
+                return new Error(response.statusText);
+            }
+        }).then((response) => {
+            // Is something wrong with access token?
+            // if something is wrong with the access token then the response
+            // object will be empty
+            if (response instanceof Error || Object.keys(response).length === 0) {
+                // Yes. Something wrong with access token,
+                // Get a new one and attempt to update the information again
+                AsyncStorage.removeItem(Consts.STORAGE_KEYS.ACCESS_TOKEN_KEY);
+                Backend.getBackendAccessToken(Backend.getPlaceDetails, placeID, callback, ...args);
+            } else {
+                // Access token is good! resolve the promise
+                return response.json();
+            }
+        }).then((response) => {
+            // console.log(response);
+            callback(response, ...args);
+        }).catch((error) => {
+            console.log(JSON.stringify(error));
+        })
+    }
 }

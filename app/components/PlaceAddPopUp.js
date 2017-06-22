@@ -171,7 +171,7 @@ export default class PlaceAddPopUp extends Component {
             return;
 
 
-        console.log("Previous Index: " + this.listPlaceIndex + ", New Index: " + this.placeIndex);
+        // console.log("Previous Index: " + this.listPlaceIndex + ", New Index: " + this.placeIndex);
 
 
         let temp = this.tempPlaceArray.reverse();
@@ -210,6 +210,9 @@ export default class PlaceAddPopUp extends Component {
             this.tempUserObject.lists[this.listIndex] = this.getEmptyListObject(this.getListID());
         }
 
+        if (!this.tempUserObject.lists[this.listIndex]) {
+            this.tempUserObject.lists[this.listIndex] = this.getEmptyListObject(this.getListID());
+        }
         this.tempUserObject.lists[this.listIndex].places = this.tempPlaceArray;
 
         // The place is now currentPlaceDropped. Update the state variables
@@ -488,18 +491,18 @@ export default class PlaceAddPopUp extends Component {
                 underlayColor={"#c5b167"}
                 style={styles.buttonContainerPopUp}>
                 <Image
-                    style={{marginLeft: -3}}
-                    source={require('../icons/back_black.png')}/>
+                    style={styles.topBarIcon}
+                    source={require('../icons/back_with_white_bg.png')}/>
             </TouchableHighlight>
 
             {/*ok button*/}
             <TouchableHighlight
                 onPress={this.okButtonPressed}
                 underlayColor={"#c5b167"}
-                style={styles.buttonContainerPopUp}>
+                style={styles.saveButtonPopUp}>
                 {/*<Image style={styles.submitButtonPopUp}
                  source={require('../images/back1600.png')}/>*/}
-                <Text style={styles.submitButtonPopUp}>OK</Text>
+                <Text style={styles.submitButtonPopUp}>SAVE</Text>
             </TouchableHighlight>
         </View>;
     };
@@ -600,6 +603,7 @@ export default class PlaceAddPopUp extends Component {
                 }
 
                 {name && <TouchableHighlight
+                    underlayColor={"#c5b167"}
                     onPress={() => this.removePlace(key)}
                     style={styles.removePlacePopUp}>
                     <Image
@@ -666,20 +670,26 @@ const styles = StyleSheet.create({
         width: null,
         height: null,
         resizeMode: "cover",
+        alignItems: "center",
         // justifyContent: "center",
-        paddingLeft: 10,
-        paddingRight: 10,
+        // paddingLeft: 10,
+        // paddingRight: 10,
     },
 
     topBarContainerPopUp: {
         height: 40,
-        paddingLeft: -20,
-        paddingRight: -20,
-        marginTop: 5,
+        // paddingLeft: -20,
+        // paddingRight: -20,
+        //marginTop: 5,
         width: "100%",
         flexDirection: 'row',
         justifyContent: 'space-between',
         //borderWidth: 1,
+    },
+
+    topBarIcon: {
+        width: 30,
+        height: 30,
     },
 
     buttonContainerPopUp: {
@@ -691,13 +701,30 @@ const styles = StyleSheet.create({
         //borderWidth: 1
     },
 
+
+    saveButtonPopUp: {
+        height: 35,
+        width: 60,
+        borderRadius: 10,
+        marginTop: 5,
+        marginRight: 5,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "black",
+        //borderWidth: 1
+    },
+
     backButtonPopUp: {
         // IDK why but flex:1 does not work.
         height: "100%",
         width: "100%"
     },
 
-    submitButtonPopUp: {fontSize: 12, fontFamily: 'Museo Sans Cyrl'},
+    submitButtonPopUp: {
+        fontSize: 14,
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
+    },
 
     placeNameContainerPopUp: {
         marginTop: 5,
@@ -720,13 +747,15 @@ const styles = StyleSheet.create({
     currentPlaceContainerPopUp: {
         marginTop: 5,
         height: "10%",
-        width: "100%",
+        width: "90%",
         borderRadius: 10,
         flexDirection: 'row',
         paddingLeft: 20,
         paddingRight: 20,
+        //marginLeft: 20,
         alignItems: "center",
         backgroundColor: "rgba(255,255,255,0.8)",
+        // borderWidth: 1,
         //elevation: 10,
     },
 
@@ -750,7 +779,7 @@ const styles = StyleSheet.create({
     userListsContainerPopUp: {
         marginTop: 5,
         height: "70%",
-        width: "100%",
+        width: "95%",
         marginBottom: 5,
     },
 
@@ -782,12 +811,13 @@ const styles = StyleSheet.create({
     },
 
     removePlacePopUp: {
-        position: 'absolute',
+        position: "absolute",
         right: 10,
-        height: 20,
-        width: 20,
+        height: 40,
+        width: 40,
         justifyContent: "center",
         alignItems: "center",
+        //borderWidth:1,
     },
 
     placeRankContainerPopUp: {

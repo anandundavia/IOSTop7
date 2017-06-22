@@ -130,6 +130,7 @@ export default class Consts {
         GET_ALL_CITY: Consts.BACKEND_BASE + "api/getallcity",
         LEADERBOARD: Consts.BACKEND_BASE + "api/leaderBoard",
         FRIENDS_RANK: Consts.BACKEND_BASE + "api/friendsrank",
+        PLACE_DETAILS: Consts.BACKEND_BASE + "api/getplacedetails",
 
     };
 
