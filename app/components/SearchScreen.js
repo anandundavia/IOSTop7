@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Image, StyleSheet, Alert, TouchableHighlight} from "react-native";
+import {Image, StyleSheet,Platform, Alert, TouchableHighlight} from "react-native";
 import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete";
 
 import Consts from "../consts/Consts";
