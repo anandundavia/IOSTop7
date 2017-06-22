@@ -263,7 +263,8 @@ const autoCompleteStyle = {
 
     description: {
         width: 100,
-        color: "black"
+        color: "black",
+        fontFamily:"Museo Sans Cyrl"
     },
 
     listView: {
@@ -276,6 +277,7 @@ const autoCompleteStyle = {
         alignItems: 'center',
         backgroundColor: '#DCC670',
         elevation: 15,
+
     },
 
     textInput: {
@@ -283,7 +285,8 @@ const autoCompleteStyle = {
         height: 50,
         fontSize: 18,
         marginLeft: 25,
-        marginTop: 13
+        marginTop: 13,
+        fontFamily:"Museo Sans Cyrl"
     },
 
 };
