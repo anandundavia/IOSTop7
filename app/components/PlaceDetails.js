@@ -197,7 +197,9 @@ export default class PlaceDetails extends Component {
             addButtonView = <TouchableHighlight style={styles.addButtonContainer}
                                                 underlayColor={'rgba(0,0,0,0)'}
                                                 onPress={this.addPlaceToFavourite}>
-                <Image source={require('../icons/plus_black.png')}/>
+                <Image
+                    style={styles.topBarIcon}
+                    source={require('../icons/plus_with_white_bg.png')}/>
             </TouchableHighlight>
         } else {
             this.isAdded = placeRank;
@@ -217,7 +219,9 @@ export default class PlaceDetails extends Component {
             <TouchableHighlight style={styles.backButtonContainer}
                                 underlayColor={'rgba(0,0,0,0)'}
                                 onPress={this.goBack}>
-                <Image source={require('../icons/back_black.png')}/>
+                <Image
+                    style={styles.topBarIcon}
+                    source={require('../icons/back_with_white_bg.png')}/>
             </TouchableHighlight>
 
             {/*The add button*/}
@@ -597,19 +601,30 @@ const styles = StyleSheet.create({
     },
 
     backButtonContainer: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
+        marginLeft:5,
+        marginTop:5,
         alignItems: "center",
         justifyContent: "center",
+        //borderWidth: 1
     },
 
 
+    topBarIcon: {
+        width: 30,
+        height: 30,
+    },
+
     addButtonContainer: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         right: 0,
+        marginRight:5,
+        marginTop:5,
         alignItems: "center",
         justifyContent: "center",
+        //borderWidth: 1
     },
 
     existsContainer: {
@@ -622,6 +637,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderRadius: 15,
         backgroundColor: "white",
+        //borderWidth: 1
     },
 
     rank: {
