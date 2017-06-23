@@ -583,7 +583,7 @@ export default class PlaceAddPopUp extends Component {
             return <View
                 ref={view => this.allPlaces[parseInt(key)] = view}
                 key={key}
-                {...this.panResponder.panHandlers}
+
                 style={[styles.userListPlaceNameContainerPopUp, border]}>
 
                 {view}
@@ -596,6 +596,7 @@ export default class PlaceAddPopUp extends Component {
                 </View>
 
                 {name && <Text
+                    {...this.panResponder.panHandlers}
                     numberOfLines={1}
                     style={[styles.userListPlaceNamePopUp, this.tempFontStyle]}>
                     {name}
