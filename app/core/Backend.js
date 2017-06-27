@@ -64,7 +64,9 @@ export default class Backend {
      * calls the /updateuserinfo api endpoint of the API
      */
     static updateUserInformation = (callback, ...args) => {
-
+        console.log("UPDATE USER INFO");
+        console.log(callback);
+        console.log(args);
         fetch(Consts.BACKEND.UPDATE_USER_INFO, {
             method: "post",
             headers: {
@@ -74,6 +76,7 @@ export default class Backend {
             body: JSON.stringify(Memory().commonRequest)
         }).then((response) => {
             if (response.status === 200) {
+                console.log(response);
                 return response;
             } else {
                 return new Error(response.statusText)
@@ -334,6 +337,7 @@ export default class Backend {
 
 
     static getPlaceDetails(placeID, callback, ...args) {
+        // console.log('BACKEND CALL');
         fetch(Consts.BACKEND.PLACE_DETAILS, {
             method: "post",
             headers: {
@@ -343,25 +347,33 @@ export default class Backend {
             body: JSON.stringify({id: placeID})
         }).then((response) => {
             if (response.status === 200) {
+                // console.log('RESPONCE OF GOOGLE SEARCH');
+                // console.log(response);
                 return response;
             } else {
                 return new Error(response.statusText);
             }
         }).then((response) => {
+            // console.log('GOOGLE SEARCH ERROR');
             // Is something wrong with access token?
             // if something is wrong with the access token then the response
             // object will be empty
             if (response instanceof Error || Object.keys(response).length === 0) {
+                // console.log('GOOGLE SEARCH ERROR ::1');
                 // Yes. Something wrong with access token,
                 // Get a new one and attempt to update the information again
                 AsyncStorage.removeItem(Consts.STORAGE_KEYS.ACCESS_TOKEN_KEY);
                 Backend.getBackendAccessToken(Backend.getPlaceDetails, placeID, callback, ...args);
             } else {
+                // console.log('ACCESS TOKEN IS GOOD');
                 // Access token is good! resolve the promise
+                // console.log(response);
                 return response.json();
             }
         }).then((response) => {
+            // console.log('CALL BACK PART');
             // console.log(response);
+            // console.log('GOOGLE SEARCH ERROR');
             callback(response, ...args);
         }).catch((error) => {
             console.log(JSON.stringify(error));

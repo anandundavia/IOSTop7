@@ -93,7 +93,8 @@ export default class Consts {
 
     static KEYS = {
         // This is the new key. Belongs to atmayfair@gmail.com
-        GOOGLE_API_KEY: "AIzaSyCZSiIcUdMKgD6LZ0P7S7kgOA12U4A31d8",
+        // GOOGLE_API_KEY: "AIzaSyCZSiIcUdMKgD6LZ0P7S7kgOA12U4A31d8",
+        GOOGLE_API_KEY: "AIzaSyASI8vI91mLFkRr_OjGKooY2uXOrEuOEv8",
 
 
         // Down below is the old key belongs to abundavia@gmail.com
@@ -115,10 +116,10 @@ export default class Consts {
 
 
     //staging
-    static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
+    // static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
 
     //dev
-    //static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
+    static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
 
     static  BACKEND = {
         CLIENT_KEY: "d2VidWk6d2VidWlzZWNyZXQ=",

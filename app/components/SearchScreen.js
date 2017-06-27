@@ -15,6 +15,11 @@ export default class SearchScreen extends Component {
     };
 
     dataReceived = (data, placeData, details) => {
+        // console.log('DATA RECEIVED');
+        // console.log(data);
+        // console.log(placeData);
+        // console.log(details);
+
         if (data.Status === 'success') {
             let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
                 Consts.KEYS.GOOGLE_API_KEY;
@@ -199,7 +204,14 @@ export default class SearchScreen extends Component {
      * @param data
      * @param details
      */
-    suggestedPlaceOnPress = (data, details = null) => Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
+    suggestedPlaceOnPress = (data, details = null) =>
+    {
+        // console.log("FROM GOOGLE API");
+        // console.log(data)
+        // console.log("DETAIL");
+        // console.log(details)
+        Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
+    };
 
 
     /**

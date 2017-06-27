@@ -280,7 +280,7 @@ export default class Dashboard extends Component {
             regionToLoad = Consts.DEFAULT_REGION;
         }
 
-        console.log(regionToLoad);
+        // console.log(regionToLoad);
 
         return <Animated.View
             style={[styles.mainViewContainer, this.animatedDesign]}>

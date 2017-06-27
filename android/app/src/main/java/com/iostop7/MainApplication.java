@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
+
 import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new FBSDKPackage(mCallbackManager),
             new MapsPackage()
+
       );
     }
   };

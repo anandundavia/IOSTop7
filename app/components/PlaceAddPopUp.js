@@ -126,6 +126,7 @@ export default class PlaceAddPopUp extends Component {
                     cityLongitude: this.params.markerObject.coordinate.longitude,
                     zoomingIndex: 0.06
                 },
+
                 rating: this.params.markerObject.rating,
                 [numberRated]: number,
                 [weightedRating]: (10 - this.placeIndex)
@@ -178,6 +179,8 @@ export default class PlaceAddPopUp extends Component {
         let t; // temporary var
         let index = this.placeIndex;
         //let newPlace = {id: this.params.markerObject.id, name: this.params.markerObject.name};
+        console.log("DROP RELEASED");
+        console.log(this.listPlaceObject);
         let newPlace = this.listPlaceObject;
 
         /*
@@ -283,7 +286,8 @@ export default class PlaceAddPopUp extends Component {
                 this.currentViewProps.style.top = 0;
                 this.placeIndex = -1;
             }
-            this.listPlaceObject = {id: this.params.markerObject.id, name: this.params.markerObject.name};
+            let priceLevel = this.params.markerObject.priceLevel <= 3 ? 0 : 1;
+            this.listPlaceObject = {id: this.params.markerObject.id, name: this.params.markerObject.name,priceLevel:priceLevel};
             // setting the native props will kinda sorta refresh the view 'lightly'
             this.currentPlace.setNativeProps(this.currentViewProps);
 
@@ -322,9 +326,8 @@ export default class PlaceAddPopUp extends Component {
                 newFinalIndex = Math.floor(newIndex);
                 //console.log("Index: " + newIndex + ", Refined: " + newFinalIndex);
             }
-
             let tempArr = this.tempPlaceArray.slice(3).reverse();
-            this.listPlaceObject = {id: tempArr[index].id, name: tempArr[index].name};
+            this.listPlaceObject = {id: tempArr[index].id, name: tempArr[index].name,priceLevel:tempArr[index].priceLevel};
             this.listPlaceIndex = index;
             this.placeIndex = this.listPlaceIndex + newFinalIndex;
 
@@ -442,6 +445,7 @@ export default class PlaceAddPopUp extends Component {
      * @param index
      */
     removePlace = (index) => {
+        console.log('::::: REMOVE PLACES :::::');
         this.tempPlaceArray[this.tempPlaceArray.length - 1 - index] = {id: null, name: null};
 
         let isEmpty = true;
@@ -465,13 +469,13 @@ export default class PlaceAddPopUp extends Component {
         // is the list empty?
         if (isEmpty) {
             // Yes the list is empty. Delete the list object from the user altogether
-            this.tempUserObject.lists.splice(this.listIndex, 1);
+            // this.tempUserObject.lists.splice(this.listIndex, 1);
 
             // Does user have any more lists?
-            if (this.tempUserObject.lists.length === 0) {
-                // Nope he does not. Delete the whole key of list.
-                delete this.tempUserObject.lists;
-            }
+            // if (this.tempUserObject.lists.length === 0) {
+            //     // Nope he does not. Delete the whole key of list.
+            //     delete this.tempUserObject.lists;
+            // }
         } else {
             // No the list has other elements, set the temp place array to the listIndex
             this.tempUserObject.lists[this.listIndex].places = this.tempPlaceArray;
