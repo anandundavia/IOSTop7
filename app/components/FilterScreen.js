@@ -249,7 +249,7 @@ export default class FilterScreen extends Component {
         ];
         let typeNames = ["ALL", "EXPERTS", "FRIENDS"];
         return <View style={styles.filterParameterContainer}>
-            <Text style={styles.filterParameterName}>RATED BY</Text>
+            <Text style={styles.filterParameterName}>RANKED BY</Text>
             <ButtonGroup
                 selectedIndex={this.state.selectedRatedBy}
                 buttons={types}

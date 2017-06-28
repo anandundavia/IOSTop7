@@ -21,12 +21,12 @@ export default class SearchScreen extends Component {
         // console.log(details);
 
         if (data.Status === 'success') {
-            let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
-                Consts.KEYS.GOOGLE_API_KEY;
+            // let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
+            //     Consts.KEYS.GOOGLE_API_KEY;
             let newMaker = {
                 id: data.place.id,
                 priceLevel: data.place.priceLevel,
-                icon: {uri: icon},
+                icon: {uri: data.place.googlePhotoRef},
                 name: data.place.name,
                 phoneNumber: data.place.phoneNumber,
                 number: 3, // So that PriceRange in PlaceDetails does not break
@@ -109,7 +109,6 @@ export default class SearchScreen extends Component {
         if (details.photos && details.photos.length !== 0) {
             //Pick the first photo to show
             ref = details.photos[0].photo_reference;
-
             // Google API need reference of the image to get the full image.
             icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + ref + "&key=" +
                 Consts.KEYS.GOOGLE_API_KEY;

@@ -140,8 +140,8 @@ export default class PlaceDetails extends Component {
     getListID = () => {
         return Memory().userObject.id + "_" +
             this.params.markerObject.location.city + "_" +
-            this.params.markerObject.location.state + "_" +
-            this.params.markerObject.location.country + "_" +
+            // this.params.markerObject.location.state + "_" +
+            // this.params.markerObject.location.country + "_" +
             this.params.markerObject.type;
     };
 

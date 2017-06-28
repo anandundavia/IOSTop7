@@ -69,8 +69,140 @@ export default class PlaceAddPopUp extends Component {
         this.props.navigation.goBack();
     };
 
+    async googlePhoto(refrence) {
+        console.log("MY FUN ");
+        let string = 'http';
+        if(refrence.indexOf(string) === -1){
+            let apicall = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + refrence + "&key=" +
+                Consts.KEYS.GOOGLE_API_KEY;
+            let response = await fetch(apicall);
+
+            if(response.status === 200){
+                // ("Temp:");
+                // console.log(JSON.stringify(this.tempUserObject));console.log
+                Memory().userObject = this.tempUserObject;
+                // console.log("memory:");
+                // console.log(JSON.stringify(Memory().userObject));
+
+                let numberRated;
+                let weightedRating;
+
+                if (Memory().userObject.expert) {
+                    numberRated = "numberOfExpertRated";
+                    weightedRating = "expertTotalWeightedRating";
+                } else {
+                    numberRated = "numberOfUserRated";
+                    weightedRating = "userTotalWeightedRating";
+                }
+
+                let number;
+                if (this.params.isAdded) {
+                    number = 0;
+                } else {
+                    number = 1;
+                }
+
+
+                Memory().commonRequest = {
+                    userDetails: Memory().userObject,
+                    place: {
+                        id: this.params.markerObject.id,
+                        name: this.params.markerObject.name,
+                        types: [this.params.markerObject.type],
+                        phoneNumber: this.params.markerObject.phoneNumber,
+                        setting: "both",
+                        googlePhotoRef: response.url,
+                        priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
+                        location: {
+                            city: this.params.markerObject.location.city,
+                            state: this.params.markerObject.location.state,
+                            country: this.params.markerObject.location.country,
+                            cityLatitude: this.params.markerObject.coordinate.latitude,
+                            cityLongitude: this.params.markerObject.coordinate.longitude,
+                            zoomingIndex: 0.06
+                        },
+
+                        rating: this.params.markerObject.rating,
+                        [numberRated]: number,
+                        [weightedRating]: (10 - this.placeIndex)
+                    }
+                };
+
+                console.log("COMMON REQUEST ");
+                console.log(JSON.stringify(Memory().commonRequest));
+
+                Backend.updateUserInformation(() => {
+                    this.setLoadingTextViewVisibility(false);
+                    this.props.navigation.state.params.onGoBack();
+                    this.props.navigation.goBack();
+                });
+
+            }
+        }else{
+            // ("Temp:");
+            // console.log(JSON.stringify(this.tempUserObject));console.log
+            Memory().userObject = this.tempUserObject;
+            // console.log("memory:");
+            // console.log(JSON.stringify(Memory().userObject));
+
+            let numberRated;
+            let weightedRating;
+
+            if (Memory().userObject.expert) {
+                numberRated = "numberOfExpertRated";
+                weightedRating = "expertTotalWeightedRating";
+            } else {
+                numberRated = "numberOfUserRated";
+                weightedRating = "userTotalWeightedRating";
+            }
+
+            let number;
+            if (this.params.isAdded) {
+                number = 0;
+            } else {
+                number = 1;
+            }
+
+
+            Memory().commonRequest = {
+                userDetails: Memory().userObject,
+                place: {
+                    id: this.params.markerObject.id,
+                    name: this.params.markerObject.name,
+                    types: [this.params.markerObject.type],
+                    phoneNumber: this.params.markerObject.phoneNumber,
+                    setting: "both",
+                    googlePhotoRef: refrence,
+                    priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
+                    location: {
+                        city: this.params.markerObject.location.city,
+                        state: this.params.markerObject.location.state,
+                        country: this.params.markerObject.location.country,
+                        cityLatitude: this.params.markerObject.coordinate.latitude,
+                        cityLongitude: this.params.markerObject.coordinate.longitude,
+                        zoomingIndex: 0.06
+                    },
+
+                    rating: this.params.markerObject.rating,
+                    [numberRated]: number,
+                    [weightedRating]: (10 - this.placeIndex)
+                }
+            };
+
+            console.log("COMMON REQUEST ");
+            console.log(JSON.stringify(Memory().commonRequest));
+
+            Backend.updateUserInformation(() => {
+                this.setLoadingTextViewVisibility(false);
+                this.props.navigation.state.params.onGoBack();
+                this.props.navigation.goBack();
+            });
+        }
+
+    }
 
     okButtonPressed = () => {
+        console.log("OK BUTTON PRESS");
         this.setLoadingTextViewVisibility(true);
 
         Memory().updateLeaderboard = true;
@@ -81,66 +213,9 @@ export default class PlaceAddPopUp extends Component {
 
         let reference = url.substring(index, end);
 
+        this.googlePhoto(reference);
 
-        // ("Temp:");
-        // console.log(JSON.stringify(this.tempUserObject));console.log
-        Memory().userObject = this.tempUserObject;
-        // console.log("memory:");
-        // console.log(JSON.stringify(Memory().userObject));
-
-
-        let numberRated;
-        let weightedRating;
-
-        if (Memory().userObject.expert) {
-            numberRated = "numberOfExpertRated";
-            weightedRating = "expertTotalWeightedRating";
-        } else {
-            numberRated = "numberOfUserRated";
-            weightedRating = "userTotalWeightedRating";
-        }
-
-        let number;
-        if (this.params.isAdded) {
-            number = 0;
-        } else {
-            number = 1;
-        }
-
-
-        Memory().commonRequest = {
-            userDetails: Memory().userObject,
-            place: {
-                id: this.params.markerObject.id,
-                name: this.params.markerObject.name,
-                types: [this.params.markerObject.type],
-                phoneNumber: this.params.markerObject.phoneNumber,
-                setting: "both",
-                googlePhotoRef: reference,
-                priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
-                location: {
-                    city: this.params.markerObject.location.city,
-                    state: this.params.markerObject.location.state,
-                    country: this.params.markerObject.location.country,
-                    cityLatitude: this.params.markerObject.coordinate.latitude,
-                    cityLongitude: this.params.markerObject.coordinate.longitude,
-                    zoomingIndex: 0.06
-                },
-
-                rating: this.params.markerObject.rating,
-                [numberRated]: number,
-                [weightedRating]: (10 - this.placeIndex)
-            }
-        };
-
-
-        console.log(JSON.stringify(Memory().commonRequest));
-
-        Backend.updateUserInformation(() => {
-            this.setLoadingTextViewVisibility(false);
-            this.props.navigation.state.params.onGoBack();
-            this.props.navigation.goBack();
-        });
+        // remove updateuser function call from here and move to googlePhoto function
     };
 
 
@@ -355,8 +430,8 @@ export default class PlaceAddPopUp extends Component {
     getListID = () => {
         return this.tempUserObject.id + "_" +
             this.params.markerObject.location.city + "_" +
-            this.params.markerObject.location.state + "_" +
-            this.params.markerObject.location.country + "_" +
+            // this.params.markerObject.location.state + "_" +
+            // this.params.markerObject.location.country + "_" +
             this.params.markerObject.type;
     };
 
@@ -637,7 +712,7 @@ export default class PlaceAddPopUp extends Component {
 
 
     componentWillMount() {
-        //this.setUpPopUp();
+        // this.setUpPopUp();
         this.precomputeListInformation();
         this.setUpDragging();
     }
@@ -665,7 +740,6 @@ export default class PlaceAddPopUp extends Component {
             {this.getLoadingTextView()}
         </Image>)
     }
-
 
 }
 

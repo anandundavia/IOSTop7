@@ -365,7 +365,7 @@ export default class Dashboard extends Component {
                     marginBottom:150
                 }
             }
-
+            console.log("VALUE :::: "+ JSON.stringify(value));
             return <TouchableHighlight
                 key={key}
                 onPress={() => {

@@ -55,6 +55,29 @@ export default class Backend {
         });
     };
 
+    static getPhotoUrl = (refrence) =>{
+        console.log("GET CALL FOR PHOTO URL");
+        let apicall = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + refrence + "&key=" +
+            Consts.KEYS.GOOGLE_API_KEY;
+        fetch(apicall, {
+            method: "get",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "bearer " + Memory().oAuth.access_token
+            },
+            // body: JSON.stringify(Memory().commonRequest)
+        }).then((response) => {
+            if (response.status === 200) {
+                console.log("RESPOSE OF GOOGLE PHOTO");
+                console.log(response);
+                return response.url;
+            } else {
+                return new Error(response.statusText)
+            }
+        })
+    }
+
+
 
     /**
      * Update the user information to the backend.
@@ -64,9 +87,9 @@ export default class Backend {
      * calls the /updateuserinfo api endpoint of the API
      */
     static updateUserInformation = (callback, ...args) => {
-        console.log("UPDATE USER INFO");
-        console.log(callback);
-        console.log(args);
+        // console.log("UPDATE USER INFO");
+        // console.log(callback);
+        // console.log(args);
         fetch(Consts.BACKEND.UPDATE_USER_INFO, {
             method: "post",
             headers: {
@@ -231,13 +254,14 @@ export default class Backend {
                     Memory().markers[parseInt(key)] = {
                         id: value.id,
                         priceLevel: value.priceLevel,
-                        icon: {
-                            uri: Consts.API_URLS.GOOGLE_PHOTO_API_BASE +
-                            "maxwidth=400&photoreference=" +
-                            value.googlePhotoRef +
-                            "&key=" +
-                            Consts.KEYS.GOOGLE_API_KEY
-                        },
+                        // icon: {
+                        //     uri: Consts.API_URLS.GOOGLE_PHOTO_API_BASE +
+                        //     "maxwidth=400&photoreference=" +
+                        //     value.googlePhotoRef +
+                        //     "&key=" +
+                        //     Consts.KEYS.GOOGLE_API_KEY
+                        // },
+                        icon: {uri:value.googlePhotoRef},
                         name: value.name,
                         number: parseInt(key + 1),
                         type: value.types[0],
