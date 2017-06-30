@@ -38,13 +38,16 @@ export default class PlaceDetails extends Component {
         }
         this.friendsViewHeight = new Animated.Value(length);
         this.isAdded = null;
-
+        console.log("FROM CONSTRUCTOR"+JSON.stringify(this.params));
     }
 
     /**
      * Go back to the dashboard when the user taps on back button
      */
     goBack = () => {
+        if(this.params && this.params.toPage){
+            this.props.navigation.navigate(this.params.toPage);
+        }
         this.params.onGoBack();
         this.props.navigation.goBack();
     };
@@ -101,6 +104,7 @@ export default class PlaceDetails extends Component {
 
 
     addPlaceToFavourite = () => {
+        console.log(":::: ADD PLACE To FAVOURITE :::: ");
         if (Memory().userObject.isGuest) {
             this.params.markerObject.friendsView = null;
             this.props.navigation.navigate(
@@ -112,7 +116,9 @@ export default class PlaceDetails extends Component {
                 }
             );
         } else {
-
+            console.log("CHECKING FOR TYPE");
+            console.log(this.params.markerObject);
+            console.log(this.params.markerObject.type instanceof Object);
             if (this.params.markerObject.type instanceof Object) {
                 if (this.params.markerObject.type.length === 1) {
                     let type = this.params.markerObject.type[0];
@@ -367,14 +373,16 @@ export default class PlaceDetails extends Component {
 
         let typeIcon;
         let type;
-
-
+        let placeType;
+        // Remove for display category popup @RanvaRahul
         if( this.params.markerObject.type instanceof Object) {
-            this.params.markerObject.type = this.params.markerObject.type[0]
+            placeType = this.params.markerObject.type[0]
+        }else{
+            placeType = this.params.markerObject.type;
         }
-
-
-        switch (this.params.markerObject.type) {
+        console.log("::::: TYPES DISPLAY ::::::: ");
+        console.log(placeType);
+        switch (placeType) {
             case  Consts.PLACE_TYPES.BAR:
                 typeIcon = <Image style={styles.placeDetailsIcon} source={require("../icons/bar_white.png")}/>;
                 type = <Text style={styles.placeDetailsText}>{Consts.PLACE_TYPES.BAR.toUpperCase()}</Text>;

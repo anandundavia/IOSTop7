@@ -17,6 +17,10 @@ import {
 import MapView from "react-native-maps";
 import SideMenu from "react-native-side-menu";
 import ScrollableTabView from "react-native-scrollable-tab-view";
+import {LoginManager, LoginButton} from "react-native-fbsdk";
+import Facebook from "../core/Facebook";
+
+
 
 
 import Marker from "./Marker";
@@ -55,6 +59,7 @@ export default class Dashboard extends Component {
             showOverlay: false,
             loadMapView: true,
         }
+
     }
 
 
@@ -174,10 +179,30 @@ export default class Dashboard extends Component {
      */
     getSideBar = () => {
         let userListView;
+        let navigation;
         //Does user have any lists?
         if (Memory().userObject.lists) {
             //Yes he does! Create the component for views
             userListView = Memory().userObject.lists.map(this.renderList);
+            navigation = <View style={styles.listNavigationContainer}>
+                <TouchableHighlight
+                    underlayColor={"#c5b167"}
+                    onPress={this.swipeLift}
+                    style={styles.leftButton}>
+                    <Image source={require("../icons/back_black.png")}/>
+                </TouchableHighlight>
+                {/*<TouchableHighlight*/}
+                {/*onPress={this.editPlaceList}*/}
+                {/*style={styles.editButton}>*/}
+                {/*<Text>Edit</Text>*/}
+                {/*</TouchableHighlight>*/}
+                <TouchableHighlight
+                    underlayColor={"#c5b167"}
+                    onPress={this.swipeRight}
+                    style={styles.rightButton}>
+                    <Image source={require("../icons/back_right.png")}/>
+                </TouchableHighlight>
+            </View>;
         } else {
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
@@ -185,13 +210,24 @@ export default class Dashboard extends Component {
                     Add any place to a list and the list will show up here
                 </Text>
             </View>;
+            navigation = null;
         }
 
         let userImageSource;
+        let loginButton;
         if (Memory().userObject.isGuest) {
             userImageSource = require("../icons/guest_user_image_black.png");
+            loginButton = <TouchableHighlight
+                onPress={this.initLogIn}
+                style={styles.facebookLogin}>
+                <Text
+                    style={styles.facebookLoginText}>
+                    LOGIN WITH FACEBOOK
+                </Text>
+            </TouchableHighlight>;
         } else {
             userImageSource = {uri: Memory().userObject.picture.data.url};
+            loginButton = null;
         }
 
         return <Image
@@ -206,6 +242,7 @@ export default class Dashboard extends Component {
                     <Text style={styles.userName}>{Memory().userObject.name}</Text>
                 </View>
                 {/*<LoginButton/>*/}
+                {loginButton}
                 <View style={styles.horizontalLine}/>
             </View>
 
@@ -218,26 +255,67 @@ export default class Dashboard extends Component {
                 tabBarUnderlineStyle={{height: 0}}>
                 {userListView}
             </ScrollableTabView>
-            <View style={styles.listNavigationContainer}>
-                <TouchableHighlight
-                    underlayColor={"#c5b167"}
-                    onPress={this.swipeLift}
-                    style={styles.leftButton}>
-                    <Image source={require("../icons/back_black.png")}/>
-                </TouchableHighlight>
-                {/*<TouchableHighlight*/}
-                    {/*onPress={this.editPlaceList}*/}
-                    {/*style={styles.editButton}>*/}
-                    {/*<Text>Edit</Text>*/}
-                {/*</TouchableHighlight>*/}
-                <TouchableHighlight
-                    underlayColor={"#c5b167"}
-                    onPress={this.swipeRight}
-                    style={styles.rightButton}>
-                    <Image source={require("../icons/back_right.png")}/>
-                </TouchableHighlight>
-            </View>
+            {navigation}
         </Image>;
+    };
+
+
+    /**
+     * Handle the data of user received from Graph Manager
+     * @param error
+     * @param result
+     */
+    handleData = (error, result) => {
+        if (!error) {
+            Memory().userObject = result;
+            Backend.syncUserInfo((isUserNew) => {
+                this.setLoadingTextViewVisibility(false);
+                if (isUserNew) {
+                    this.props.navigation.navigate(
+                        Consts.SCREEN_TITLES.USER_CONFIRM_DETAILS,
+                        // TODO: PLEASE TEST
+                        {...this.params}
+                    );
+                } else {
+                    if (this.params && this.params.toPage) {
+                        this.props.navigation.state.params.onGoBack();
+                        this.props.navigation.goBack();
+                    } else {
+                        this.props.navigation.navigate(Consts.SCREEN_TITLES.DASHBOARD);
+                    }
+
+                }
+            })
+        } else {
+            console.log(error)
+        }
+    };
+
+    /**
+     * Once the login is done ( or cancelled ) handle the flow
+     * @param result
+     */
+    handleLogIn = (result) => {
+        if (result.isCancelled) {
+            alert("Login was cancelled");
+        } else {
+            this.setLoadingTextViewVisibility(true);
+            Facebook.makeGraphRequest(this.handleData);
+        }
+    };
+
+
+    /**
+     * Initiate the facebook login flow using LoginManager of Facebook
+     */
+    initLogIn = () => {
+        LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
+            .then(this.handleLogIn, (error) => alert(error))
+            .catch((error) => {
+                console.error(error)
+            });
+        Backend.getBackendAccessToken(() => {
+        });
     };
 
 
@@ -268,6 +346,7 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getMainMapView = () => {
+
         let regionToLoad;
         if (Memory().currentCity) {
             regionToLoad = {
@@ -365,7 +444,7 @@ export default class Dashboard extends Component {
                     marginBottom:150
                 }
             }
-            console.log("VALUE :::: "+ JSON.stringify(value));
+
             return <TouchableHighlight
                 key={key}
                 onPress={() => {
@@ -654,6 +733,19 @@ const styles = StyleSheet.create({
         width: "100%"
     },
 
+    facebookLogin: {
+        width: "60%",
+        height: "10%",
+        borderRadius: 50,
+        backgroundColor: "#3B5999",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    facebookLoginText: {
+        fontWeight: "bold",
+        color: "white",
+        fontFamily: 'Museo Sans Cyrl'
+    },
 
     listNavigationContainer: {
         justifyContent: "space-between",

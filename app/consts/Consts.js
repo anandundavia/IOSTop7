@@ -116,10 +116,10 @@ export default class Consts {
 
 
     //staging
-    // static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
+    static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
 
     //dev
-    static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
+    // static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
 
     static  BACKEND = {
         CLIENT_KEY: "d2VidWk6d2VidWlzZWNyZXQ=",

@@ -15,10 +15,11 @@ export default class SearchScreen extends Component {
     };
 
     dataReceived = (data, placeData, details) => {
-        // console.log('DATA RECEIVED');
-        // console.log(data);
-        // console.log(placeData);
-        // console.log(details);
+
+        console.log('DATA RECEIVED');
+        console.log(data);
+        console.log(placeData);
+        console.log(details);
 
         if (data.Status === 'success') {
             // let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
@@ -60,6 +61,8 @@ export default class SearchScreen extends Component {
 
 
     detailsFromGoogle = (data, details) => {
+        console.log("DETAIL FROM GOOGLE");
+        console.log(details.types);
         let type = [];
         if (details.types) {
             for (let i = 0; i < details.types.length; i++) {
@@ -157,7 +160,8 @@ export default class SearchScreen extends Component {
                 }
             }
         }
-
+        console.log("::::: TYPE :::::");
+        console.log(type);
 
         if (typeExists && cityExists) {
             let newMaker = {
@@ -182,8 +186,8 @@ export default class SearchScreen extends Component {
                 rating: details.rating
             };
 
-            //console.log(JSON.stringify(newMaker));
-
+            console.log("::::: CREATE MARKER :::::: ");
+            console.log(JSON.stringify(newMaker));
             this.props.navigation.navigate(
                 Consts.SCREEN_TITLES.PLACE_DETAILS,
                 {
@@ -205,10 +209,10 @@ export default class SearchScreen extends Component {
      */
     suggestedPlaceOnPress = (data, details = null) =>
     {
-        // console.log("FROM GOOGLE API");
-        // console.log(data)
-        // console.log("DETAIL");
-        // console.log(details)
+        console.log("FROM GOOGLE API");
+        console.log(data)
+        console.log("DETAIL");
+        console.log(details)
         Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
     };
 

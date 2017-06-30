@@ -45,6 +45,14 @@ export default class FilterScreen extends Component {
 
             }
 
+            let rankedBy = Memory().leaderBoardFilters.ratedBy;
+            if(rankedBy === 'all'){
+                ratedBy = 0;
+            } else if(rankedBy === 'experts'){
+                ratedBy = 1;
+            }else{
+                ratedBy = 2;
+            }
 
             let priceL = Memory().leaderBoardFilters.priceLevel;
             if (priceL === 0) {
@@ -65,7 +73,7 @@ export default class FilterScreen extends Component {
         this.state = {
             selectedType: type,
             selectedPrice: priceLevel,
-            selectedRatedBy: 0,
+            selectedRatedBy: ratedBy,
         }
     }
 
@@ -98,6 +106,7 @@ export default class FilterScreen extends Component {
 
 
         let ratedBy;
+        let userId = '';
         switch (this.state.selectedRatedBy) {
             case 0:
                 ratedBy = "all";
@@ -107,6 +116,7 @@ export default class FilterScreen extends Component {
                 break;
             case 2:
                 ratedBy = "friends";
+                userId = Memory().userObject.id;
                 break;
         }
 
@@ -123,12 +133,14 @@ export default class FilterScreen extends Component {
                 priceLevel = 1;
                 break;
         }
+
         Memory().leaderBoardFilters = {
             types: type,
             priceLevel: priceLevel,
             city: this.selectedCity,
-            ratedBy: "all",
+            ratedBy: ratedBy,
             setting: "both",
+            userId: userId,
         };
         Memory().updateLeaderboard = true;
         this.props.navigation.state.params.updateLeaderBoard();
@@ -242,12 +254,24 @@ export default class FilterScreen extends Component {
     };
 
     getRatedView = () => {
-        let types = [
-            <Image style={styles.option} source={require("../icons/all_white.png")}/>,
-            <Image style={styles.option} source={require("../icons/experts_white.png")}/>,
-            <Image style={styles.option} source={require("../icons/friends_white.png")}/>
-        ];
-        let typeNames = ["ALL", "EXPERTS", "FRIENDS"];
+        let types;
+
+        let typeNames;
+        if(Memory().userObject.isGuest){
+            typeNames = ["ALL", "EXPERTS"];
+            types = [
+                <Image style={styles.option} source={require("../icons/all_white.png")}/>,
+                <Image style={styles.option} source={require("../icons/experts_white.png")}/>
+            ];
+        }else{
+            typeNames = ["ALL", "EXPERTS", "FRIENDS"];
+            types = [
+                <Image style={styles.option} source={require("../icons/all_white.png")}/>,
+                <Image style={styles.option} source={require("../icons/experts_white.png")}/>,
+                <Image style={styles.option} source={require("../icons/friends_white.png")}/>
+            ];
+        }
+
         return <View style={styles.filterParameterContainer}>
             <Text style={styles.filterParameterName}>RANKED BY</Text>
             <ButtonGroup

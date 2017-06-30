@@ -361,7 +361,7 @@ export default class Backend {
 
 
     static getPlaceDetails(placeID, callback, ...args) {
-        // console.log('BACKEND CALL');
+        console.log('BACKEND CALL');
         fetch(Consts.BACKEND.PLACE_DETAILS, {
             method: "post",
             headers: {
@@ -371,8 +371,8 @@ export default class Backend {
             body: JSON.stringify({id: placeID})
         }).then((response) => {
             if (response.status === 200) {
-                // console.log('RESPONCE OF GOOGLE SEARCH');
-                // console.log(response);
+                console.log('RESPONCE OF GOOGLE SEARCH');
+                console.log(response);
                 return response;
             } else {
                 return new Error(response.statusText);
