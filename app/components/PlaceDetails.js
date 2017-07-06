@@ -17,7 +17,7 @@ import MapView from "react-native-maps";
 import Consts from "../consts/Consts";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
-
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 export default class PlaceDetails extends Component {
 
@@ -39,6 +39,7 @@ export default class PlaceDetails extends Component {
         this.friendsViewHeight = new Animated.Value(length);
         this.isAdded = null;
         console.log("FROM CONSTRUCTOR"+JSON.stringify(this.params));
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
     }
 
     /**
@@ -116,9 +117,8 @@ export default class PlaceDetails extends Component {
                 }
             );
         } else {
-            console.log("CHECKING FOR TYPE");
-            console.log(this.params.markerObject);
-            console.log(this.params.markerObject.type instanceof Object);
+            this.tracker.trackEvent(Consts.analyticEvent.addPlaceInListEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.addPlaceInListLabel);
+
             if (this.params.markerObject.type instanceof Object) {
                 if (this.params.markerObject.type.length === 1) {
                     let type = this.params.markerObject.type[0];
@@ -128,7 +128,7 @@ export default class PlaceDetails extends Component {
                 } else if (this.params.markerObject.type.length > 1) {
                     this.showPopUp();
                 } else {
-                    console.warn("SOMETNG ");
+                    console.warn("SOMETHING");
                 }
             } else {
                 this.addPlace();
@@ -346,6 +346,8 @@ export default class PlaceDetails extends Component {
 
 
     openMapApp = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.openMapEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.openMapLabel);
+
         if (Platform.OS === 'ios') {
             let googleMapURL = "comgooglemaps://?saddr=" + +this.params.markerObject.coordinate.latitude + "," + this.params.markerObject.coordinate.longitude;
             Linking.openURL(googleMapURL).then((e) => {
@@ -551,7 +553,7 @@ export default class PlaceDetails extends Component {
                         friendsView.push(
                             <View key={0} style={styles.noFriendsContainer}>
                                 <Text style={styles.noFriendsText}>
-                                    You need to be logged in to see your friends' ranks!
+                                    You need to be logged in to see your friend's ranks!
                                 </Text>
                             </View>
                         )
@@ -594,13 +596,12 @@ export default class PlaceDetails extends Component {
     }
 
     render() {
-        // console.log("PlaceDetails: Render called");
         return (
             <View>
                 {this.getTheTopbarView()}
                 {this.getMainView()}
                 {/*The view for the loading text*/}
-                {this.getLoadingTextView()}
+                {/*{this.getLoadingTextView()}*/}
             </View>
         )
     }
@@ -631,7 +632,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         alignItems: "center",
         justifyContent: "center",
-        //borderWidth: 1
+        // borderWidth: 1
     },
 
 
@@ -913,24 +914,24 @@ const styles = StyleSheet.create({
 
 
     loadingText: {
-        color: "white",
-        fontFamily: 'Museo Sans Cyrl'
-        //borderWidth: 1
+        // color: "white",
+        // fontFamily: 'Museo Sans Cyrl'
+        // //borderWidth: 1
     },
 
     loadingTextContainer: {
-        position: 'absolute',
-        alignSelf: 'center',
-        bottom: 12,
-        borderWidth: 1,
-        width: 150,
-        height: 30,
-        borderRadius: 10,
-        justifyContent: "center",
-        alignItems: "center",
-        borderColor: "rgba(0,0,0,0.5)",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        elevation: 20
+        // position: 'absolute',
+        // alignSelf: 'center',
+        // bottom: 12,
+        // borderWidth: 1,
+        // width: 150,
+        // height: 30,
+        // borderRadius: 10,
+        // justifyContent: "center",
+        // alignItems: "center",
+        // borderColor: "rgba(0,0,0,0.5)",
+        // backgroundColor: "rgba(0,0,0,0.5)",
+        // elevation: 20
 
     }
 });

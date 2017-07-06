@@ -5,9 +5,14 @@ import {GooglePlacesAutocomplete} from "react-native-google-places-autocomplete"
 import Consts from "../consts/Consts";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
-
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 export default class SearchScreen extends Component {
+
+    constructor() {
+        super();
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
+    }
 
     static navigationOptions = {
         gesturesEnabled: false,
@@ -15,13 +20,9 @@ export default class SearchScreen extends Component {
     };
 
     dataReceived = (data, placeData, details) => {
-
-        console.log('DATA RECEIVED');
-        console.log(data);
-        console.log(placeData);
-        console.log(details);
-
         if (data.Status === 'success') {
+            this.tracker.trackEvent(Consts.analyticEvent.searchFromDBEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.searchFromDBLabel);
+
             // let icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + data.place.googlePhotoRef + "&key=" +
             //     Consts.KEYS.GOOGLE_API_KEY;
             let newMaker = {
@@ -61,8 +62,8 @@ export default class SearchScreen extends Component {
 
 
     detailsFromGoogle = (data, details) => {
-        console.log("DETAIL FROM GOOGLE");
-        console.log(details.types);
+        this.tracker.trackEvent(Consts.analyticEvent.searchDirectEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.searchDirectLabel);
+
         let type = [];
         if (details.types) {
             for (let i = 0; i < details.types.length; i++) {
@@ -160,8 +161,6 @@ export default class SearchScreen extends Component {
                 }
             }
         }
-        console.log("::::: TYPE :::::");
-        console.log(type);
 
         if (typeExists && cityExists) {
             let newMaker = {
@@ -197,6 +196,7 @@ export default class SearchScreen extends Component {
                 }
             );
         } else {
+            this.tracker.trackEvent(Consts.analyticEvent.wrongSearchEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.wrongSearchLabel);
             Alert.alert(Consts.WRONG_PLACE_MESSAGES.TITLE, Consts.WRONG_PLACE_MESSAGES.MESSAGE)
         }
     };
@@ -209,10 +209,8 @@ export default class SearchScreen extends Component {
      */
     suggestedPlaceOnPress = (data, details = null) =>
     {
-        console.log("FROM GOOGLE API");
-        console.log(data)
-        console.log("DETAIL");
-        console.log(details)
+        this.tracker.trackEvent(Consts.analyticEvent.searchClickEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.searchEventLabel);
+
         Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
     };
 
@@ -289,9 +287,9 @@ const autoCompleteStyle = {
 
     textInputContainer: {
         height: 80,
-        alignItems: 'center',
+        // alignItems: 'center',
         backgroundColor: '#DCC670',
-        elevation: 15,
+        // elevation: 15,
 
     },
 

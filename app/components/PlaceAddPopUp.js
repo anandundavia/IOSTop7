@@ -6,6 +6,7 @@ import Backend from "../core/Backend";
 
 
 import Consts from "../consts/Consts";
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 const {height} = Dimensions.get('window');
 
 
@@ -57,6 +58,7 @@ export default class PlaceAddPopUp extends Component {
         if (this.params.isAdded !== null) {
             this.currentPlaceDropped = true;
         }
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
 
     }
 
@@ -202,7 +204,8 @@ export default class PlaceAddPopUp extends Component {
     }
 
     okButtonPressed = () => {
-        console.log("OK BUTTON PRESS");
+        this.tracker.trackEvent(Consts.analyticEvent.updatePlaceInListEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.updatePlaceInListLabel);
+
         this.setLoadingTextViewVisibility(true);
 
         Memory().updateLeaderboard = true;
@@ -255,7 +258,6 @@ export default class PlaceAddPopUp extends Component {
         let index = this.placeIndex;
         //let newPlace = {id: this.params.markerObject.id, name: this.params.markerObject.name};
         console.log("DROP RELEASED");
-        console.log(this.listPlaceObject);
         let newPlace = this.listPlaceObject;
 
         /*
@@ -296,12 +298,19 @@ export default class PlaceAddPopUp extends Component {
         // The place is now currentPlaceDropped. Update the state variables
 
         if (this.listPlaceIndex !== null) {
+            console.log("::: LIST PLACE INDEX NOT NULL ");
             this.allPlaces[this.listPlaceIndex].setNativeProps({style: styles.userListPlaceNameContainerPopUp});
         } else {
+            console.log("::: LIST PLACE INDEX NULL ");
             this.currentPlaceDropped = true;
             this.currentPlace.setNativeProps({
                 style: {
-                    borderWidth: 0
+                    // borderWidth: 0,
+                    // top: 10,
+                    backgroundColor: "rgba(0,0,0,0)",
+                    zIndex: 1,
+                    borderBottomWidth: 0,
+                    position:"absolute"
                 }
             });
         }
@@ -505,8 +514,8 @@ export default class PlaceAddPopUp extends Component {
      */
     setUpDragging = () => {
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onMoveShouldSetPanResponder: () => true,
+            onStartShouldSetPanResponder: (evt, gestureState) => true,
+            onMoveShouldSetPanResponder: (evt, gestureState) => true,
             onPanResponderRelease: this.dropReleased,
             onPanResponderMove: this.dragStarted,
         });
@@ -520,6 +529,8 @@ export default class PlaceAddPopUp extends Component {
      * @param index
      */
     removePlace = (index) => {
+        this.tracker.trackEvent(Consts.analyticEvent.deletePlaceEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.deletePlaceLabel);
+
         console.log('::::: REMOVE PLACES :::::');
         this.tempPlaceArray[this.tempPlaceArray.length - 1 - index] = {id: null, name: null};
 
@@ -619,7 +630,7 @@ export default class PlaceAddPopUp extends Component {
                 {...this.panResponder.panHandlers}>
                 <Image
                     source={require("../icons/drag_black.png")}
-                    //style={styles.dragImageContainerPopUp}
+                    // style={styles.dragImageContainerPopUp}
                 />
                 <Text style={styles.dragPlaceNamePopUp}>{this.params.markerObject.name}</Text>
             </View>
@@ -694,6 +705,7 @@ export default class PlaceAddPopUp extends Component {
             </View>
         });
         return <View style={styles.userListsContainerPopUp}>{listView}</View>;
+
     };
 
 
@@ -719,6 +731,7 @@ export default class PlaceAddPopUp extends Component {
 
     render() {
         console.log("PopUp: Render called");
+
         return (<Image
             source={require("../icons/background.png")}
             style={styles.popUpContainer}>

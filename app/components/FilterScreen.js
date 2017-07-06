@@ -5,6 +5,7 @@ import {ButtonGroup} from "react-native-elements";
 
 import Memory from "../core/Memory";
 import Consts from "../consts/Consts";
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 export default class FilterScreen extends Component {
 
@@ -75,10 +76,12 @@ export default class FilterScreen extends Component {
             selectedPrice: priceLevel,
             selectedRatedBy: ratedBy,
         }
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
     }
 
 
     applyFilters = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.applyFilterEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.applyFilterLabel);
 
         let type;
         switch (this.state.selectedType) {
@@ -186,6 +189,7 @@ export default class FilterScreen extends Component {
                         {value.city}
                     </Option>
                 )}
+
 
             </Select>
         </View>
@@ -332,7 +336,7 @@ export default class FilterScreen extends Component {
             <OptionList overlayStyles={{
                 top: 80,
                 left: 20,
-                width: 0,
+                maxWidth: "75%",
                 height: "auto",
                 alignItems: "flex-start",
             }} ref="cityOptionList"/>
@@ -367,11 +371,11 @@ const styles = StyleSheet.create({
     },
 
     filterParameterContainer: {
-        height: 100,
+        height: "20%",
         width: "100%",
         backgroundColor: "rgba(0,0,0,0)",
-        marginBottom: 30,
-        //borderWidth: 1
+        // marginBottom: 20,
+        // borderWidth: 1
     },
 
     filterParameterName: {
@@ -383,7 +387,7 @@ const styles = StyleSheet.create({
 
 
     filterOptionsContainer: {
-        height: 60,
+        height: "35%",
         width: "100%",
         borderColor: "#DCC670",
         backgroundColor: "#DCC670",
@@ -399,8 +403,8 @@ const styles = StyleSheet.create({
     },
 
     optionTextStyle: {
-        height: 20,
-        fontSize: 18,
+        // height: 20,
+        // fontSize: 18,
         color: "white",
         width: "100%",
 

@@ -83,6 +83,7 @@ export default class Marker extends Component {
             <View style={styles.placeDetailsMarkerContainer}>
                 <TouchableHighlight
                     onPress={this.onToolTipPressed}
+                    underlayColor={'rgba(0,0,0,0)'}
                     style={styles.placeDetailsMakerPlaceImageContainer}>
                     <Image
                         source={this.props.markerObject.icon}

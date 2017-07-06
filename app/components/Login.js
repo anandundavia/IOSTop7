@@ -6,6 +6,7 @@ import Consts from "../consts/Consts";
 import Facebook from "../core/Facebook";
 import Memory from "../core/Memory";
 import Backend from "../core/Backend";
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 
 export default class Login extends Component {
@@ -22,6 +23,7 @@ export default class Login extends Component {
             isAccessTokenChecked: false,
             isUserLoggedIn: false,
         }
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
     }
 
     /**
@@ -74,6 +76,8 @@ export default class Login extends Component {
      * Initiate the facebook login flow using LoginManager of Facebook
      */
     initLogIn = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.loginButtonEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.loginButtonLabel);
+
         LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_friends'])
             .then(this.handleLogIn, (error) => alert(error))
             .catch((error) => {
@@ -88,6 +92,8 @@ export default class Login extends Component {
      * Skip the login and go to dashboard when the user does not want to login
      */
     skipLogIn = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.loginSkipEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.loginSkipLabel);
+
         this.setLoadingTextViewVisibility(true);
         Backend.getBackendAccessToken(() => {
             Memory().userObject = Consts.GUEST_USER;
@@ -155,8 +161,6 @@ export default class Login extends Component {
 
     render() {
         console.log("Login: Render called");
-
-
         return (
             <Image
                 source={require("../icons/background.png")}

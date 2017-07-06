@@ -1,8 +1,11 @@
 package com.iostop7;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.facebook.react.ReactApplication;
+import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.facebook.react.ReactNativeHost;
@@ -38,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new GoogleAnalyticsBridgePackage(),
             new VectorIconsPackage(),
             new FBSDKPackage(mCallbackManager),
             new MapsPackage()
@@ -59,4 +63,11 @@ public class MainApplication extends Application implements ReactApplication {
       // If you want to use AppEventsLogger to log events.
       AppEventsLogger.activateApp(this);
   }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+
+    }
 }

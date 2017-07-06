@@ -20,6 +20,7 @@ import {Button, ButtonGroup} from "react-native-elements";
 import Consts from "../consts/Consts";
 import Backend from "../core/Backend";
 import Memory from "../core/Memory";
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 const {height, width} = Dimensions.get('window');
 
@@ -57,6 +58,7 @@ export default class UserConfirmDetails extends Component {
         };
 
         console.log(this.params);
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
 
     }
 
@@ -100,6 +102,8 @@ export default class UserConfirmDetails extends Component {
      * Go to dashboard afterwards
      */
     updateUserInformation = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.loginEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.loginLabel);
+
         Keyboard.dismiss();
         this.setLoadingTextViewVisibility(true);
         Backend.getBackendAccessToken(Backend.syncUserInfo, () => {
@@ -327,7 +331,6 @@ export default class UserConfirmDetails extends Component {
 
 
     render() {
-
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View style={[styles.mainView, {opacity: this.popUpZIndex > 0 ? 0.3 : 1}]}>

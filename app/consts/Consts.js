@@ -116,10 +116,13 @@ export default class Consts {
 
 
     //staging
-    static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
+    // static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
 
     //dev
-    // static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
+    static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
+
+    static GA_KEY = 'UA-42396538-5';//UA-101876038-1
+
 
     static  BACKEND = {
         CLIENT_KEY: "d2VidWk6d2VidWlzZWNyZXQ=",
@@ -176,4 +179,99 @@ export default class Consts {
                 break;
         }
     };
+
+    static analyticEvent = {
+        "clickEvent":"click",
+
+        "showMapEvent": "showMap",
+        "mapViewLabel": "Map View on Dashboard",
+
+        "showListEvent": "showList",
+        "listViewLabel": {
+            "label":"List View on Dashboard"
+        },
+
+        "leftSideBarEvent": "OpenFilter",
+        "showSideBarLabel": {
+            "label":"OpenFilter"
+        },
+
+        "applyFilterEvent":"applyFilter",
+        "applyFilterLabel":{
+            "label":"Filter Applied"
+        },
+
+        "rightSideBarEvent": "UserProfile",
+        "showRightSideBarLabel":{
+            "label":"User's Top7 List"
+        },
+
+        "searchClickEvent":"search",
+        "searchEventLabel":{
+            "label":"Search place"
+        },
+
+        "wrongSearchEvent":"wrong place and type search",
+        "wrongSearchLabel":{
+            "label":"This wrong place Search = "
+        },
+
+        "searchFromDBEvent":"SearchFromDB",
+        "searchFromDBLabel":{
+            "label":"Place Search from the Database = "
+        },
+
+        "searchDirectEvent":"SearchDirect",
+        "searchDirectLabel":{
+            "label":"Place Search Direct From Google = "
+        },
+
+        "showPlaceDetailsEvent":"PlaceDetailView",
+        "showPlaceDetailsLabel":{
+            "label":"Show Place Detail View from Leader board of = "
+        },
+        "showPlaceDetailSearchLabel":{
+            "label":"Show Place Detail View from Search of = "
+        },
+
+        "addPlaceInListEvent":" AddPlaceInList",
+        "addPlaceInListLabel":{
+            "label":"Place add In List = "
+        },
+
+        "updatePlaceInListEvent":"UpdatePlaceInList",
+        "updatePlaceInListLabel":{
+            "label":"Place update in List = "
+        },
+
+        "updateListEvent":"listUpdate",
+        "updateListLabel":{
+            "label":"List Update"
+        },
+
+        "deletePlaceEvent":"deletePlace",
+        "deletePlaceLabel":{
+            "label":"Place Delete from the list ="
+        },
+
+        "loginButtonEvent":"loginButton",
+        "loginButtonLabel":{
+            "label":"User Click on login Button"
+        },
+
+        "loginSkipEvent":"skipLogin",
+        "loginSkipLabel":{
+            "label":"User Click on Skip Login"
+        },
+
+        "loginEvent":"Login",
+        "loginLabel":{
+            "label":"User Login in system"
+        },
+
+        "openMapEvent":"openMapFromPlaceDetail",
+        "openMapLabel":{
+            "label":"User Redirect on Map"
+        },
+    }
 }

@@ -19,6 +19,7 @@ import SideMenu from "react-native-side-menu";
 import ScrollableTabView from "react-native-scrollable-tab-view";
 import {LoginManager, LoginButton} from "react-native-fbsdk";
 import Facebook from "../core/Facebook";
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 
 
 
@@ -59,6 +60,8 @@ export default class Dashboard extends Component {
             showOverlay: false,
             loadMapView: true,
         }
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
+        // let tracker1 = new GoogleAnalyticsTracker('UA-42396538-5');
 
     }
 
@@ -113,6 +116,7 @@ export default class Dashboard extends Component {
 
 
     showSearchOverlay = () => {
+
         this.sideMenu.openMenu(false);
         this.props.navigation.navigate(Consts.SCREEN_TITLES.SEARCH_SCREEN, {
             onGoBack: () => {
@@ -181,29 +185,35 @@ export default class Dashboard extends Component {
         let userListView;
         let navigation;
         //Does user have any lists?
-        if (Memory().userObject.lists) {
+        if (Memory().userObject.lists.length > 0) {
+            console.log("::: IF CONDITION ::::");
             //Yes he does! Create the component for views
             userListView = Memory().userObject.lists.map(this.renderList);
-            navigation = <View style={styles.listNavigationContainer}>
-                <TouchableHighlight
-                    underlayColor={"#c5b167"}
-                    onPress={this.swipeLift}
-                    style={styles.leftButton}>
-                    <Image source={require("../icons/back_black.png")}/>
-                </TouchableHighlight>
-                {/*<TouchableHighlight*/}
-                {/*onPress={this.editPlaceList}*/}
-                {/*style={styles.editButton}>*/}
-                {/*<Text>Edit</Text>*/}
-                {/*</TouchableHighlight>*/}
-                <TouchableHighlight
-                    underlayColor={"#c5b167"}
-                    onPress={this.swipeRight}
-                    style={styles.rightButton}>
-                    <Image source={require("../icons/back_right.png")}/>
-                </TouchableHighlight>
-            </View>;
+            if (Memory().userObject.lists.length > 1) {
+                navigation = <View style={styles.listNavigationContainer}>
+                    <TouchableHighlight
+                        underlayColor={"#c5b167"}
+                        onPress={this.swipeLift}
+                        style={styles.leftButton}>
+                        <Image source={require("../icons/back_black.png")}/>
+                    </TouchableHighlight>
+                    {/*<TouchableHighlight*/}
+                    {/*onPress={this.editPlaceList}*/}
+                    {/*style={styles.editButton}>*/}
+                    {/*<Text>Edit</Text>*/}
+                    {/*</TouchableHighlight>*/}
+                    <TouchableHighlight
+                        underlayColor={"#c5b167"}
+                        onPress={this.swipeRight}
+                        style={styles.rightButton}>
+                        <Image source={require("../icons/back_right.png")}/>
+                    </TouchableHighlight>
+                </View>;
+            }else{
+                navigation = null;
+            }
         } else {
+            console.log("::: ELSE CONDITION ::::");
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
                 <Text style={{color: "black", fontSize: 18, fontFamily: 'Museo Sans Cyrl'}}>
@@ -499,10 +509,13 @@ export default class Dashboard extends Component {
     };
 
 
-    openFilterScreen = () => this.props.navigation.navigate(
-        Consts.SCREEN_TITLES.FILTER_SCREEN,
-        {updateLeaderBoard: this.updateLeaderBoard}
-    );
+    openFilterScreen = () => {
+        this.tracker.trackEvent(Consts.analyticEvent.applyFilterEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.applyFilterLabel);
+        this.props.navigation.navigate(
+            Consts.SCREEN_TITLES.FILTER_SCREEN,
+            {updateLeaderBoard: this.updateLeaderBoard}
+        );
+    }
 
 
     /**
@@ -581,7 +594,7 @@ export default class Dashboard extends Component {
         //
         //     });
         // });
-
+        this.tracker.trackEvent(Consts.analyticEvent.showListEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.listViewLabel);
 
         this.setState({
             loadMapView: !this.state.loadMapView
@@ -678,7 +691,7 @@ export default class Dashboard extends Component {
 
     componentDidUpdate() {
 
-        if (Memory().userObject.lists && this.nameContainer) {
+        if (Memory().userObject.lists.length > 0  && this.nameContainer) {
             this.nameContainer.setNativeProps({
                 text: this.getListName(0)
             });

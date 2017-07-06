@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Dimensions, Image, PanResponder, StyleSheet, Text, View} from "react-native";
 import Consts from "../consts/Consts";
-
+import { GoogleAnalyticsTracker, GoogleAnalyticsSettings, GoogleTagManager } from 'react-native-google-analytics-bridge';
 const {height, width} = Dimensions.get('window');
 export default class PlaceList extends Component {
 
@@ -15,6 +15,7 @@ export default class PlaceList extends Component {
         if (!props.names) {
             console.warn("Props 'names' is not set. The list will not be displayed");
         }
+        this.tracker = new GoogleAnalyticsTracker(Consts.GA_KEY);
     }
 
 

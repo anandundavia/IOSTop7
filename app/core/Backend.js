@@ -68,8 +68,6 @@ export default class Backend {
             // body: JSON.stringify(Memory().commonRequest)
         }).then((response) => {
             if (response.status === 200) {
-                console.log("RESPOSE OF GOOGLE PHOTO");
-                console.log(response);
                 return response.url;
             } else {
                 return new Error(response.statusText)
@@ -99,7 +97,6 @@ export default class Backend {
             body: JSON.stringify(Memory().commonRequest)
         }).then((response) => {
             if (response.status === 200) {
-                console.log(response);
                 return response;
             } else {
                 return new Error(response.statusText)
@@ -119,6 +116,9 @@ export default class Backend {
             }
         }).then((response) => {
             if (response) {
+                if(response.responseStatus === true){
+                    Memory().userObject = response.userDetails;
+                }
                 callback(...args);
             } else {
                 // TODO: What if there are errors in the server and the user information is
