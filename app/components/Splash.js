@@ -51,9 +51,11 @@ export default class Splash extends Component {
         if (!error) {
             // No we don't. Save the data in memory and sync the information
             // with top7backend as well
-            let friendList = result.friends.data;
-            delete result.friends;
-            result['friendsList'] = friendList;
+            if(result.friends !== undefined){
+                let friendList = result.friends.data;
+                delete result.friends;
+                result['friendsList'] = friendList;
+            }
             Memory().userObject = result;
             Backend.getBackendAccessToken(this.syncUserInfo);
         } else {

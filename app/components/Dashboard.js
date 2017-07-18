@@ -182,10 +182,13 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getSideBar = () => {
+        console.log(":: GET SIDE BAR ::");
         let userListView;
         let navigation;
         //Does user have any lists?
-        if (Memory().userObject.lists.length > 0) {
+        console.log("MEMORY");
+        console.log(Memory().userObject.lists);
+        if (Memory().userObject.lists !== null && Memory().userObject.lists.length > 0) {
             console.log("::: IF CONDITION ::::");
             //Yes he does! Create the component for views
             userListView = Memory().userObject.lists.map(this.renderList);
@@ -523,6 +526,7 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getTopBarView = () => {
+        console.log(":: TOP BAR ::");
         if (!Memory().leaderBoardFilters) {
             Memory().leaderBoardFilters = Consts.DEFAULT_LEADERBOARD_FILTERS;
         }
@@ -691,7 +695,7 @@ export default class Dashboard extends Component {
 
     componentDidUpdate() {
 
-        if (Memory().userObject.lists.length > 0  && this.nameContainer) {
+        if (Memory().userObject.lists !==null && Memory().userObject.lists.length > 0  && this.nameContainer) {
             this.nameContainer.setNativeProps({
                 text: this.getListName(0)
             });

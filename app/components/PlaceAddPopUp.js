@@ -305,12 +305,10 @@ export default class PlaceAddPopUp extends Component {
             this.currentPlaceDropped = true;
             this.currentPlace.setNativeProps({
                 style: {
-                    // borderWidth: 0,
-                    // top: 10,
                     backgroundColor: "rgba(0,0,0,0)",
                     zIndex: 1,
                     borderBottomWidth: 0,
-                    position:"absolute"
+                    position:"absolute",
                 }
             });
         }
@@ -470,7 +468,7 @@ export default class PlaceAddPopUp extends Component {
      * Precompute the list information
      */
     precomputeListInformation = () => {
-
+        console.log(":::::: PRE COMPUTE :::::: ");
         // getting the list id
         let listID = this.getListID();
 
@@ -531,7 +529,6 @@ export default class PlaceAddPopUp extends Component {
     removePlace = (index) => {
         this.tracker.trackEvent(Consts.analyticEvent.deletePlaceEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.deletePlaceLabel);
 
-        console.log('::::: REMOVE PLACES :::::');
         this.tempPlaceArray[this.tempPlaceArray.length - 1 - index] = {id: null, name: null};
 
         let isEmpty = true;
@@ -607,7 +604,7 @@ export default class PlaceAddPopUp extends Component {
         let type = this.params.markerObject.type;
 
 
-        console.log(type);
+        // console.log(type);
 
         let typeName = type.charAt(0).toUpperCase() + type.slice(1) + "s";
 
@@ -704,7 +701,7 @@ export default class PlaceAddPopUp extends Component {
 
             </View>
         });
-        return <View style={styles.userListsContainerPopUp}>{listView}</View>;
+        return <View style={[styles.userListsContainerPopUp,{zIndex:3}]}>{listView}</View>;
 
     };
 
@@ -724,6 +721,7 @@ export default class PlaceAddPopUp extends Component {
 
 
     componentWillMount() {
+        console.log(":::: COMPONENT WILL MOUNT :::: ");
         // this.setUpPopUp();
         this.precomputeListInformation();
         this.setUpDragging();
@@ -747,6 +745,7 @@ export default class PlaceAddPopUp extends Component {
             {this.getCurrentPlaceView()}
 
             {/*The view for the current top7 list of user*/}
+
             {this.getCurrentListView()}
 
             {/*The view for the loading text*/}
@@ -887,7 +886,8 @@ const styles = StyleSheet.create({
         backgroundColor: "rgba(0,0,0,0)",
         // borderWidth: 1,
         borderBottomWidth: 1,
-        borderColor: "white"
+        borderColor: "white",
+
     },
 
     userListPlaceNamePopUp: {
