@@ -79,7 +79,7 @@ export default class Marker extends Component {
             priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
         }
 
-        return <MapView.Callout style={{zIndex: 10}} tooltip>
+        return <MapView.Callout style={{zIndex: 10}} tooltip >
             <View style={styles.placeDetailsMarkerContainer}>
                 <TouchableHighlight
                     onPress={this.onToolTipPressed}
