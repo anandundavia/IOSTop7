@@ -91,7 +91,17 @@ export default class Dashboard extends Component {
     getListName = (index) => {
         let type = Memory().userObject.lists[index].listType + "s";
         type = type.charAt(0).toUpperCase() + type.slice(1);
-        let city = Memory().userObject.lists[index].location.city;
+        let city;
+        if(Memory().allCities){
+            for (let i = 0; i < Memory().allCities.length; i++) {
+                if (Memory().allCities[i].city === Memory().userObject.lists[index].location.city) {
+                    city = Memory().allCities[i].displayCityName;
+                    break;
+                }
+            }
+        }else{
+            city = Memory().userObject.lists[index].location.city;
+        }
         return "Top7 " + type + ", " + city;
     };
 
@@ -182,14 +192,10 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getSideBar = () => {
-        console.log(":: GET SIDE BAR ::");
         let userListView;
         let navigation;
         //Does user have any lists?
-        console.log("MEMORY");
-        console.log(Memory().userObject.lists);
         if (Memory().userObject.lists !== null && Memory().userObject.lists.length > 0) {
-            console.log("::: IF CONDITION ::::");
             //Yes he does! Create the component for views
             userListView = Memory().userObject.lists.map(this.renderList);
             if (Memory().userObject.lists.length > 1) {
@@ -216,7 +222,6 @@ export default class Dashboard extends Component {
                 navigation = null;
             }
         } else {
-            console.log("::: ELSE CONDITION ::::");
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
                 <Text style={{color: "black", fontSize: 18, fontFamily: 'Museo Sans Cyrl'}}>
@@ -359,7 +364,6 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getMainMapView = () => {
-
         let regionToLoad;
         if (Memory().currentCity) {
             regionToLoad = {
@@ -526,10 +530,31 @@ export default class Dashboard extends Component {
      * @returns {XML}
      */
     getTopBarView = () => {
-        console.log(":: TOP BAR ::");
+        let displayCity;
+        let type;
         if (!Memory().leaderBoardFilters) {
             Memory().leaderBoardFilters = Consts.DEFAULT_LEADERBOARD_FILTERS;
+            displayCity = Memory().leaderBoardFilters.city;
+            type = Memory().leaderBoardFilters.types;
+        }else{
+            type = Memory().leaderBoardFilters.types;
+            if(Memory().allCities){
+                for (let i = 0; i < Memory().allCities.length; i++) {
+                    if (Memory().allCities[i].city === Memory().leaderBoardFilters.city) {
+                        displayCity = Memory().allCities[i].displayCityName;
+                        break;
+                    }
+                    if (Memory().allCities[i].displayCityName === Memory().leaderBoardFilters.city) {
+                        displayCity = Memory().leaderBoardFilters.city;
+                        break;
+                    }
+                }
+            }
         }
+
+        let displayString = type + " in " + displayCity;
+
+
         return <View style={styles.topBarContainer}>
             <TouchableHighlight
                 underlayColor={"#c5b167"}
@@ -543,7 +568,7 @@ export default class Dashboard extends Component {
                 underlayColor={"#c5b167"}
                 onPress={this.openFilterScreen}
                 style={styles.cityNameContainer}>
-                <Text style={styles.cityName}>{Memory().leaderBoardFilters.city}</Text>
+                <Text style={styles.cityName}>{displayString}</Text>
             </TouchableHighlight>
         </View>;
     };

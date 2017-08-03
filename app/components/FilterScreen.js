@@ -31,8 +31,10 @@ export default class FilterScreen extends Component {
 
         // Do we have previously set leaderboard filters?
         if (Memory().leaderBoardFilters) {
-            // Yes we do.
             this.selectedCity = Memory().leaderBoardFilters.city;
+
+            // Yes we do.
+
             let placeType = Memory().leaderBoardFilters.types;
             switch (placeType) {
                 case Consts.PLACE_TYPES.CLUB:
@@ -82,7 +84,6 @@ export default class FilterScreen extends Component {
 
     applyFilters = () => {
         this.tracker.trackEvent(Consts.analyticEvent.applyFilterEvent,Consts.analyticEvent.clickEvent, Consts.analyticEvent.applyFilterLabel);
-
         let type;
         switch (this.state.selectedType) {
             case 0:
@@ -165,11 +166,26 @@ export default class FilterScreen extends Component {
     };
 
     getPlaceView = () => {
+        let displayCity;
+        if(Memory().allCities){
+            for (let i = 0; i < Memory().allCities.length; i++) {
+                if (Memory().allCities[i].city === Memory().leaderBoardFilters.city) {
+                    displayCity = Memory().allCities[i].displayCityName;
+                    break;
+                }
+                if (Memory().allCities[i].displayCityName === Memory().leaderBoardFilters.city) {
+                    displayCity = Memory().leaderBoardFilters.city;
+                    break;
+                }
+            }
+        }else{
+            displayCity = Memory().leaderBoardFilters.city;
+        }
         return <View style={styles.filterParameterContainer}>
             <Text style={styles.filterParameterName}>PLACE</Text>
             <Select
                 width={250}
-                defaultValue={this.selectedCity}
+                defaultValue={displayCity}
                 onSelect={(value) => {
                     this.selectedCity = value;
 
@@ -185,8 +201,10 @@ export default class FilterScreen extends Component {
 
                 {Memory().allCities.map((value, key) => <Option key={key}
                                                                 style={styles.optionStyle}
-                                                                styleText={styles.optionTextStyle}>
-                        {value.city}
+                                                                styleText={styles.optionTextStyle}
+                                                                value = {value.city}
+                    >
+                        {value.displayCityName}
                     </Option>
                 )}
 

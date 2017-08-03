@@ -196,7 +196,7 @@ export default class SearchScreen extends Component {
                 }
             );
         } else {
-            this.tracker.trackEvent(Consts.analyticEvent.wrongSearchEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.wrongSearchLabel);
+            this.tracker.trackEvent(Consts.analyticEvent.clickEvent, Consts.analyticEvent.wrongSearchEvent,Consts.analyticEvent.wrongSearchLabel);
             Alert.alert(Consts.WRONG_PLACE_MESSAGES.TITLE, Consts.WRONG_PLACE_MESSAGES.MESSAGE)
         }
     };
@@ -209,7 +209,7 @@ export default class SearchScreen extends Component {
      */
     suggestedPlaceOnPress = (data, details = null) =>
     {
-        this.tracker.trackEvent(Consts.analyticEvent.searchClickEvent, Consts.analyticEvent.clickEvent, Consts.analyticEvent.searchEventLabel);
+        this.tracker.trackEvent(Consts.analyticEvent.clickEvent, Consts.analyticEvent.searchClickEvent,Consts.analyticEvent.searchEventLabel);
 
         Backend.getPlaceDetails(data.place_id, this.dataReceived, data, details);
     };

@@ -124,7 +124,7 @@ export default class Splash extends Component {
                 <StatusBar hidden/>
                 <Image
                     style={styles.appLogo}
-                    source={require("../icons/logo_white.png")}/>
+                    source={require("../icons/logo_black.png")}/>
                 <View style={styles.loadingTextContainer}>
                     <Text
                         style={fontStyle}

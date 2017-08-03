@@ -419,6 +419,7 @@ export default class PlaceDetails extends Component {
             priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
         }
 
+
         return <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <StatusBar hidden/>
 

@@ -169,7 +169,7 @@ export default class Login extends Component {
                 <StatusBar hidden={true}/>
                 <Image
                     style={styles.appLogo}
-                    source={require("../icons/logo_white.png")}
+                    source={require("../icons/logo_black.png")}
                 />
 
                 <TouchableHighlight

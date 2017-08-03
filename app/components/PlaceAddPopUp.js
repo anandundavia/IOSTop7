@@ -71,13 +71,13 @@ export default class PlaceAddPopUp extends Component {
         this.props.navigation.goBack();
     };
 
-    async googlePhoto(refrence) {
+    async googlePhoto(photoReference) {
         console.log("MY FUN ");
         let string = 'http';
-        if(refrence.indexOf(string) === -1){
-            let apicall = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + refrence + "&key=" +
+        if(photoReference.indexOf(string) === -1){
+            let apiCall = Consts.API_URLS.GOOGLE_PHOTO_API_BASE + "maxwidth=400&photoreference=" + photoReference + "&key=" +
                 Consts.KEYS.GOOGLE_API_KEY;
-            let response = await fetch(apicall);
+            let response = await fetch(apiCall);
 
             if(response.status === 200){
                 // ("Temp:");
@@ -174,7 +174,7 @@ export default class PlaceAddPopUp extends Component {
                     types: [this.params.markerObject.type],
                     phoneNumber: this.params.markerObject.phoneNumber,
                     setting: "both",
-                    googlePhotoRef: refrence,
+                    googlePhotoRef: photoReference,
                     priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
                     location: {
                         city: this.params.markerObject.location.city,
@@ -214,9 +214,9 @@ export default class PlaceAddPopUp extends Component {
         let index = url.indexOf("photoreference=") + "photoreference=".length;
         let end = url.indexOf("&key=");
 
-        let reference = url.substring(index, end);
+        let photoReference = url.substring(index, end);
 
-        this.googlePhoto(reference);
+        this.googlePhoto(photoReference);
 
         // remove updateuser function call from here and move to googlePhoto function
     };
@@ -602,7 +602,17 @@ export default class PlaceAddPopUp extends Component {
      */
     getCurrentListNameView = () => {
         let type = this.params.markerObject.type;
-
+        let cityName;
+        if(Memory().allCities){
+            for (let i = 0; i < Memory().allCities.length; i++) {
+                if (Memory().allCities[i].city === Memory().leaderBoardFilters.city) {
+                    cityName = Memory().allCities[i].displayCityName;
+                    break;
+                }
+            }
+        }else{
+            cityName = this.params.markerObject.location.city;
+        }
 
         // console.log(type);
 
@@ -610,7 +620,7 @@ export default class PlaceAddPopUp extends Component {
 
         return <View style={styles.placeNameContainerPopUp}>
             <Text
-                style={styles.placeNamePopUp}>Top7 {typeName}, {this.params.markerObject.location.city}</Text>
+                style={styles.placeNamePopUp}>Top7 {typeName}, {cityName}</Text>
         </View>
     };
 

@@ -251,6 +251,17 @@ export default class Backend {
                 Memory().leaderboard = response;
                 Memory().markers = [];
                 response.map((value, key) => {
+                    let string = 'http';
+                    let icon;
+                    if(value.googlePhotoRef.indexOf(string) === -1){
+                        icon = Consts.API_URLS.GOOGLE_PHOTO_API_BASE +
+                            "maxwidth=400&photoreference=" +
+                            value.googlePhotoRef +
+                            "&key=" +
+                            Consts.KEYS.GOOGLE_API_KEY;
+                    }else{
+                        icon = value.googlePhotoRef;
+                    }
                     Memory().markers[parseInt(key)] = {
                         id: value.id,
                         priceLevel: value.priceLevel,
@@ -261,7 +272,7 @@ export default class Backend {
                         //     "&key=" +
                         //     Consts.KEYS.GOOGLE_API_KEY
                         // },
-                        icon: {uri:value.googlePhotoRef},
+                        icon: {uri:icon},
                         name: value.name,
                         number: parseInt(key + 1),
                         type: value.types[0],
@@ -318,7 +329,6 @@ export default class Backend {
 
             callback(reviews);
         }).catch((error) => {
-            console.log("Failed to fetch reviews..");
             console.log(JSON.stringify(error));
         })
     }
@@ -361,7 +371,6 @@ export default class Backend {
 
 
     static getPlaceDetails(placeID, callback, ...args) {
-        console.log('BACKEND CALL');
         fetch(Consts.BACKEND.PLACE_DETAILS, {
             method: "post",
             headers: {
@@ -371,8 +380,6 @@ export default class Backend {
             body: JSON.stringify({id: placeID})
         }).then((response) => {
             if (response.status === 200) {
-                console.log('RESPONCE OF GOOGLE SEARCH');
-                console.log(response);
                 return response;
             } else {
                 return new Error(response.statusText);

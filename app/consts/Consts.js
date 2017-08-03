@@ -53,7 +53,8 @@ export default class Consts {
         city: Consts.DEFAULT_CITY,
         setting: "both",
         priceLevel: 2,
-        ratedBy: "all"
+        ratedBy: "all",
+
     };
 
     static DEFAULT_REGION = {
@@ -118,10 +119,10 @@ export default class Consts {
     //staging
     // static BACKEND_BASE = "http://top7apistaging.innovify.com/top7backend/";
 
-    static BACKEND_BASE = "http://api.top7.guide/top7backend/";
+    // static BACKEND_BASE = "http://api.top7.guide/top7backend/";
 
     //dev
-    // static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
+    static BACKEND_BASE = "http://top7api.innovify.com/top7backend/";
 
     static GA_KEY = 'UA-42396538-5';//UA-101876038-1
 
