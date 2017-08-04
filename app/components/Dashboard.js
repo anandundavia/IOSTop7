@@ -376,8 +376,6 @@ export default class Dashboard extends Component {
             regionToLoad = Consts.DEFAULT_REGION;
         }
 
-        // console.log(regionToLoad);
-
         return <Animated.View
             style={[styles.mainViewContainer, this.animatedDesign]}>
             <MapView.Animated
@@ -556,6 +554,13 @@ export default class Dashboard extends Component {
 
 
         return <View style={styles.topBarContainer}>
+
+            <TouchableHighlight
+                underlayColor={"#c5b167"}
+                onPress={this.openFilterScreen}
+                style={styles.cityNameContainer}>
+                <Text style={styles.cityName}>{displayString}</Text>
+            </TouchableHighlight>
             <TouchableHighlight
                 underlayColor={"#c5b167"}
                 onPress={() => this.sideMenu.openMenu(true)}
@@ -563,12 +568,6 @@ export default class Dashboard extends Component {
                 <Image
                     style={styles.tabIcon}
                     source={require("../icons/menu_black.png")}/>
-            </TouchableHighlight>
-            <TouchableHighlight
-                underlayColor={"#c5b167"}
-                onPress={this.openFilterScreen}
-                style={styles.cityNameContainer}>
-                <Text style={styles.cityName}>{displayString}</Text>
             </TouchableHighlight>
         </View>;
     };
@@ -646,16 +645,18 @@ export default class Dashboard extends Component {
 
         return <Image style={styles.bottomBarContainer}
                       source={require("../icons/bottom-bar.png")}>
-            <TouchableHighlight style={styles.listIconContainer}
-                                underlayColor={'rgba(0,0,0,0.2)'}
-                                onPress={this.listViewButtonPressed}>
-                {iconView}
-            </TouchableHighlight>
+
 
             <TouchableHighlight style={styles.filterIconContainer}
                                 underlayColor={'rgba(0,0,0,0.2)'}
                                 onPress={this.openFilterScreen}>
                 <Image source={require('../icons/filter_white.png')}/>
+            </TouchableHighlight>
+
+            <TouchableHighlight style={styles.listIconContainer}
+                                underlayColor={'rgba(0,0,0,0.2)'}
+                                onPress={this.listViewButtonPressed}>
+                {iconView}
             </TouchableHighlight>
         </Image>;
     };
@@ -716,6 +717,7 @@ export default class Dashboard extends Component {
             this.setLoadingTextViewVisibility(false);
             this.setState({});
         }));
+
     }
 
     componentDidUpdate() {
@@ -742,6 +744,7 @@ export default class Dashboard extends Component {
                 menu={this.getSideBar()}
                 ref={menu => this.sideMenu = menu}
                 openMenuOffset={width * 0.9}
+                menuPosition = 'right'
             >
                 <View style={styles.container}>
                     <StatusBar hidden/>
@@ -902,6 +905,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#DCC670',
         alignItems: "center",
         zIndex: 15,
+        paddingLeft: 20,
     },
 
     tabIconContainer: {

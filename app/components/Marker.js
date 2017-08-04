@@ -79,9 +79,7 @@ export default class Marker extends Component {
             priceLevel = <Text style={styles.placeDetailsText}>{Consts.PRICE_LEVEL.EXPENSIVE.toUpperCase()}</Text>
         }
 
-        return <MapView.Callout style={{zIndex: 10}} tooltip
-
-        >
+        return <MapView.Callout style={{zIndex: 10}} tooltip>
             <View style={styles.placeDetailsMarkerContainer}>
                 <TouchableHighlight
                     onPress={this.onToolTipPressed}
@@ -162,14 +160,17 @@ export default class Marker extends Component {
 
         return (
             <MapView.Marker
-
                 centerOffset={{x: 0, y: 0}}
                 coordinate={this.props.markerObject.coordinate}>
                 {this.getMarkerView()}
                 {this.getMarkerCalloutView()}
+                {/*onPress={() => this.onCalloutPressed(index)}*/}
+                {/*ref={`callout-${index}`}*/}
+                {/*zIndex={this.state.selectedCalloutIndex === index ? 999 : 0}*/}
             </MapView.Marker>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -200,6 +201,7 @@ const styles = StyleSheet.create({
         height: 232,
         width: 220,
         borderRadius: 10,
+        zIndex: 10
     },
 
     placeDetailsMakerPlaceImageContainer: {
