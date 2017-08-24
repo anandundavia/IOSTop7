@@ -224,8 +224,8 @@ export default class Dashboard extends Component {
         } else {
             // Nope he does not. show message that he does not.
             userListView = <View style={styles.listContainer}>
-                <Text style={{color: "black", fontSize: 18, fontFamily: 'Museo Sans Cyrl'}}>
-                    Add any place to a list and the list will show up here
+                <Text style={{color: "black", fontSize: 14, fontFamily: 'Museo Sans Cyrl'}}>
+                    You can start creating your lists of Top7  Restaurants, Clubs & Bars by Pressing the + Button on Top
                 </Text>
             </View>;
             navigation = null;
@@ -550,7 +550,7 @@ export default class Dashboard extends Component {
             }
         }
 
-        let displayString = type + " in " + displayCity;
+        let displayString = type + "s in " + displayCity;
 
 
         return <View style={styles.topBarContainer}>

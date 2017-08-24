@@ -114,7 +114,7 @@ export default class PlaceAddPopUp extends Component {
                         phoneNumber: this.params.markerObject.phoneNumber,
                         setting: "both",
                         googlePhotoRef: response.url,
-                        priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
+                        priceLevel: this.params.markerObject.priceLevel <= 2 ? 0 : 1,
                         location: {
                             city: this.params.markerObject.location.city,
                             state: this.params.markerObject.location.state,
@@ -175,7 +175,7 @@ export default class PlaceAddPopUp extends Component {
                     phoneNumber: this.params.markerObject.phoneNumber,
                     setting: "both",
                     googlePhotoRef: photoReference,
-                    priceLevel: this.params.markerObject.priceLevel <= 3 ? 0 : 1,
+                    priceLevel: this.params.markerObject.priceLevel <= 2 ? 0 : 1,
                     location: {
                         city: this.params.markerObject.location.city,
                         state: this.params.markerObject.location.state,
@@ -368,7 +368,7 @@ export default class PlaceAddPopUp extends Component {
                 this.currentViewProps.style.top = 0;
                 this.placeIndex = -1;
             }
-            let priceLevel = this.params.markerObject.priceLevel <= 3 ? 0 : 1;
+            let priceLevel = this.params.markerObject.priceLevel <= 2 ? 0 : 1;
             this.listPlaceObject = {id: this.params.markerObject.id, name: this.params.markerObject.name,priceLevel:priceLevel};
             // setting the native props will kinda sorta refresh the view 'lightly'
             this.currentPlace.setNativeProps(this.currentViewProps);
